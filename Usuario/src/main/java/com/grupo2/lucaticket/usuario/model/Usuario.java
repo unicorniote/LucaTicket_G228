@@ -28,7 +28,6 @@ public class Usuario {
 
     @Id
     @Schema(name = "id", description = "Identificador numerico del usuario")
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
