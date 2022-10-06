@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -23,11 +25,12 @@ public class EventoAdapterTestUnit {
 	@InjectMocks
 	EventoAdapter eventoAdapter;
 
-	@InjectMocks
-	EventoDto eventoDto;
+//	@InjectMocks
+//	EventoDto eventoDto;
 
 	Evento evento;
 	Recinto recinto;
+	List<Evento> eventos = new ArrayList<>();
 
 	private final int ID_EVENTO = 1;
 	private final int ID_RECINTO = 1;
@@ -72,13 +75,23 @@ public class EventoAdapterTestUnit {
 		evento.setRecinto(recinto);
 		evento.setGenero(GENERO);
 
+		eventos.add(evento);
+		eventos.add(evento);
+
+	}
+
+	@Test
+	void testSetUp() {
+
+		assertThat(evento).isNotNull();
+		assertThat(eventos).isNotNull();
+
 	}
 
 	@Test
 	void shouldReturnsEventoDtoNotNull() {
 
-		EventoDto eventoDtoNull = eventoAdapter.EventoToDto(evento);
-		assertThat(eventoDtoNull).isNotNull();
+		assertThat(eventoAdapter.EventoToDto(evento)).isNotNull();
 	}
 
 	@Test
@@ -88,6 +101,24 @@ public class EventoAdapterTestUnit {
 				PRECIOS, POLITICA, NOMBRE_RECINTO, CIUDAD, DIRECCION, AFORO, GENERO);
 
 		assertThat(eventoAdapter.EventoToDto(evento)).isEqualTo(eventoDtoCompleto);
+	}
+
+	@Test
+	void shouldReturnEventoDtoListNotNull() {
+
+		assertThat(eventoAdapter.EventoToDto(eventos)).isNotNull();
+	}
+
+	@Test
+	void shouldReturnsEventoDtoList() {
+
+		EventoDto eventoDtoCompleto = new EventoDto(ID_EVENTO, NOMBRE_EVENTO, DESCRIPCION_CORTA, FOTO, FECHA, HORA,
+				PRECIOS, POLITICA, NOMBRE_RECINTO, CIUDAD, DIRECCION, AFORO, GENERO);
+		List<EventoDto> eventosDto = new ArrayList<>();
+		eventosDto.add(eventoDtoCompleto);
+		eventosDto.add(eventoDtoCompleto);
+
+		assertThat(eventoAdapter.EventoToDto(eventos)).isEqualTo(eventosDto);
 	}
 
 }

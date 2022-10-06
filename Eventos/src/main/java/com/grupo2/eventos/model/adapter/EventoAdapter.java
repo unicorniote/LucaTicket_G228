@@ -1,5 +1,8 @@
 package com.grupo2.eventos.model.adapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -49,6 +52,28 @@ public class EventoAdapter implements EventoAdapterI {
 		eventoDto.setGenero(evento.getGenero());
 
 		return eventoDto;
+	}
+
+	/**
+	 * Método EventoToDto que devuelve una lista de objetos DTO de Evento a partir
+	 * de una lista de entidades Evento.
+	 * 
+	 * @param eventos - Lista de objetos de entidades Evento
+	 * @return List<EventoDto>
+	 * @author Álvaro Román Gómez
+	 * @version 1.0
+	 */
+	@Override
+	public List<EventoDto> EventoToDto(List<Evento> eventos) {
+		// TODO Auto-generated method stub
+		logger.info("Mapeando lista de entidades Evento a lista de objetos DTO EventoDto...");
+		List<EventoDto> eventosDto = new ArrayList<>();
+
+		for (Evento evento : eventos) {
+			eventosDto.add(this.EventoToDto(evento));
+		}
+
+		return eventosDto;
 	}
 
 }
