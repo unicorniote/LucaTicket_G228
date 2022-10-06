@@ -7,7 +7,7 @@ import com.grupo2.eventos.model.Evento;
 /**
 * @Project LucaTicket
 *
-* @Classname EventosRepository
+* @Classname EventosRepositoryI
 *
 * @author Grupo 2 -Carlos Jesús Pérez Márquez
 *
