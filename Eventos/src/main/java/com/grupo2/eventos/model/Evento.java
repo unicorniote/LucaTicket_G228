@@ -3,6 +3,8 @@ package com.grupo2.eventos.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -60,7 +62,7 @@ public class Evento implements Serializable{
 	private LocalTime horaEvento;
 
 	@Schema(name = "rangoPrecio", description = "Precio del evento")
-	private float rangoPrecio;
+	private Map<String, Float> rangoPrecio = new HashMap<>();
 
 	@Schema(name = "politicaAcceso", description = "Descripcion de la política de acceso al evento")
 	private String politicaAcceso;
