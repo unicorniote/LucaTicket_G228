@@ -35,35 +35,35 @@ public class Evento {
 	@Id
 	@Schema(name = "ID", description = "Identificador númerico del evento")
 	private int ID;
-	
+
 	@Schema(name = "nombre", description = "Nombre del evento")
 	private String nombre;
-	
+
 	@Schema(name = "descripCorta", description = "Descripción corta del evento")
 	private String descripCorta;
-	
+
 	@Schema(name = "descripExtendida", description = "Descriptción extendida del evento")
 	private String descripExtendida;
-	
+
 	@Schema(name = "foto", description = "Atributo que indica si el evento dispone de fotografía")
 	private boolean foto;
-	
+
 	@Schema(name = "fechaEvento", description = "Fecha de la celebración del evento")
 	private LocalDate fechaEvento;
-	
+
 	@Schema(name = "horaEvento", description = "Hora de comienzo del evento")
 	private LocalTime horaEvento;
-	
+
 	@Schema(name = "rangoPrecio", description = "Precio del evento")
 	private float rangoPrecio;
-	
+
 	@Schema(name = "politicaAcceso", description = "Descripcion de la política de acceso al evento")
 	private String politicaAcceso;
-	
+
 	@Schema(name = "recinto", description = "Datos del recinto donde se celebra el evento")
 	private Recinto recinto;
-	
+
 	@Schema(name = "genero", description = "Género musical del evento")
 	private String genero;
-	
+
 }
