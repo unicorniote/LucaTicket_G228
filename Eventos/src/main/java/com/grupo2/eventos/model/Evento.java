@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
  * 
  * @Classname Evento
  * 
- * @author Grupo 2 -Tamara
+ * @author Grupo 2 - Tamara Alvarez
  *
  * @date 06/10/2022
  * 

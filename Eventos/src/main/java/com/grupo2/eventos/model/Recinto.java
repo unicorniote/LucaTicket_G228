@@ -11,6 +11,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * @Project LucaTicket
+ * 
+ * @Classname Recinto
+ * 
+ * @author Grupo 2 - Tamara Alvarez
+ *
+ * @date 06/10/2022
+ * 
+ * @since 1.0
+ *
+ */
+
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
