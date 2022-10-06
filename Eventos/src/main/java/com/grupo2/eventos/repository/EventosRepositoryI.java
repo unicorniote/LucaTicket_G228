@@ -1,6 +1,8 @@
 package com.grupo2.eventos.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.grupo2.eventos.model.Evento;
 
 /**
 * @Project LucaTicket
@@ -16,7 +18,7 @@ package com.grupo2.eventos.repository;
 */
 
 
-public interface EventosRepository extends JpaRepository<Evento, Long> {
+public interface EventosRepositoryI extends JpaRepository<Evento, Integer> {
 
 	
 }

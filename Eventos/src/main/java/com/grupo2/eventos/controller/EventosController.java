@@ -2,11 +2,15 @@ package com.grupo2.eventos.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grupo2.eventos.repository.EventosRepository;
+import com.grupo2.eventos.repository.EventosRepositoryI;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
 * @Project LucaTicket
@@ -32,7 +36,7 @@ public class EventosController {
 	
 	
 	@Autowired
-	private EventosService eventosService;
+	private EventosServiceI eventosService;
 	
 	// Documentación JAVADOC
 	
