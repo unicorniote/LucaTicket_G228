@@ -71,15 +71,17 @@ public class Evento implements Serializable {
 	@NotNull
 	private LocalTime horaEvento;
 
+<<<<<<< HEAD
 	@NotEmpty
 	@Positive
+	private Map<String, Float> rangoPrecio = new HashMap<>();
+=======
 	@Schema(name = "rangoPrecio", description = "Precio del evento")
 	private Map<String, Double> rangoPrecio = new HashMap<>();
+>>>>>>> developer
 
-	
 	private String politicaAcceso;
 
-	@Indexed
 	@NotNull
 	private Recinto recinto;
 
