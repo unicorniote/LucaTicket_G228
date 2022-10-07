@@ -7,8 +7,8 @@ import com.grupo2.eventos.model.response.EventoDto;
 
 public interface EventoAdapterI {
 
-	public EventoDto EventoToDto(Evento evento);
+	public EventoDto eventoToDto(Evento evento);
 
-	public List<EventoDto> EventoToDto(List<Evento> eventos);
+	public List<EventoDto> eventoToDto(List<Evento> eventos);
 
 }

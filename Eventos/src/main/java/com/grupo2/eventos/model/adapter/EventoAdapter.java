@@ -32,7 +32,7 @@ public class EventoAdapter implements EventoAdapterI {
 	 * @version 1.0
 	 */
 	@Override
-	public EventoDto EventoToDto(Evento evento) {
+	public EventoDto eventoToDto(Evento evento) {
 		// TODO Auto-generated method stub
 		logger.info("Mapeando objeto entidad Evento a DTO de Evento...");
 		EventoDto eventoDto = new EventoDto();
@@ -64,13 +64,13 @@ public class EventoAdapter implements EventoAdapterI {
 	 * @version 1.0
 	 */
 	@Override
-	public List<EventoDto> EventoToDto(List<Evento> eventos) {
+	public List<EventoDto> eventoToDto(List<Evento> eventos) {
 		// TODO Auto-generated method stub
 		logger.info("Mapeando lista de entidades Evento a lista de objetos DTO EventoDto...");
 		List<EventoDto> eventosDto = new ArrayList<>();
 
 		for (Evento evento : eventos) {
-			eventosDto.add(this.EventoToDto(evento));
+			eventosDto.add(this.eventoToDto(evento));
 		}
 
 		return eventosDto;
