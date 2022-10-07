@@ -60,6 +60,9 @@ public class EventosController {
 	
 	@Autowired
 	private EventoAdapterI eventoAdapter;
+	
+	@Autowired 
+	private Evento evento;
 
 	
 	/**
@@ -83,6 +86,8 @@ public class EventosController {
 					schema = @Schema(implementation = Evento.class))}),
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content)})
+	
+	
 	@PostMapping("/add")
 	public ResponseEntity<?> addEvento(@Valid @RequestBody Evento evento){
 
@@ -116,7 +121,8 @@ public class EventosController {
 					@Content(mediaType = "application/json",
 					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "400", description = "No existen eventos en la bbdd", content = @Content)})
-	@GetMapping
+	
+	@GetMapping("/listar")
 	public Collection<EventoDto> getEventos() {
 		logger.info("----------Buscando eventos");
 		Collection<Evento> eventos = eventosService.findAll();
