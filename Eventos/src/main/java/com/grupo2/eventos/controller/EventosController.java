@@ -1,6 +1,8 @@
 package com.grupo2.eventos.controller;
 
 import com.grupo2.eventos.model.Evento;
+import com.grupo2.eventos.model.adapter.EventoAdapter;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo2.eventos.repository.EventosRepositoryI;
-
+import com.grupo2.eventos.service.EventosServiceI;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -51,6 +53,9 @@ public class EventosController {
 
 	@Autowired
 	private EventosServiceI eventosService;
+	
+	@Autowired 
+	private EventoAdapter eventoAdapter;
 
 	// Documentación JAVADOC
 
@@ -58,7 +63,7 @@ public class EventosController {
 	* Descripción del método:
 	* Método que añade un evento introducido por el administrador.
 	* @param evento evento
-	* @return {@ResponseEntity} Se devuelve un obejto evento
+	* @return {@ResponseEntity} Se devuelve un objeto evento
 	* @author Carlos Jesús Pérez Márquez
 	* @version 1.0
 	*/
@@ -80,7 +85,6 @@ public class EventosController {
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content)})
 
-	@Parameter(description = "ID del evento necesario para localizarlo", required=true)
 
 
 
