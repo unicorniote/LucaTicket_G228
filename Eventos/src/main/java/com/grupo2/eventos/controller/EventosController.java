@@ -1,6 +1,7 @@
 package com.grupo2.eventos.controller;
 
 import com.grupo2.eventos.model.Evento;
+import com.grupo2.eventos.service.EventosServiceI;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;

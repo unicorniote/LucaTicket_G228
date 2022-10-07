@@ -30,11 +30,6 @@ public class UsuarioTest {
         validator = factory.getValidator();
     }
 
-    @BeforeEach
-    void setUpEach() {
-       // user = new Usuario();
-    }
-
     @Test
     void usuarioNoDeberiaSerNull() {
         // WHEN
