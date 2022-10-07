@@ -28,8 +28,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-
-
 /**
 * @Project LucaTicket
 *
@@ -91,7 +89,7 @@ public class UsuarioController {
 	
 	
 	/**
-	* Método findById - Busca un usuario por ID.
+	* Método findById - Busca un usuario por su Id.
 	* 
 	* @return Devuelve un objeto usuarioDTO
 	* 
@@ -101,20 +99,20 @@ public class UsuarioController {
 	*/
 	
 	@Operation(summary = "Listar los usuarios",
-			description = "Lista todo los usuarios existentes en la BBDD de MySQL",
+			description = "Lista todo los eventos existentes en la BBDD de MySql",
 			tags={"Usuario"})
 
 	@ApiResponses(value= {
 			@ApiResponse(responseCode = "201",
-			description = "Usuarios encontrados",
+			description = "Eventos encontrados",
 			content = {
 					@Content(mediaType = "application/json",
 					schema = @Schema(implementation = Usuario.class))}),
-			@ApiResponse(responseCode = "400", description = "No existen eventos en la bbdd", content = @Content)})
+			@ApiResponse(responseCode = "400", description = "No existen usuarios en la bbdd", content = @Content)})
 	@GetMapping ("/listar")
 	public Collection<UsuarioDto> getEventos() {
 		logger.info("Buscando usuario");
-		Collection<Usuario> eventos = usuarioService.findAll();
+		Collection<Usuario> usuario = usuarioService.findAll();
 		return usuarioAdapter.usuarioToDto((List<Usuario>)usuario);
 	}
 	

@@ -1,6 +1,19 @@
 package com.grupo2.eventos.controller.error;
 
 
+/**
+* @Project LucaTicket
+*
+* @Classname EventoNotFoundException
+*
+* @author Lamia
+* @date 07/10/2022
+*
+* @since 1.0
+*
+*/
+
+
 
 
 
