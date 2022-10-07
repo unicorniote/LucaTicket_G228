@@ -1,6 +1,6 @@
 package com.grupo2.eventos.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.grupo2.eventos.model.Evento;
 
@@ -18,7 +18,7 @@ import com.grupo2.eventos.model.Evento;
 */
 
 
-public interface EventosRepositoryI extends JpaRepository<Evento, Integer> {
+public interface EventosRepositoryI extends MongoRepository<Evento, Integer> {
 
 	
 }

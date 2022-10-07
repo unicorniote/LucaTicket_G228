@@ -1,10 +1,15 @@
 package com.grupo2.eventos.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -16,7 +21,7 @@ import lombok.NoArgsConstructor;
  * 
  * @Classname Evento
  * 
- * @author Grupo 2 -Tamara
+ * @author Grupo 2 - Tamara Alvarez
  *
  * @date 06/10/2022
  * 
@@ -30,9 +35,11 @@ import lombok.NoArgsConstructor;
 @Schema(name = "Evento", description = "Entidad que representa el model de datos de un evento.")
 
 @Document(collection = "eventos")
-public class Evento {
+public class Evento implements Serializable {
 
-	@Id
+	private static final long serialVersionUID = 1L;
+
+	@MongoId(FieldType.OBJECT_ID)
 	@Schema(name = "ID", description = "Identificador númerico del evento")
 	private int ID;
 
@@ -55,14 +62,16 @@ public class Evento {
 	private LocalTime horaEvento;
 
 	@Schema(name = "rangoPrecio", description = "Precio del evento")
-	private float rangoPrecio;
+	private Map<String, Double> rangoPrecio = new HashMap<>();
 
 	@Schema(name = "politicaAcceso", description = "Descripcion de la política de acceso al evento")
 	private String politicaAcceso;
 
+	@Indexed
 	@Schema(name = "recinto", description = "Datos del recinto donde se celebra el evento")
 	private Recinto recinto;
 
+	@Indexed
 	@Schema(name = "genero", description = "Género musical del evento")
 	private String genero;
 
