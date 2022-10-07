@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -26,7 +27,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Schema(name = "Usuario", description = "Entidad que representa el modelo de datos de un usuario")
 @Entity
-public class Usuario {
+public class Usuario implements Serializable {
 
     @Id
     @Schema(name = "id", description = "Identificador numerico del usuario")
