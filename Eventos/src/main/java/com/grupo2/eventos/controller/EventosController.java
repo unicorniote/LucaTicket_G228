@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo2.eventos.repository.EventosRepositoryI;
-
+import com.grupo2.eventos.service.EventosServiceI;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
