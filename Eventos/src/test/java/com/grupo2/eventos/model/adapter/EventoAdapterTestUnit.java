@@ -91,7 +91,7 @@ public class EventoAdapterTestUnit {
 	@Test
 	void shouldReturnsEventoDtoNotNull() {
 
-		assertThat(eventoAdapter.EventoToDto(evento)).isNotNull();
+		assertThat(eventoAdapter.eventoToDto(evento)).isNotNull();
 	}
 
 	@Test
@@ -100,13 +100,13 @@ public class EventoAdapterTestUnit {
 		EventoDto eventoDtoCompleto = new EventoDto(ID_EVENTO, NOMBRE_EVENTO, DESCRIPCION_CORTA, FOTO, FECHA, HORA,
 				PRECIOS, POLITICA, NOMBRE_RECINTO, CIUDAD, DIRECCION, AFORO, GENERO);
 
-		assertThat(eventoAdapter.EventoToDto(evento)).isEqualTo(eventoDtoCompleto);
+		assertThat(eventoAdapter.eventoToDto(evento)).isEqualTo(eventoDtoCompleto);
 	}
 
 	@Test
 	void shouldReturnEventoDtoListNotNull() {
 
-		assertThat(eventoAdapter.EventoToDto(eventos)).isNotNull();
+		assertThat(eventoAdapter.eventoToDto(eventos)).isNotNull();
 	}
 
 	@Test
@@ -118,7 +118,7 @@ public class EventoAdapterTestUnit {
 		eventosDto.add(eventoDtoCompleto);
 		eventosDto.add(eventoDtoCompleto);
 
-		assertThat(eventoAdapter.EventoToDto(eventos)).isEqualTo(eventosDto);
+		assertThat(eventoAdapter.eventoToDto(eventos)).isEqualTo(eventosDto);
 	}
 
 }
