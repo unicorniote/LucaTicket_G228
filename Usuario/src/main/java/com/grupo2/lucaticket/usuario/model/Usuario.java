@@ -20,6 +20,7 @@ import java.time.LocalDate;
  * @Date 06/10/2022
  */
 @Data
+@Table(name = "usuario")
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(name = "Usuario", description = "Entidad que representa el modelo de datos de un usuario")
