@@ -49,7 +49,7 @@ import java.util.List;
 @RestController
 @Validated
 @RequestMapping("/eventos")
-@Tag(name="Student Controller", description = "Listado de endpoints relacionados con la entidad Evento")
+@Tag(name="Evento Controller", description = "Listado de endpoints relacionados con la entidad Evento")
 public class EventosController {
 
 	private static final Logger logger = LoggerFactory.getLogger(EventosController.class);
@@ -60,9 +60,6 @@ public class EventosController {
 	
 	@Autowired
 	private EventoAdapterI eventoAdapter;
-	
-	@Autowired 
-	private Evento evento;
 
 	
 	/**
@@ -86,8 +83,6 @@ public class EventosController {
 					schema = @Schema(implementation = Evento.class))}),
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content)})
-	
-	
 	@PostMapping("/add")
 	public ResponseEntity<?> addEvento(@Valid @RequestBody Evento evento){
 
@@ -121,8 +116,7 @@ public class EventosController {
 					@Content(mediaType = "application/json",
 					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "400", description = "No existen eventos en la bbdd", content = @Content)})
-	
-	@GetMapping("/listar")
+	@GetMapping ("/listar")
 	public Collection<EventoDto> getEventos() {
 		logger.info("----------Buscando eventos");
 		Collection<Evento> eventos = eventosService.findAll();
