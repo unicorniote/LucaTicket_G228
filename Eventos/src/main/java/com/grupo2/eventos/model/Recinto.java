@@ -2,9 +2,12 @@ package com.grupo2.eventos.model;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.FieldType;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -33,23 +36,30 @@ public class Recinto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	@MongoId(FieldType.OBJECT_ID)
+	@Id
+	private String _id;
+	
+	@NotNull
 	@Schema(name = "ID", description = "Identificador númerico del recinto")
 	private int ID;
 	
-	@Schema(name = "nomRecinto", description = "Nombre del recinto")
+	@NotNull
+	@NotEmpty
 	private String nomRecinto;
 	
-	@Schema(name = "ciudad", description = "Ciudad donde se encuentra el recinto")
+	@NotNull
+	@NotEmpty
 	private String ciudad;
 	
-	@Schema(name = "direccion", description = "Dirección del recinto")
+	@NotNull
+	@NotEmpty
 	private String direccion;
 	
-	@Schema(name = "tipo", description = "Tipo de recinto (cubierto, descubierto, etc.")
 	private String tipo;
 	
-	@Schema(name = "aforo", description = "Máximo aforo")
+	@NotNull(message = "El aforo no puede estar vacío")
+	@Positive(message = "El aforo debe ser positivo")
+	@NotEmpty
 	private int aforo;
 	
 }
