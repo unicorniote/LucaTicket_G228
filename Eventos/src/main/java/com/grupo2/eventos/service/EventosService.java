@@ -1,5 +1,7 @@
 package com.grupo2.eventos.service;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,11 +10,16 @@ import com.grupo2.eventos.repository.EventosRepositoryI;
 
 
 /**
- * Descripción de la clase:
- * Clase EventosService encargada de  llamar a los métodos
+ * @Project LucaTicket
+ * 
+ * @Classname EventosService
+ * 
+ * @author Grupo 2 - Lamia
  *
- * @author Lamia
- * @version 06/10/2022
+ * @date 06/10/2022
+ * 
+ * @since 1.0
+ *
  */
 
 @Service
@@ -24,9 +31,13 @@ public class EventosService implements EventosServiceI{
 	/**
 	* Descripción del método:
 	* Método que guarda los Eventos
-	* @param  
+	* 
+	* @param  evento
+	* 
 	* @return repositorio eventos
+	* 
 	* @author Lamia
+	* 
 	* @version 1.0
 	*/
 	
@@ -36,4 +47,24 @@ public class EventosService implements EventosServiceI{
 		
 		
 	}
+
+	
+	/**
+	* Método findAll():
+	* Lista todos los eventos existentes
+	* 
+	* @return repo.finAll()
+	* 
+	* @author Grupo 2 - Tamara Alvarez
+	* 
+	* @version 1.0
+	*/
+	
+	@Override
+	public Collection<Evento> findAll() {
+		return repo.findAll();
+	}
+	
+	
+	
 }
