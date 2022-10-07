@@ -89,18 +89,18 @@ public class UsuarioController {
 	
 	
 	/**
-	* Método findById - Busca un evento por su Id.
+	* Método findById - Busca un usuario por su Id.
 	* 
-	* @return Devuelve un objeto eventoDTO
+	* @return Devuelve un objeto usuarioDTO
 	* 
-	* @author Grupo 2 - Tamara Alvarez
+	* @author Grupo 2 - Lamia
 	* 
 	* @version 1.0
 	*/
 	
-	@Operation(summary = "Listar los eventos",
-			description = "Lista todo los eventos existentes en la BBDD de MongoDB",
-			tags={"Evento"})
+	@Operation(summary = "Listar los usuarios",
+			description = "Lista todo los eventos existentes en la BBDD de MySql",
+			tags={"Usuario"})
 
 	@ApiResponses(value= {
 			@ApiResponse(responseCode = "201",
@@ -108,11 +108,11 @@ public class UsuarioController {
 			content = {
 					@Content(mediaType = "application/json",
 					schema = @Schema(implementation = Usuario.class))}),
-			@ApiResponse(responseCode = "400", description = "No existen eventos en la bbdd", content = @Content)})
+			@ApiResponse(responseCode = "400", description = "No existen usuarios en la bbdd", content = @Content)})
 	@GetMapping ("/listar")
 	public Collection<UsuarioDto> getEventos() {
 		logger.info("Buscando usuario");
-		Collection<Usuario> eventos = usuarioService.findAll();
+		Collection<Usuario> usuario = usuarioService.findAll();
 		return usuarioAdapter.usuarioToDto((List<Usuario>)usuario);
 	}
 	
