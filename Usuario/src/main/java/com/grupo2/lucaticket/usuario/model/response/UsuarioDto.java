@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(name = "UsuarioResponse", description = "DTO de Usuario")
-public class UsuarioResponse implements Serializable {
+@Schema(name = "UsuarioDto", description = "DTO de Usuario")
+public class UsuarioDto implements Serializable {
 
     @Schema(name = "id", description = "Identificador numerico del usuario")
     private int id;

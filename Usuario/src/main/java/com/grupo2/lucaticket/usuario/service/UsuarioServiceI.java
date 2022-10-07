@@ -5,15 +5,16 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import com.grupo2.lucaticket.usuario.controller.UsuarioDto;
+
 import com.grupo2.lucaticket.usuario.model.Usuario;
+import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
 
 public interface UsuarioServiceI {
 
-	public Usuario save(@Valid Usuario usuario);
+    public Usuario save(@Valid Usuario usuario);
 
-	public Collection<Usuario> findAll();
+    public Collection<Usuario> findAll();
 
-	 //public Collection<UsuarioDto> usuarioToDto(List<Usuario> usuario);
+    public Collection<UsuarioDto> usuarioToDto(List<Usuario> usuario);
 
 }

@@ -1,7 +1,7 @@
 package com.grupo2.lucaticket.usuario.model.adapter;
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
-import com.grupo2.lucaticket.usuario.model.response.UsuarioResponse;
+import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -27,9 +27,9 @@ public class UsuarioAdapter implements UsuarioAdapterI {
      * @since 1.0
      */
     @Override
-    public UsuarioResponse usuarioToDto(Usuario usuario) {
+    public UsuarioDto usuarioToDto(Usuario usuario) {
         logger.info("Mapeando objeto entidad Usuario a DTO de Usuario...");
-        UsuarioResponse response = new UsuarioResponse();
+        UsuarioDto response = new UsuarioDto();
         response.setId(usuario.getId());
         response.setNombre(usuario.getNombre());
         response.setApellido(usuario.getApellido());
@@ -46,7 +46,7 @@ public class UsuarioAdapter implements UsuarioAdapterI {
      * @since 1.0
      */
     @Override
-    public List<UsuarioResponse> usuarioToDto(List<Usuario> usuarios) {
+    public List<UsuarioDto> usuarioToDto(List<Usuario> usuarios) {
         logger.info("Mapeando lista de entidades Usuario a lista de DTO de Usuarios");
         return usuarios.stream().map(this::usuarioToDto).toList();
     }
