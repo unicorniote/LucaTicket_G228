@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 @Document(collection = "Recintos")
-public class Recinto implements Serializable{
+public class Recinto {
 	
 	@Id
 	private String _id;
