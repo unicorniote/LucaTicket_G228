@@ -27,7 +27,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Schema(name = "Usuario", description = "Entidad que representa el modelo de datos de un usuario")
 @Entity
-public class Usuario implements Serializable {
+public class Usuario{
 
     @Id
     @Schema(name = "id", description = "Identificador numerico del usuario")

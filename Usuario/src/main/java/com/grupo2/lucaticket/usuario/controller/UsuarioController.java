@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
+import com.grupo2.lucaticket.usuario.model.adapter.UsuarioAdapter;
 import com.grupo2.lucaticket.usuario.service.UsuarioServiceI;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,7 +54,7 @@ public class UsuarioController {
 	private UsuarioServiceI usuarioService;
 	
 	@Autowired
-	private UsuarioServiceI usuarioAdapter;
+	private UsuarioAdapter usuarioAdapter;
 	
 	/**
 	* Descripción del método:

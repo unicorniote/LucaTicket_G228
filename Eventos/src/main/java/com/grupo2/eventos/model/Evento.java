@@ -40,7 +40,7 @@ import lombok.NoArgsConstructor;
 @Schema(name = "Evento", description = "Entidad que representa el model de datos de un evento.")
 
 @Document(collection = "eventos")
-public class Evento implements Serializable {
+public class Evento {
 
 	private static final long serialVersionUID = 1L;
 

@@ -32,7 +32,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "recintos")
-public class Recinto implements Serializable{
+public class Recinto{
 
 	private static final long serialVersionUID = 1L;
 	
