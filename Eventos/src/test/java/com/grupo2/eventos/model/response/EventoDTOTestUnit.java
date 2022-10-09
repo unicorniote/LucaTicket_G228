@@ -11,6 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.grupo2.eventos.model.Evento;
+
 @ExtendWith(MockitoExtension.class)
 public class EventoDTOTestUnit {
 
@@ -32,7 +34,24 @@ public class EventoDTOTestUnit {
 	private final String DIRECCION = "LUCATIC";
 	private final int AFORO = 100;
 	private final String GENERO = "Genero del evento";
+	
+	void setUp() {
+	//EventoDTO
+	evento=new EventoDto();
+	evento.setId(ID);
+	evento.setNombreEvento(NOMBRE_EVENTO);
+	evento.setDescripcionEvento(DESCRIPCION_EVENTO);
+	evento.setFoto(FOTO);
+	evento.setFechaEvento(FECHA);
+	evento.setHoraEvento(HORA);
+	evento.setRangoPreciosEvento(PRECIOS);
+	evento.setPolitcaAcceso(POLITICA);
+	evento.setCiudadEvento(CIUDAD);
+	evento.setDireccionEvento(DIRECCION);
+	evento.setAforoEvento(AFORO);
+	evento.setGenero(GENERO);
 
+	}
 	@Test
 	void eventDtoExists() {
 
@@ -173,12 +192,10 @@ public class EventoDTOTestUnit {
 
 	void eventDtoShouldBeCreated() {
 
-		// Given
-		EventoDto eventoCompleto = new EventoDto(ID, NOMBRE_EVENTO, DESCRIPCION_EVENTO, FOTO, FECHA, HORA, PRECIOS,
-				POLITICA, NOMBRE_RECINTO, CIUDAD, DIRECCION, AFORO, GENERO);
-
+		
+		
 		// Then
-		assertThat(eventoCompleto).isNotNull();
+		assertThat(evento).isNotNull();
 
 	}
 

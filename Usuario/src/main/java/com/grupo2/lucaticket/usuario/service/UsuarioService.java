@@ -41,7 +41,7 @@ public class UsuarioService implements UsuarioServiceI{
     }
     
     @Override
-    public void deleteById(Long id) {
-    	
+    public void deleteById(String id) {
+    	repo.deleteById(id);
     }
 }
