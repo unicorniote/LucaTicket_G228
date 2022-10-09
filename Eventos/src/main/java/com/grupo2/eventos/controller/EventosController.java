@@ -124,7 +124,6 @@ public class EventosController {
 		logger.info("----------Buscando eventos");
 		List<EventoDto> eventos = eventoAdapter.eventoToDto(eventosService.findAll());
 		logger.info("Eventos ->: " + eventos.toString());
-		//return eventoAdapter.eventoToDto((List<Evento>)eventos);
 		return eventos;
 	}
 	
@@ -132,9 +131,4 @@ public class EventosController {
 	public void deleteEvento(@PathVariable String id) {
 		eventosService.deleteById(id);
 	}
-	
 }
-	
-
-
-
