@@ -1,22 +1,16 @@
 package com.grupo2.eventos.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.awt.PageAttributes.MediaType;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -163,5 +157,23 @@ public class EventosControllerTestUnit {
 				.andExpect(status().isOk());		
 		
 	}
+	
+	
+	/**
+	 * Terminar de arreglar
+	 * 
+	@Test
+	public void cuandoArrayListVacio_entoncesDevuelve400() throws Exception {
+		
+		logger.info("Aplicando test que devuelve 400");
+		
+		List<Evento> eventosVacio = new ArrayList<Evento>();
+		
+		when(eventosService.findAll()).thenReturn(eventosVacio);
+		
+		mockMvc.perform(get("/eventos/listar")
+				.contentType("application/json"))
+				.andExpect(status().isOk());
+	}*/
 
 }
