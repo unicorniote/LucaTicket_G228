@@ -64,8 +64,6 @@ public class UsuarioController {
 	* @author Lamia
 	* @version 1.0
 	*/
-	
-	
 	@Operation(summary = "Añadir un usuario al archivo JSON",
 			description = "Dado un usuario, se añade al archivo JSON que conforma la BBDD de MongoDB",
 			tags={"Usuario"})
@@ -99,7 +97,6 @@ public class UsuarioController {
 	* 
 	* @version 1.0
 	*/
-	
 	@Operation(summary = "Listar los usuarios",
 			description = "Lista todo los eventos existentes en la BBDD de MySql",
 			tags={"Usuario"})
@@ -116,15 +113,4 @@ public class UsuarioController {
 		logger.info("Buscando usuario");
 		return usuarioAdapter.usuarioToDto((List<Usuario>) usuarioService.findAll());
 	}
-	
-	
-	
-	
-	
-
-
 }
-
-
-
-
