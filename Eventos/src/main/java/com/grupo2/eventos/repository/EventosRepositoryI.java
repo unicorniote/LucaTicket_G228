@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
 
 public interface EventosRepositoryI extends MongoRepository<Evento, Integer> {
 	@Query(value="{'_id' : $0}", delete = true)
-	public Evento deleteById (String id);
+	public void deleteById (String id);
 
 	
 }
