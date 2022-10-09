@@ -14,9 +14,6 @@ package com.grupo2.eventos.controller.error;
 */
 
 
-
-
-
 public class EventoNotFoundException  extends RuntimeException{
 	
 	

@@ -55,19 +55,19 @@ public class EventoAdapterTestUnit {
 		recinto = new Recinto();
 
 		// RECINTO
-		recinto.setID(ID_RECINTO);
-		recinto.setNomRecinto(NOMBRE_RECINTO);
+		recinto.setID(String.valueOf(ID_RECINTO));
+		recinto.setNombreRecinto(NOMBRE_RECINTO);
 		recinto.setCiudad(CIUDAD);
 		recinto.setDireccion(DIRECCION);
 		recinto.setTipo(TIPO);
-		recinto.setAforo(AFORO);
+		recinto.setAforo(String.valueOf(AFORO));
 
 		// EVENTO
 		evento.setID(ID_EVENTO);
 		evento.setNombre(NOMBRE_EVENTO);
 		evento.setDescripCorta(DESCRIPCION_CORTA);
 		evento.setDescripExtendida(DESCRIPCION_LARGA);
-		evento.setFoto(FOTO);
+		evento.setFoto(String.valueOf(FOTO));
 		evento.setFechaEvento(FECHA);
 		evento.setHoraEvento(HORA);
 		evento.setRangoPrecio(PRECIOS);

@@ -61,6 +61,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	 */
 
 	@Override
+	
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		logger.info("------ handleHttpRequestMethodNotSupported()");
