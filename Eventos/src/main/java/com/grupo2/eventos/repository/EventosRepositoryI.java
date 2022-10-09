@@ -3,6 +3,7 @@ package com.grupo2.eventos.repository;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.grupo2.eventos.model.Evento;
+import org.springframework.stereotype.Repository;
 
 /**
 * @Project LucaTicket
@@ -17,8 +18,8 @@ import com.grupo2.eventos.model.Evento;
 *
 */
 
-
-public interface EventosRepositoryI extends MongoRepository<Evento, Integer> {
+@Repository
+public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 
 	
 }

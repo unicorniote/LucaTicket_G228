@@ -40,8 +40,8 @@ public class UsuarioService implements UsuarioServiceI{
         return repo.findAll();
     }
 
-    @Override
-    public Collection<UsuarioDto> usuarioToDto(List<Usuario> usuario) {
-        return adapter.usuarioToDto(usuario);
-    }
+//    @Override
+//    public Collection<UsuarioDto> usuarioToDto(List<Usuario> usuario) {
+//        return adapter.usuarioToDto(usuario);
+//    }
 }

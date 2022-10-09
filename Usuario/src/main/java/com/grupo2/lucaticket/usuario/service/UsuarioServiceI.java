@@ -15,6 +15,6 @@ public interface UsuarioServiceI {
 
     public Collection<Usuario> findAll();
 
-    public Collection<UsuarioDto> usuarioToDto(List<Usuario> usuario);
+//    public Collection<UsuarioDto> usuarioToDto(List<Usuario> usuario);
 
 }

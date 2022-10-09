@@ -30,6 +30,6 @@ public class UsuarioDto implements Serializable {
     private String pass;
 
     @Schema(name = "fechaAlta", description = "Fecha de cuando el usuario se registro en el sistema del usuario")
-    private LocalDate fechaAlta;
+    private LocalDate fechaalta;
 
 }

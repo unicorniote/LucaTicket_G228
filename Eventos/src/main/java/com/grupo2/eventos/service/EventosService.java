@@ -2,18 +2,11 @@ package com.grupo2.eventos.service;
 
 import com.grupo2.eventos.model.Evento;
 import com.grupo2.eventos.repository.EventosRepositoryI;
-import java.util.Collection;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.grupo2.eventos.model.Evento;
-
-import com.grupo2.eventos.repository.EventosRepositoryI;
-
-
-
-
 
 
 /**
@@ -59,18 +52,16 @@ public class EventosService implements EventosServiceI{
 
 	
 	/**
-	* Método findAll():
-	* Lista todos los eventos existentes
-	* 
-	* @return repo.finAll()
-	* 
-	* @author Grupo 2 - Tamara Alvarez
-	* 
-	* @version 1.0
-	*/
+	 * Método findAll():
+	 * Lista todos los eventos existentes
+	 *
+	 * @return repo.finAll()
+	 * @author Grupo 2 - Tamara Alvarez
+	 * @version 1.0
+	 */
 	
 	@Override
-	public Collection<Evento> findAll() {
+	public List<Evento> findAll() {
 		return repo.findAll();
 	}
 	

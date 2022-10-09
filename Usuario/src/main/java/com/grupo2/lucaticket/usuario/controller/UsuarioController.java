@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.grupo2.lucaticket.usuario.model.adapter.UsuarioAdapterI;
 import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +54,7 @@ public class UsuarioController {
 	private UsuarioServiceI usuarioService;
 	
 	@Autowired
-	private UsuarioServiceI usuarioAdapter;
+	private UsuarioAdapterI usuarioAdapter;
 	
 	/**
 	* Descripción del método:
@@ -113,8 +114,7 @@ public class UsuarioController {
 	@GetMapping ("/listar")
 	public Collection<UsuarioDto> getEventos() {
 		logger.info("Buscando usuario");
-		Collection<Usuario> usuario = usuarioService.findAll();
-		return usuarioAdapter.usuarioToDto((List<Usuario>)usuario);
+		return usuarioAdapter.usuarioToDto((List<Usuario>) usuarioService.findAll());
 	}
 	
 	
