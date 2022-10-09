@@ -30,6 +30,7 @@ public class EventoAdapterTestUnit {
 
 	Evento evento;
 	Recinto recinto;
+	EventoDto eventoDtoCompleto;
 	List<Evento> eventos = new ArrayList<>();
 
 	private final int ID_EVENTO = 1;
@@ -53,6 +54,7 @@ public class EventoAdapterTestUnit {
 	void setUp() {
 		evento = new Evento();
 		recinto = new Recinto();
+		eventoDtoCompleto = new EventoDto();
 
 		// RECINTO
 		recinto.setID(ID_RECINTO);
@@ -78,6 +80,23 @@ public class EventoAdapterTestUnit {
 		eventos.add(evento);
 		eventos.add(evento);
 
+		//EventoDTO
+		
+		
+		eventoDtoCompleto.setId(ID_EVENTO);
+		eventoDtoCompleto.setNombreEvento(CIUDAD);
+		eventoDtoCompleto.setDescripcionEvento(DESCRIPCION_CORTA);
+		eventoDtoCompleto.setFoto(FOTO);
+		eventoDtoCompleto.setFechaEvento(FECHA);
+		eventoDtoCompleto.setHoraEvento(HORA);
+		eventoDtoCompleto.setRangoPreciosEvento(PRECIOS);
+		eventoDtoCompleto.setPolitcaAcceso(POLITICA);
+		eventoDtoCompleto.setNombreEvento(CIUDAD);
+		eventoDtoCompleto.setCiudadEvento(CIUDAD);
+		eventoDtoCompleto.setDireccionEvento(DIRECCION);
+		eventoDtoCompleto.setAforoEvento(AFORO);
+		eventoDtoCompleto.setGenero(GENERO);
+		
 	}
 
 	@Test
@@ -97,9 +116,7 @@ public class EventoAdapterTestUnit {
 	@Test
 	void shouldReturnsEventoDtoComplete() {
 
-		EventoDto eventoDtoCompleto = new EventoDto(ID_EVENTO, NOMBRE_EVENTO, DESCRIPCION_CORTA, FOTO, FECHA, HORA,
-				PRECIOS, POLITICA, NOMBRE_RECINTO, CIUDAD, DIRECCION, AFORO, GENERO);
-
+		
 		assertThat(eventoAdapter.eventoToDto(evento)).isEqualTo(eventoDtoCompleto);
 	}
 
@@ -111,9 +128,7 @@ public class EventoAdapterTestUnit {
 
 	@Test
 	void shouldReturnsEventoDtoList() {
-
-		EventoDto eventoDtoCompleto = new EventoDto(ID_EVENTO, NOMBRE_EVENTO, DESCRIPCION_CORTA, FOTO, FECHA, HORA,
-				PRECIOS, POLITICA, NOMBRE_RECINTO, CIUDAD, DIRECCION, AFORO, GENERO);
+		
 		List<EventoDto> eventosDto = new ArrayList<>();
 		eventosDto.add(eventoDtoCompleto);
 		eventosDto.add(eventoDtoCompleto);
