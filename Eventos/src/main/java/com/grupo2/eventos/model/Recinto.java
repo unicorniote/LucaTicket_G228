@@ -8,6 +8,7 @@ import javax.validation.constraints.Positive;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.stereotype.Component;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Document(collection = "Recintos")
-public class Recinto implements Serializable{
+public class Recinto{
 	
 	@Id
 	private String _id;

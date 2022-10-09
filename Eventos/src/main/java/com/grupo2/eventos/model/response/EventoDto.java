@@ -17,8 +17,6 @@ import lombok.NoArgsConstructor;
  * @version 1.0: 06/10/2022
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Schema(name = "Evento DTO", description = "Objeto de tipo DTO de un Evento")
 public class EventoDto implements Serializable {
 
