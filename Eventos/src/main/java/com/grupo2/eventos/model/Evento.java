@@ -2,6 +2,7 @@ package com.grupo2.eventos.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Positive;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,47 +38,39 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Schema(name = "Evento", description = "Entidad que representa el model de datos de un evento.")
 
-@Document(collection = "eventos")
-public class Evento {
+@Document(collection = "Eventos")
+public class Evento{
+
 
 	@Id
 	private String _id;
-	
-	@NotNull(message = "El nombre no debe estar vacío")
-	@Schema(name = "ID", description = "Identificador númerico del evento")
-	private int ID;
 
 	@NotNull
 	private String nombre;
 
 	@NotNull
-	private String descripCorta;
+	private String descripcionCorta;
 
 	@NotNull
-	private String descripExtendida;
+	private String descripcionLarga;
 
-	private boolean foto;
+	private String foto;
 
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Future(message = "La fecha no puede ser pasada")
 	@NotNull(message = "La fecha no debe estar vacía")
-	private LocalDate fechaEvento;
-
-	@DateTimeFormat(pattern = "HH:mm")
-	@NotNull
-	private LocalTime horaEvento;
+	private LocalDateTime fechaEvento;
 
 	@NotEmpty
 	@Schema(name = "rangoPrecio", description = "Precio del evento")
-	private Map<String, Double> rangoPrecio = new HashMap<>();
+	private Map<String, Double> precio;
 
 
-	private String politicaAcceso;
+	private String politaAcceso;
 
 	@NotNull
+	@DocumentReference(lazy = true)
 	private Recinto recinto;
 
 	@Indexed

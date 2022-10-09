@@ -30,27 +30,21 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@Document(collection = "recintos")
-public class Recinto {
 
+@Document(collection = "Recintos")
+public class Recinto implements Serializable{
+	
 	@Id
 	private String _id;
 	
 	@NotNull
-	@Schema(name = "ID", description = "Identificador númerico del recinto")
-	private int ID;
-	
-	@NotNull
 	@NotEmpty
-	private String nomRecinto;
+	private String nombreRecinto;
 	
 	@NotNull
 	@NotEmpty
 	private String ciudad;
-	
-	@NotNull
-	@NotEmpty
+
 	private String direccion;
 	
 	private String tipo;
@@ -58,6 +52,6 @@ public class Recinto {
 	@NotNull(message = "El aforo no puede estar vacío")
 	@Positive(message = "El aforo debe ser positivo")
 	@NotEmpty
-	private int aforo;
+	private Integer aforo;
 	
 }

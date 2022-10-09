@@ -37,15 +37,15 @@ public class EventoAdapter implements EventoAdapterI {
 		logger.info("Mapeando objeto entidad Evento a DTO de Evento...");
 		EventoDto eventoDto = new EventoDto();
 
-		eventoDto.setId(evento.getID());
-		eventoDto.setNombreEvento(evento.getNombre());
-		eventoDto.setDescripcionEvento(evento.getDescripCorta());
-		eventoDto.setFoto(evento.isFoto());
-		eventoDto.setFechaEvento(evento.getFechaEvento());
-		eventoDto.setHoraEvento(evento.getHoraEvento());
-		eventoDto.setRangoPreciosEvento(evento.getRangoPrecio());
-		eventoDto.setPolitcaAcceso(evento.getPoliticaAcceso());
-		eventoDto.setRecintoEvento(evento.getRecinto().getNomRecinto());
+
+		eventoDto.setNombre(evento.getNombre());
+		eventoDto.setDescripcionEvento(evento.getDescripcionCorta());
+		eventoDto.setFoto(evento.getFoto());
+		eventoDto.setFechaEvento(evento.getFechaEvento().toLocalDate());
+		eventoDto.setHoraEvento(evento.getFechaEvento().toLocalTime());
+		eventoDto.setRangoPreciosEvento(evento.getPrecio());
+		eventoDto.setPolitcaAcceso(evento.getPolitaAcceso());
+		eventoDto.setRecintoEvento(evento.getRecinto().getNombreRecinto());
 		eventoDto.setCiudadEvento(evento.getRecinto().getCiudad());
 		eventoDto.setDireccionEvento(evento.getRecinto().getDireccion());
 		eventoDto.setAforoEvento(evento.getRecinto().getAforo());

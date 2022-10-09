@@ -14,7 +14,6 @@ public interface UsuarioServiceI {
     public Usuario save(@Valid Usuario usuario);
 
     public Collection<Usuario> findAll();
-
-    public Collection<UsuarioDto> usuarioToDto(List<Usuario> usuario);
-
+    
+    public void deleteById (Long id);
 }

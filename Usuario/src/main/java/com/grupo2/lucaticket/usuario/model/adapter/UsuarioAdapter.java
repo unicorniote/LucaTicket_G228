@@ -35,7 +35,7 @@ public class UsuarioAdapter implements UsuarioAdapterI {
         response.setApellido(usuario.getApellido());
         response.setEmail(usuario.getEmail());
         response.setPass(usuario.getPass());
-        response.setFechaAlta(usuario.getFechaAlta());
+        response.setFechaalta(usuario.getFechaalta());
         return response;
     }
 

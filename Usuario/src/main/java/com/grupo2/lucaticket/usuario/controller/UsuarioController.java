@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.grupo2.lucaticket.usuario.model.adapter.UsuarioAdapterI;
 import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,7 +54,7 @@ public class UsuarioController {
 	private UsuarioServiceI usuarioService;
 	
 	@Autowired
-	private UsuarioServiceI usuarioAdapter;
+	private UsuarioAdapterI usuarioAdapter;
 	
 	/**
 	* Descripción del método:
@@ -63,8 +64,6 @@ public class UsuarioController {
 	* @author Lamia
 	* @version 1.0
 	*/
-	
-	
 	@Operation(summary = "Añadir un usuario al archivo JSON",
 			description = "Dado un usuario, se añade al archivo JSON que conforma la BBDD de MongoDB",
 			tags={"Usuario"})
@@ -78,7 +77,7 @@ public class UsuarioController {
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content)})
 	@PostMapping("/add")
-	public ResponseEntity<?> addEvento(@Valid @RequestBody Usuario usuario){
+	public ResponseEntity<?> addEvento( @RequestBody Usuario usuario){
 
 		logger.info("añadiendo Usuario");
 		usuario = this.usuarioService.save(usuario);
@@ -98,7 +97,6 @@ public class UsuarioController {
 	* 
 	* @version 1.0
 	*/
-	
 	@Operation(summary = "Listar los usuarios",
 			description = "Lista todo los eventos existentes en la BBDD de MySql",
 			tags={"Usuario"})
@@ -113,18 +111,6 @@ public class UsuarioController {
 	@GetMapping ("/listar")
 	public Collection<UsuarioDto> getEventos() {
 		logger.info("Buscando usuario");
-		Collection<Usuario> usuario = usuarioService.findAll();
-		return usuarioAdapter.usuarioToDto((List<Usuario>)usuario);
+		return usuarioAdapter.usuarioToDto((List<Usuario>) usuarioService.findAll());
 	}
-	
-	
-	
-	
-	
-
-
 }
-
-
-
-

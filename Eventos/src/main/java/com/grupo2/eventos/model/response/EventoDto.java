@@ -22,14 +22,12 @@ public class EventoDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "ID", description = "Identificación de un evento")
-    private int id;
     @Schema(name = "Nombre", description = "Nombre del evento")
-    private String nombreEvento;
+    private String nombre;
     @Schema(name = "Descripción", description = "Descripción del evento")
     private String descripcionEvento;
     @Schema(name = "Foto", description = "Foto del evento")
-    private boolean foto;
+    private String foto;
     @Schema(name = "Fecha", description = "Fecha del evento")
     private LocalDate fechaEvento;
     @Schema(name = "Hora", description = "Hora del evento")
@@ -45,7 +43,7 @@ public class EventoDto implements Serializable {
     @Schema(name = "Dirección", description = "Dirección del recinto del evento")
     private String direccionEvento;
     @Schema(name = "Aforo", description = "Límite de aforo del recinto del evento")
-    private int aforoEvento;
+    private Integer aforoEvento;
     @Schema(name = "Género", description = "Género del evento")
     private String genero;
 

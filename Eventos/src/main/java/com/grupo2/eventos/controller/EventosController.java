@@ -16,7 +16,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,12 +86,13 @@ public class EventosController {
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content)})
 	@PostMapping("/add")
-	public ResponseEntity<?> addEvento(@Valid @RequestBody Evento evento){
+	public ResponseEntity<?> addEvento(@RequestBody Evento evento){
 
 		logger.info("añadiendo Evento");
+		System.out.println(evento);
 		evento = this.eventosService.save(evento);
 		logger.info("El evento se ha añadido correctamente");
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(evento.getID()).toUri();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(evento.get_id()).toUri();
 
 		return ResponseEntity.created(location).build();
 	}
@@ -117,16 +120,15 @@ public class EventosController {
 					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "400", description = "No existen eventos en la bbdd", content = @Content)})
 	@GetMapping ("/listar")
-	public Collection<EventoDto> getEventos() {
+	public List<EventoDto> getEventos() {
 		logger.info("----------Buscando eventos");
-		Collection<Evento> eventos = eventosService.findAll();
-		return eventoAdapter.eventoToDto((List<Evento>)eventos);
+		List<EventoDto> eventos = eventoAdapter.eventoToDto(eventosService.findAll());
+		logger.info("Eventos ->: " + eventos.toString());
+		return eventos;
 	}
 	
-	
-	
-	
-	
-
-
+	@DeleteMapping("/{id}")
+	public void deleteEvento(@PathVariable String id) {
+		eventosService.deleteById(id);
+	}
 }

@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -27,7 +26,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Schema(name = "Usuario", description = "Entidad que representa el modelo de datos de un usuario")
 @Entity
-public class Usuario implements Serializable {
+public class Usuario{
 
     @Id
     @Schema(name = "id", description = "Identificador numerico del usuario")
@@ -52,6 +51,6 @@ public class Usuario implements Serializable {
     private String pass;
 
     @Schema(name = "fechaAlta", description = "Fecha de cuando el usuario se registro en el sistema del usuario")
-    private LocalDate fechaAlta;
+    private LocalDate fechaalta;
 
 }
