@@ -66,5 +66,21 @@ public class EventosService implements EventosServiceI{
 	}
 	
 	
+	/**
+	* Método deleteById():
+	* Eliminar por Id
+	* 
+	* @return repo.deleteById()
+	* 
+	* @author Grupo 2 - Lamia
+	* 
+	* @version 1.0
+	*/
 	
+	@Override
+    public void deleteById(String id) {
+		repo.deleteById(id);
+    	
+    }
+
 }
