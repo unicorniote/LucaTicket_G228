@@ -44,4 +44,9 @@ public class UsuarioService implements UsuarioServiceI{
     public Collection<UsuarioDto> usuarioToDto(List<Usuario> usuario) {
         return adapter.usuarioToDto(usuario);
     }
+    
+    @Override
+    public void deleteById(Long id) {
+    	
+    }
 }

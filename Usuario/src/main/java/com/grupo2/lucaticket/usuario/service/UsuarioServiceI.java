@@ -16,5 +16,6 @@ public interface UsuarioServiceI {
     public Collection<Usuario> findAll();
 
     public Collection<UsuarioDto> usuarioToDto(List<Usuario> usuario);
-
+    
+    public void deleteById (Long id);
 }

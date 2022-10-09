@@ -1,6 +1,7 @@
 package com.grupo2.eventos.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import com.grupo2.eventos.model.Evento;
 
@@ -9,7 +10,7 @@ import com.grupo2.eventos.model.Evento;
 *
 * @Classname EventosRepository
 *
-* @author Grupo 2 -Carlos Jesús Pérez Márquez
+* @author Grupo 2 -Carlos Jesús Pérez Márquez y Lamia
 *
 * @date 06/10/2022
 *
@@ -19,6 +20,8 @@ import com.grupo2.eventos.model.Evento;
 
 
 public interface EventosRepositoryI extends MongoRepository<Evento, Integer> {
+	@Query(value="{'_id' : $0}", delete = true)
+	public Evento deleteById (String id);
 
 	
 }

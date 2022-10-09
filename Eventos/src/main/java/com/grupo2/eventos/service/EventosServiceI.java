@@ -10,4 +10,6 @@ public interface EventosServiceI {
 	
 	public Collection<Evento> findAll();
 
+	public void deleteById(String id);
+
 }
