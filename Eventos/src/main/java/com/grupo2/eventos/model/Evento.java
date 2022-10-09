@@ -40,9 +40,7 @@ import lombok.NoArgsConstructor;
 @Schema(name = "Evento", description = "Entidad que representa el model de datos de un evento.")
 
 @Document(collection = "eventos")
-public class Evento implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Evento {
 
 	@Id
 	private String _id;
@@ -72,7 +70,6 @@ public class Evento implements Serializable {
 	private LocalTime horaEvento;
 
 	@NotEmpty
-	@Positive
 	@Schema(name = "rangoPrecio", description = "Precio del evento")
 	private Map<String, Double> rangoPrecio = new HashMap<>();
 

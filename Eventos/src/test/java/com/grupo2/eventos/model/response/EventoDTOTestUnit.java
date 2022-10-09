@@ -171,11 +171,25 @@ public class EventoDTOTestUnit {
 
 	}
 
+	@Test
 	void eventDtoShouldBeCreated() {
 
 		// Given
-		EventoDto eventoCompleto = new EventoDto(ID, NOMBRE_EVENTO, DESCRIPCION_EVENTO, FOTO, FECHA, HORA, PRECIOS,
-				POLITICA, NOMBRE_RECINTO, CIUDAD, DIRECCION, AFORO, GENERO);
+		EventoDto eventoCompleto = new EventoDto();
+		eventoCompleto.setId(ID);
+		eventoCompleto.setNombreEvento(NOMBRE_EVENTO);
+		eventoCompleto.setDireccionEvento(DESCRIPCION_EVENTO);
+		eventoCompleto.setFoto(FOTO);
+		eventoCompleto.setFechaEvento(FECHA);
+		eventoCompleto.setHoraEvento(HORA);
+		eventoCompleto.setRangoPreciosEvento(PRECIOS);
+		eventoCompleto.setPolitcaAcceso(POLITICA);
+		eventoCompleto.setNombreEvento(NOMBRE_RECINTO);
+		eventoCompleto.setCiudadEvento(CIUDAD);
+		eventoCompleto.setDireccionEvento(DIRECCION);
+		eventoCompleto.setAforoEvento(AFORO);
+		eventoCompleto.setGenero(GENERO);
+		
 
 		// Then
 		assertThat(eventoCompleto).isNotNull();

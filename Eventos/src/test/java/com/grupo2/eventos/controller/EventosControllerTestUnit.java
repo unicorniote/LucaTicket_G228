@@ -1,6 +1,11 @@
 package com.grupo2.eventos.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -14,20 +19,16 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.grupo2.eventos.model.Evento;
 import com.grupo2.eventos.model.Recinto;
 import com.grupo2.eventos.model.adapter.EventoAdapter;
@@ -65,7 +66,7 @@ public class EventosControllerTestUnit {
 	private final String DESCRIPCION_CORTA = "Descripción corta del evento";
 	private final String DESCRIPCION_LARGA = "Descripción larga del evento";
 	private final boolean FOTO = true;
-	private final LocalDate FECHA = LocalDate.parse("2022-10-06");
+	private final LocalDate FECHA = LocalDate.parse("2023-10-06");
 	private final LocalTime HORA = LocalTime.parse("22:01:50");
 	private final Map<String, Double> PRECIOS = Map.of("General", 50.0, "VIP", 100.0);
 	private final String POLITICA = "No se adminten menores";
@@ -81,6 +82,7 @@ public class EventosControllerTestUnit {
 		evento = new Evento();
 		eventoNull = new Evento();
 		recinto = new Recinto();
+		objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
 		// RECINTO
 		recinto.setID(ID_RECINTO);
@@ -104,17 +106,20 @@ public class EventosControllerTestUnit {
 		evento.setGenero(GENERO);
 		
 		//EVENTONULL
-		evento.setID(ID_EVENTO);
-		evento.setNombre(NOMBRE_EVENTO_NULL);
-		evento.setDescripCorta(DESCRIPCION_CORTA);
-		evento.setDescripExtendida(DESCRIPCION_LARGA);
-		evento.setFoto(FOTO);
-		evento.setFechaEvento(FECHA);
-		evento.setHoraEvento(HORA);
-		evento.setRangoPrecio(PRECIOS);
-		evento.setPoliticaAcceso(POLITICA);
-		evento.setRecinto(recinto);
-		evento.setGenero(GENERO);
+		eventoNull.setID(ID_EVENTO);
+		eventoNull.setNombre(NOMBRE_EVENTO_NULL);
+		eventoNull.setDescripCorta(DESCRIPCION_CORTA);
+		eventoNull.setDescripExtendida(DESCRIPCION_LARGA);
+		eventoNull.setFoto(FOTO);
+		eventoNull.setFechaEvento(FECHA);
+		eventoNull.setHoraEvento(HORA);
+		eventoNull.setRangoPrecio(PRECIOS);
+		eventoNull.setPoliticaAcceso(POLITICA);
+		eventoNull.setRecinto(recinto);
+		eventoNull.setGenero(GENERO);
+		
+		eventos.add(evento);
+		eventos.add(eventoNull);
 	}
 		
 		
@@ -123,14 +128,16 @@ public class EventosControllerTestUnit {
 	 el tipo de contenido de solicitud es correcto*/
 	
 	@Test
-	public void cuandoEntradaValida_entoncesDevuelve200() throws Exception {
+	public void cuandoEntradaValida_entoncesDevuelve201() throws Exception {
 		
-		logger.info("Aplicando test que devuelve 200");
+		logger.info("Aplicando test que devuelve 201");
+		
+		when(eventosService.save(evento)).thenReturn(evento);
 		
 		mockMvc.perform(post("/eventos/add")
 				.content(objectMapper.writeValueAsString(evento))
 				.contentType("application/json"))
-				.andExpect(status().isOk());
+				.andExpect(status().isCreated());
 	}
 
 	@Test
@@ -142,6 +149,19 @@ public class EventosControllerTestUnit {
 				.content(objectMapper.writeValueAsString(eventoNull))
 				.contentType("application/json"))
 				.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void cuandoPideListarEventos_entoncesDevuelve200() throws Exception {
+		
+		logger.info("Aplicando test que devuelve 200");
+		
+		when(eventosService.findAll()).thenReturn(eventos);
+		
+		mockMvc.perform(get("/eventos/listar")
+				.contentType("application/json"))
+				.andExpect(status().isOk());		
+		
 	}
 
 }

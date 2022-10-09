@@ -97,9 +97,24 @@ public class EventoAdapterTestUnit {
 	@Test
 	void shouldReturnsEventoDtoComplete() {
 
-		EventoDto eventoDtoCompleto = new EventoDto(ID_EVENTO, NOMBRE_EVENTO, DESCRIPCION_CORTA, FOTO, FECHA, HORA,
-				PRECIOS, POLITICA, NOMBRE_RECINTO, CIUDAD, DIRECCION, AFORO, GENERO);
-
+		EventoDto eventoDtoCompleto = new EventoDto();
+		
+		eventoDtoCompleto.setId(ID_EVENTO);
+		eventoDtoCompleto.setNombreEvento(NOMBRE_EVENTO);
+		eventoDtoCompleto.setDescripcionEvento(DESCRIPCION_CORTA);
+		eventoDtoCompleto.setFoto(FOTO);
+		eventoDtoCompleto.setFechaEvento(FECHA);
+		eventoDtoCompleto.setHoraEvento(HORA);
+		eventoDtoCompleto.setRangoPreciosEvento(PRECIOS);
+		eventoDtoCompleto.setPolitcaAcceso(POLITICA);
+		eventoDtoCompleto.setNombreEvento(NOMBRE_RECINTO);
+		eventoDtoCompleto.setCiudadEvento(CIUDAD);
+		eventoDtoCompleto.setDireccionEvento(DIRECCION);
+		eventoDtoCompleto.setAforoEvento(AFORO);
+		eventoDtoCompleto.setGenero(GENERO);
+		
+		
+		
 		assertThat(eventoAdapter.eventoToDto(evento)).isEqualTo(eventoDtoCompleto);
 	}
 
@@ -112,12 +127,23 @@ public class EventoAdapterTestUnit {
 	@Test
 	void shouldReturnsEventoDtoList() {
 
-		EventoDto eventoDtoCompleto = new EventoDto(ID_EVENTO, NOMBRE_EVENTO, DESCRIPCION_CORTA, FOTO, FECHA, HORA,
-				PRECIOS, POLITICA, NOMBRE_RECINTO, CIUDAD, DIRECCION, AFORO, GENERO);
+		EventoDto eventoDtoCompleto = new EventoDto();
 		List<EventoDto> eventosDto = new ArrayList<>();
-		eventosDto.add(eventoDtoCompleto);
-		eventosDto.add(eventoDtoCompleto);
-
+		
+		eventoDtoCompleto.setId(ID_EVENTO);
+		eventoDtoCompleto.setNombreEvento(NOMBRE_EVENTO);
+		eventoDtoCompleto.setDescripcionEvento(DESCRIPCION_CORTA);
+		eventoDtoCompleto.setFoto(FOTO);
+		eventoDtoCompleto.setFechaEvento(FECHA);
+		eventoDtoCompleto.setHoraEvento(HORA);
+		eventoDtoCompleto.setRangoPreciosEvento(PRECIOS);
+		eventoDtoCompleto.setPolitcaAcceso(POLITICA);
+		eventoDtoCompleto.setNombreEvento(NOMBRE_RECINTO);
+		eventoDtoCompleto.setCiudadEvento(CIUDAD);
+		eventoDtoCompleto.setDireccionEvento(DIRECCION);
+		eventoDtoCompleto.setAforoEvento(AFORO);
+		eventoDtoCompleto.setGenero(GENERO);
+		
 		assertThat(eventoAdapter.eventoToDto(eventos)).isEqualTo(eventosDto);
 	}
 
