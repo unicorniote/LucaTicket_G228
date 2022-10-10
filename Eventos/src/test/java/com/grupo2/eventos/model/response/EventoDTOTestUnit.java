@@ -19,10 +19,9 @@ public class EventoDTOTestUnit {
 	EventoDto evento;
 
 	// Valores por defecto
-	private final int ID = 1;
 	private final String NOMBRE_EVENTO = "Evento de prueba";
 	private final String DESCRIPCION_EVENTO = "Descripción del evento";
-	private final boolean FOTO = true;
+	private final String FOTO = "http://www.fotosfestivales.com";
 	private final LocalDate FECHA = LocalDate.parse("2022-10-06");
 	private final LocalTime HORA = LocalTime.parse("22:01:50");
 	private final Map<String, Double> PRECIOS = Map.of("General", 50.0, "VIP", 100.0);
@@ -39,25 +38,15 @@ public class EventoDTOTestUnit {
 		assertThat(evento).isNotNull();
 	}
 
-	@Test
-	void eventDtoShouldHaveId() {
-
-		// When
-		evento.setId(ID);
-
-		// Then
-		assertThat(evento.getId()).isEqualTo(ID);
-
-	}
 
 	@Test
 	void eventDtoShouldHaveNombreEvento() {
 
 		// When
-		evento.setNombreEvento(NOMBRE_EVENTO);
+		evento.setNombre(NOMBRE_EVENTO);
 
 		// Then
-		assertThat(evento.getNombreEvento()).isEqualTo(NOMBRE_EVENTO);
+		assertThat(evento.getNombre()).isEqualTo(NOMBRE_EVENTO);
 
 	}
 
@@ -68,7 +57,7 @@ public class EventoDTOTestUnit {
 		evento.setFoto(FOTO);
 
 		// Then
-		assertThat(evento.isFoto()).isEqualTo(FOTO);
+		assertThat(evento.getFoto()).isEqualTo(FOTO);
 
 	}
 
@@ -176,15 +165,15 @@ public class EventoDTOTestUnit {
 
 		// Given
 		EventoDto eventoCompleto = new EventoDto();
-		eventoCompleto.setId(ID);
-		eventoCompleto.setNombreEvento(NOMBRE_EVENTO);
+
+		eventoCompleto.setNombre(NOMBRE_EVENTO);;
 		eventoCompleto.setDireccionEvento(DESCRIPCION_EVENTO);
 		eventoCompleto.setFoto(FOTO);
 		eventoCompleto.setFechaEvento(FECHA);
 		eventoCompleto.setHoraEvento(HORA);
 		eventoCompleto.setRangoPreciosEvento(PRECIOS);
 		eventoCompleto.setPolitcaAcceso(POLITICA);
-		eventoCompleto.setNombreEvento(NOMBRE_RECINTO);
+		eventoCompleto.setRecintoEvento(NOMBRE_RECINTO);
 		eventoCompleto.setCiudadEvento(CIUDAD);
 		eventoCompleto.setDireccionEvento(DIRECCION);
 		eventoCompleto.setAforoEvento(AFORO);

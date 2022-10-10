@@ -5,7 +5,6 @@ import com.grupo2.eventos.model.adapter.EventoAdapterI;
 import com.grupo2.eventos.model.response.EventoDto;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,14 +23,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.grupo2.eventos.repository.EventosRepositoryI;
 import com.grupo2.eventos.service.EventosServiceI;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
-import java.util.Collection;
 import java.util.List;
 
 /**

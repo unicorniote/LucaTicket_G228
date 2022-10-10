@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,8 +61,9 @@ public class EventosControllerTestUnit {
 	private final String DESCRIPCION_CORTA = "Descripción corta del evento";
 	private final String DESCRIPCION_LARGA = "Descripción larga del evento";
 	private final String FOTO = "http://www.fotosfestivales.com";
-	private final LocalDate FECHA = LocalDate.parse("2023-10-06");
+	private final LocalDate FECHA = LocalDate.parse("2022-10-06");
 	private final LocalTime HORA = LocalTime.parse("22:01:50");
+	private final LocalDateTime FECHACOMPLETA = LocalDateTime.of(FECHA, HORA);
 	private final Map<String, Double> PRECIOS = Map.of("General", 50.0, "VIP", 100.0);
 	private final String POLITICA = "No se adminten menores";
 	private final String NOMBRE_RECINTO = "Nombre del recinto";
@@ -92,8 +94,7 @@ public class EventosControllerTestUnit {
 		evento.setDescripcionCorta(DESCRIPCION_CORTA);
 		evento.setDescripcionLarga(DESCRIPCION_LARGA);
 		evento.setFoto(FOTO);
-		evento.setFechaEvento(FECHA);
-		evento.setHoraEvento(HORA);
+		evento.setFechaEvento(FECHACOMPLETA);
 		evento.setPrecio(PRECIOS);
 		evento.setPolitaAcceso(POLITICA);
 		evento.setRecinto(recinto);
@@ -105,15 +106,14 @@ public class EventosControllerTestUnit {
 		eventoNull.setDescripcionCorta(DESCRIPCION_CORTA);
 		eventoNull.setDescripcionLarga(DESCRIPCION_LARGA);
 		eventoNull.setFoto(FOTO);
-		eventoNull.setFechaEvento(FECHA);
-		eventoNull.setHoraEvento(HORA);
+		eventoNull.setFechaEvento(FECHACOMPLETA);
 		eventoNull.setPrecio(PRECIOS);
 		eventoNull.setPolitaAcceso(POLITICA);
 		eventoNull.setRecinto(recinto);
 		eventoNull.setGenero(GENERO);
 		
 		eventos.add(evento);
-		eventos.add(eventoNull);
+		eventos.add(evento);
 	}
 		
 		

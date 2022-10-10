@@ -6,9 +6,7 @@ import java.time.LocalTime;
 import java.util.Map;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Clase de tipo DTO que reúne información de un evento.

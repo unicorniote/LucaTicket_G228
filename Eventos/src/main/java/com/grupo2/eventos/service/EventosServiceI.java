@@ -1,6 +1,5 @@
 package com.grupo2.eventos.service;
 
-import java.util.Collection;
 import java.util.List;
 
 import com.grupo2.eventos.model.Evento;
