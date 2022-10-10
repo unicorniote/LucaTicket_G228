@@ -80,7 +80,6 @@ public class EventosService implements EventosServiceI{
 	@Override
     public void deleteById(String id) {
 		repo.deleteById(id);
-    	
     }
 
 }
