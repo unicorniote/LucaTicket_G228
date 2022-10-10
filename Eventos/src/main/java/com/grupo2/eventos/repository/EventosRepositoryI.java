@@ -18,11 +18,5 @@ import org.springframework.stereotype.Repository;
 * @since 1.0
 *
 */
-
-
-public interface EventosRepositoryI extends MongoRepository<Evento, Integer> {
-	@Query(value="{'_id' : $0}", delete = true)
-	public void deleteById (String id);
-
-	
+public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 }

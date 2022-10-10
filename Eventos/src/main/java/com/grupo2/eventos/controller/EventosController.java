@@ -129,6 +129,7 @@ public class EventosController {
 	
 	@DeleteMapping("/{id}")
 	public void deleteEvento(@PathVariable String id) {
+		logger.info("Delete, id ->" + id);
 		eventosService.deleteById(id);
 	}
 }
