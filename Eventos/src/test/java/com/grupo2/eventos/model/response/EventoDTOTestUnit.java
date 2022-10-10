@@ -11,8 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.grupo2.eventos.model.Evento;
-
 @ExtendWith(MockitoExtension.class)
 public class EventoDTOTestUnit {
 
@@ -21,10 +19,9 @@ public class EventoDTOTestUnit {
 	EventoDto evento;
 
 	// Valores por defecto
-	private final int ID = 1;
 	private final String NOMBRE_EVENTO = "Evento de prueba";
 	private final String DESCRIPCION_EVENTO = "Descripción del evento";
-	private final boolean FOTO = true;
+	private final String FOTO = "URL";
 	private final LocalDate FECHA = LocalDate.parse("2022-10-06");
 	private final LocalTime HORA = LocalTime.parse("22:01:50");
 	private final Map<String, Double> PRECIOS = Map.of("General", 50.0, "VIP", 100.0);
@@ -34,24 +31,24 @@ public class EventoDTOTestUnit {
 	private final String DIRECCION = "LUCATIC";
 	private final int AFORO = 100;
 	private final String GENERO = "Genero del evento";
-	
+
 	void setUp() {
-	//EventoDTO
-	evento=new EventoDto();
-	evento.setId(ID);
-	evento.setNombreEvento(NOMBRE_EVENTO);
-	evento.setDescripcionEvento(DESCRIPCION_EVENTO);
-	evento.setFoto(FOTO);
-	evento.setFechaEvento(FECHA);
-	evento.setHoraEvento(HORA);
-	evento.setRangoPreciosEvento(PRECIOS);
-	evento.setPolitcaAcceso(POLITICA);
-	evento.setCiudadEvento(CIUDAD);
-	evento.setDireccionEvento(DIRECCION);
-	evento.setAforoEvento(AFORO);
-	evento.setGenero(GENERO);
+		// EventoDTO
+		evento = new EventoDto();
+		evento.setNombre(NOMBRE_EVENTO);
+		evento.setDescripcionEvento(DESCRIPCION_EVENTO);
+		evento.setFoto(FOTO);
+		evento.setFechaEvento(FECHA);
+		evento.setHoraEvento(HORA);
+		evento.setRangoPreciosEvento(PRECIOS);
+		evento.setPolitcaAcceso(POLITICA);
+		evento.setCiudadEvento(CIUDAD);
+		evento.setDireccionEvento(DIRECCION);
+		evento.setAforoEvento(AFORO);
+		evento.setGenero(GENERO);
 
 	}
+
 	@Test
 	void eventDtoExists() {
 
@@ -59,24 +56,13 @@ public class EventoDTOTestUnit {
 	}
 
 	@Test
-	void eventDtoShouldHaveId() {
-
-		// When
-		evento.setId(ID);
-
-		// Then
-		assertThat(evento.getId()).isEqualTo(ID);
-
-	}
-
-	@Test
 	void eventDtoShouldHaveNombreEvento() {
 
 		// When
-		evento.setNombreEvento(NOMBRE_EVENTO);
+		evento.setNombre(NOMBRE_EVENTO);
 
 		// Then
-		assertThat(evento.getNombreEvento()).isEqualTo(NOMBRE_EVENTO);
+		assertThat(evento.getNombre()).isEqualTo(NOMBRE_EVENTO);
 
 	}
 
@@ -87,7 +73,7 @@ public class EventoDTOTestUnit {
 		evento.setFoto(FOTO);
 
 		// Then
-		assertThat(evento.isFoto()).isEqualTo(FOTO);
+		assertThat(evento.getFoto()).isEqualTo(FOTO);
 
 	}
 
@@ -192,8 +178,6 @@ public class EventoDTOTestUnit {
 
 	void eventDtoShouldBeCreated() {
 
-		
-		
 		// Then
 		assertThat(evento).isNotNull();
 
