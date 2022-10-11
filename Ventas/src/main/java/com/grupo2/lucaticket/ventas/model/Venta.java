@@ -8,6 +8,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+/**
+ * Clase para representar la entidad de dats de una venta
+ *
+ * @author Grupo 2 - Alonso
+ * @version 1.0 : 11/10/2022
+ */
 @Data
 @Table(name = "ventas")
 @AllArgsConstructor

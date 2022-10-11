@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/ventas")
 public class VentasController {
-	@Autowired
-	private VentasRepository ventasRepository;
 	
 	@Autowired 
 	private VentasService ventasService;

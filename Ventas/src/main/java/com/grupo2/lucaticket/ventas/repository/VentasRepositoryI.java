@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Grupo 2 - Alonso
  * @version 1.0 : 11/10/2022
  */
-public interface VentasRepository extends JpaRepository<Venta, Integer> {
+public interface VentasRepositoryI extends JpaRepository<Venta, Integer> {
 }
