@@ -5,6 +5,7 @@ import com.grupo2.eventos.model.adapter.EventoAdapterI;
 import com.grupo2.eventos.model.response.EventoDto;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -79,7 +80,6 @@ public class EventosController {
 			content = {
 					@Content(mediaType = "application/json",
 					schema = @Schema(implementation = Evento.class))}),
-
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content)})
 	@PostMapping("/add")
 	public ResponseEntity<?> addEvento(@RequestBody Evento evento){
@@ -109,7 +109,7 @@ public class EventosController {
 			tags={"Evento"})
 
 	@ApiResponses(value= {
-			@ApiResponse(responseCode = "201",
+			@ApiResponse(responseCode = "200",
 			description = "Eventos encontrados",
 			content = {
 					@Content(mediaType = "application/json",
@@ -124,8 +124,42 @@ public class EventosController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public void deleteEvento(@PathVariable String id) {
+	public void deleteEvento(
+			@Parameter(description = "ID del evento a localizar", required=true)
+			@PathVariable String id) {
 		logger.info("Delete, id ->" + id);
 		eventosService.deleteById(id);
+	}
+	
+	
+	/**
+	* Método findById - Busca un evento por su Id.
+	* 
+	* @return Devuelve un objeto eventoDTO
+	* 
+	* @author Grupo 2 - Tamara Alvarez
+	* 
+	* @version 1.0
+	*/
+	
+	@Operation(summary = "Listaa un evento por su nombre",
+			description = "Listalos eventos existentes en la BBDD de MongoDB según el nombre",
+			tags={"Evento"})
+
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200",
+			description = "Eventos encontrados",
+			content = {
+					@Content(mediaType = "application/json",
+					schema = @Schema(implementation = Evento.class))}),
+			@ApiResponse(responseCode = "400", description = "No existen eventos en la bbdd", content = @Content)})
+	@GetMapping("/{nombre}")
+	public List<EventoDto> listaEventosNombre(
+			@Parameter(description = "Nombre del evento a localizar", required=true) 
+			@PathVariable String nombre) {
+		logger.info("----------Buscando eventos por nombre");
+		List<EventoDto> eventos = eventoAdapter.eventoToDto(eventosService.findByNombre(nombre));
+		logger.info("Eventos ->: " + eventos.toString());
+		return eventos;
 	}
 }

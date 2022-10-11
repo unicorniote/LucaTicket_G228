@@ -82,4 +82,19 @@ public class EventosService implements EventosServiceI{
 		repo.deleteById(id);
     }
 
+	/**
+	* Método findByNombre():
+	* Busca un evento por su nombre.
+	* 
+	* @return repo.findeByNombre()
+	* 
+	* @author Grupo 2 - Tamara Alvarez
+	* 
+	* @version 1.0
+	*/
+	@Override
+	public List<Evento> findByNombre(String nombre) {
+		return repo.findByNombre(nombre);
+	}
+
 }

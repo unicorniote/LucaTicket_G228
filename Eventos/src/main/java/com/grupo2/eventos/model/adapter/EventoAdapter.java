@@ -65,7 +65,6 @@ public class EventoAdapter implements EventoAdapterI {
 	 */
 	@Override
 	public List<EventoDto> eventoToDto(List<Evento> eventos) {
-		// TODO Auto-generated method stub
 		logger.info("Mapeando lista de entidades Evento a lista de objetos DTO EventoDto...");
 		List<EventoDto> eventosDto = new ArrayList<>();
 

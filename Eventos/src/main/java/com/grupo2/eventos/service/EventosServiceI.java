@@ -11,5 +11,7 @@ public interface EventosServiceI {
 	public List<Evento> findAll();
 
 	public void deleteById(String id);
+	
+	public List<Evento> findByNombre(String nombre);
 
 }
