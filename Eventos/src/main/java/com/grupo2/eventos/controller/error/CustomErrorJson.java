@@ -1,6 +1,7 @@
 package com.grupo2.eventos.controller.error;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.grupo2.eventos.utils.FechaUtils;
@@ -25,9 +26,8 @@ public class CustomErrorJson {
 	private List<String> mensaje;
 	private String ruta;
 	private String custom;
-
+	
 	public CustomErrorJson(LocalDateTime fecha, int estado, String error, List<String> mensaje, String ruta) {
-
 		super();
 		this.fecha = FechaUtils.formatearFecha(fecha);
 		this.estado = estado;
@@ -41,5 +41,6 @@ public class CustomErrorJson {
 	public void setFecha(LocalDateTime fecha) {
 		this.fecha = FechaUtils.formatearFecha(fecha);
 	}
+
 
 }

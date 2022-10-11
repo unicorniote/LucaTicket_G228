@@ -2,6 +2,7 @@ package com.grupo2.eventos.service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import com.grupo2.eventos.model.Evento;
 
@@ -13,7 +14,7 @@ public interface EventosServiceI {
 
 	public void deleteById(String id);
 	
-	public List<Evento> findByNombre(String nombre);
+	public Optional<Evento> findByNombre(String nombre);
 
 	public List<Evento> findAllByGenero(String genero);
 }

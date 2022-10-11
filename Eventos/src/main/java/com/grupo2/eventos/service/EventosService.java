@@ -1,9 +1,11 @@
 package com.grupo2.eventos.service;
 
 import com.grupo2.eventos.model.Evento;
+import com.grupo2.eventos.model.response.EventoDto;
 import com.grupo2.eventos.repository.EventosRepositoryI;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -111,8 +113,7 @@ public class EventosService implements EventosServiceI{
 	* 
 	* @version 1.0
 	*/
-	@Override
-	public List<Evento> findByNombre(String nombre) {
+	public Optional<Evento> findByNombre(String nombre) {
 		return repo.findByNombre(nombre);
 	}
 

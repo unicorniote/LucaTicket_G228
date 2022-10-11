@@ -1,9 +1,6 @@
 package com.grupo2.eventos.controller.error;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 

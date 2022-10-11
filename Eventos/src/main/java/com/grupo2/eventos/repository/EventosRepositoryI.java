@@ -1,6 +1,7 @@
 package com.grupo2.eventos.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -27,6 +28,6 @@ import com.grupo2.eventos.model.Evento;
 public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 	
 	List<Evento> findAllByGenero(String genero);
-	List<Evento> findByNombre(String nombre);
+	Optional<Evento> findByNombre(String nombre);
 
 }

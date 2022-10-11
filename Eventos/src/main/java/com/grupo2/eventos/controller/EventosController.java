@@ -1,6 +1,7 @@
 package com.grupo2.eventos.controller;
 
 
+import com.grupo2.eventos.controller.error.EventoNotFoundException;
 import com.grupo2.eventos.model.Evento;
 import com.grupo2.eventos.model.adapter.EventoAdapterI;
 import com.grupo2.eventos.model.response.EventoDto;
@@ -30,6 +31,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -162,8 +164,8 @@ public class EventosController {
 	* @author Grupo 2 - Tamara Alvarez
 	*/
 	
-	@Operation(summary = "Listaa un evento por su nombre",
-			description = "Listalos eventos existentes en la BBDD de MongoDB según el nombre",
+	@Operation(summary = "Lista un evento por su nombre",
+			description = "Lista los eventos existentes en la BBDD de MongoDB según el nombre",
 			tags={"Evento"})
 
 	@ApiResponses(value= {
@@ -174,13 +176,16 @@ public class EventosController {
 					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "400", description = "No existen eventos en la bbdd", content = @Content)})
 	@GetMapping("/{nombre}")
-	public List<EventoDto> listaEventosNombre(
+	public EventoDto listaEventosNombre(
 			@Parameter(description = "Nombre del evento a localizar", required=true) 
 			@PathVariable String nombre) {
 		logger.info("----------Buscando eventos por nombre");
-		List<EventoDto> eventos = eventoAdapter.eventoToDto(eventosService.findByNombre(nombre));
-		logger.info("Eventos ->: " + eventos.toString());
-		return eventos;
+		Optional<Evento> evento = eventosService.findByNombre(nombre);
+		if (evento.isPresent()) {
+			return eventoAdapter.eventoToDto(evento.get());
+		}else {
+			throw new EventoNotFoundException();
+		}
 	}
 
 	/**
