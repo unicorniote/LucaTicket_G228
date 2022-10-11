@@ -1,5 +1,6 @@
 package com.grupo2.eventos.service;
 
+
 import java.util.List;
 
 import com.grupo2.eventos.model.Evento;
@@ -14,4 +15,5 @@ public interface EventosServiceI {
 	
 	public List<Evento> findByNombre(String nombre);
 
+	public List<Evento> findAllByGenero(String genero);
 }

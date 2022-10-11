@@ -31,7 +31,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	@ExceptionHandler(EventoNotFoundException.class)
 	public void springHandleNotFound(HttpServletResponse response) throws IOException {
 		logger.info("EventoNotFoundException()");
-		;
 		response.sendError(HttpStatus.NOT_FOUND.value());
 	}
 
@@ -39,6 +38,12 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	public void constraintViolationException(HttpServletResponse response) throws IOException {
 		logger.info("------ ConstraintViolationException() ");
 		response.sendError(HttpStatus.BAD_REQUEST.value());
+	}
+	
+	@ExceptionHandler(EventoNotFoundExceptionByGenre.class)
+	public void springHandleNotFoundExceptionByGenre(HttpServletResponse response) throws IOException {
+		logger.info("EventoNotFoundExceptionByGenre()");
+		response.sendError(HttpStatus.NOT_FOUND.value());
 	}
 
 	@Override

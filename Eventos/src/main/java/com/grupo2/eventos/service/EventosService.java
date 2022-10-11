@@ -70,7 +70,7 @@ public class EventosService implements EventosServiceI{
 	* Método deleteById():
 	* Eliminar por Id
 	* 
-	* @return repo.deleteById()
+	* @param id del usuario de tipo String
 	* 
 	* @author Grupo 2 - Lamia
 	* 
@@ -81,6 +81,25 @@ public class EventosService implements EventosServiceI{
     public void deleteById(String id) {
 		repo.deleteById(id);
     }
+	
+	/**
+	* Método findAllByGenero(String genero):
+	* Mostrador listado de eventos según el género
+	* 
+	* @return List<Eventos>
+	* @param String genero
+	* 
+	* @author Grupo 2 - Carlos Jesús 
+	* 
+	* @version 1.0
+	*/
+	
+	public List<Evento> findAllByGenero(String genero){
+		
+		return repo.findAllByGenero(genero);
+	}
+	
+	
 
 	/**
 	* Método findByNombre():

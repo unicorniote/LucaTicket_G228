@@ -1,5 +1,6 @@
 package com.grupo2.eventos.controller;
 
+
 import com.grupo2.eventos.model.Evento;
 import com.grupo2.eventos.model.adapter.EventoAdapterI;
 import com.grupo2.eventos.model.response.EventoDto;
@@ -25,11 +26,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo2.eventos.service.EventosServiceI;
-
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+
 
 /**
 * @Project LucaTicket
@@ -65,7 +66,7 @@ public class EventosController {
 	* Descripción del método:
 	* Método que añade un evento introducido por el administrador.
 	* @param evento evento
-	* @return {@ResponseEntity} Se devuelve un obejto evento
+	* @return {@ResponseEntity} Se devuelve un objeto evento
 	* @author Carlos Jesús Pérez Márquez
 	* @version 1.0
 	*/
@@ -123,6 +124,27 @@ public class EventosController {
 		return eventos;
 	}
 	
+	/**
+	* Método deleteEvento - Elimina un evento por su Id.
+	* 
+	* @param String id
+	* 
+	* @author Grupo 2 - Alonso Gómez
+	* 
+	* @version 1.0
+	*/
+	
+	@Operation(summary = "Eliminar evento",
+			description = "Permite eliminar el evento deseado y existente en la BBDD de MongoDB",
+			tags={"Evento"})
+
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "Evento eliminado correctamente",
+					content = {@Content(mediaType = "application/json",
+					schema = @Schema(implementation = Evento.class))}),
+			@ApiResponse(responseCode = "204", description = "El servidor registra la petición correctamente, pero no se ha encontrado el contenido a borrar", content = @Content),
+			@ApiResponse(responseCode = "202", description = "El evento aún no ha sido eliminado", content = @Content)})
+
 	@DeleteMapping("/{id}")
 	public void deleteEvento(
 			@Parameter(description = "ID del evento a localizar", required=true)
@@ -138,8 +160,6 @@ public class EventosController {
 	* @return Devuelve un objeto eventoDTO
 	* 
 	* @author Grupo 2 - Tamara Alvarez
-	* 
-	* @version 1.0
 	*/
 	
 	@Operation(summary = "Listaa un evento por su nombre",
@@ -162,4 +182,36 @@ public class EventosController {
 		logger.info("Eventos ->: " + eventos.toString());
 		return eventos;
 	}
+
+	/**
+	* Método listarEventosGenero - Lista los eventos según el género aportado.
+	* 
+	* @param String genero
+	* @return List<EventosDto>
+	* 
+	* @author Grupo 2 - Carlos Jesús
+	* 
+	* @version 1.0
+	*/
+
+	@Operation(summary = "Listar eventos por género indicado",
+			description = "Permite listar los eventos según el género deseado y existentes en la BBDD de MongoDB",
+			tags={"Evento"})
+
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200", description = "La petición listar eventos por género se ha realizado correctamente", 
+					content ={@Content(mediaType = "application/json",
+					schema = @Schema(implementation = Evento.class))}),
+			@ApiResponse(responseCode = "400", description = "No existen eventos en la BBDD", content = @Content)})
+	
+	
+	@GetMapping("/eventos/{genero}")
+	public List<EventoDto> listarEventosGenero(@Parameter(description = "Párametro String Genero que recoge el getmapping", required=true)@PathVariable String genero){
+		
+		logger.info("Listando eventos por género");
+		List<EventoDto> eventosGenero =eventoAdapter.eventoToDto(eventosService.findAllByGenero(genero));
+		return eventosGenero;
+		
+	}
+
 }
