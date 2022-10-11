@@ -23,14 +23,14 @@ import com.grupo2.lucaticket.ventas.model.Venta;
 @Service
 public interface VentasServiceI {
 
+	/**
+	 * Método para crear una venta
+	 *
+	 * @return venta
+	 *
+	 * @author Grupo 2 - Lamia
+	 *
+	 * @version 1.0
+	 */
 	public Venta addVenta (Venta venta);
 }
-/**
-* Método para crear una venta
-* 
-* @return venta
-* 
-* @author Grupo 2 - Lamia
-* 
-* @version 1.0
-*/
