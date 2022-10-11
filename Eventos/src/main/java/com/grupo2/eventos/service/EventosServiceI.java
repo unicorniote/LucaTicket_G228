@@ -19,4 +19,6 @@ public interface EventosServiceI {
 	public List<Evento> findAllByGenero(String genero);
 	
 	public Optional<Evento> findById(String id);
+	
+	public Optional<Evento> findAllByCiudad(String ciudad);
 }
