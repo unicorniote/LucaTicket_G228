@@ -27,6 +27,6 @@ import com.grupo2.eventos.model.Evento;
 public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 	
 	List<Evento> findAllByGenero(String genero);
-	List<Evento> findAllByNombre(String nombre);
+	List<Evento> findByNombre(String nombre);
 
 }

@@ -1,6 +1,8 @@
 package com.grupo2.eventos.controller.error;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
@@ -39,12 +41,14 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		logger.info("------ ConstraintViolationException() ");
 		response.sendError(HttpStatus.BAD_REQUEST.value());
 	}
+
 	
-	@ExceptionHandler(EventoNotFoundExceptionByGenre.class)
-	public void springHandleNotFoundExceptionByGenre(HttpServletResponse response) throws IOException {
-		logger.info("EventoNotFoundExceptionByGenre()");
-		response.sendError(HttpStatus.NOT_FOUND.value());
-	}
+//	@ExceptionHandler(EventoNotFoundExceptionByGenre.class)
+//	public void springHandleNotFoundExceptionByGenre(HttpServletResponse response) throws IOException {
+//		logger.info("EventoNotFoundExceptionByGenre()");
+//		response.sendError(HttpStatus.NOT_FOUND.value());
+//	}
+	
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
@@ -66,7 +70,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	 */
 
 	@Override
-	
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		logger.info("------ handleHttpRequestMethodNotSupported()");
@@ -74,15 +77,5 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		CustomErrorJson customError = ErrorUtils.customErrorMapper(ex, headers, status, request);
 
 		return new ResponseEntity<Object>(customError, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
-
-		/**
-		 * Descripción del método: Método que señaliza que una petición no existe
-		 * 
-		 * @param
-		 * @return
-		 * @author Lamia
-		 * @version 1.0
-		 */
-
 	}
 }

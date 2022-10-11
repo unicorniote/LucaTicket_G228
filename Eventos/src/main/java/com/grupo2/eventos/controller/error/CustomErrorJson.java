@@ -37,7 +37,7 @@ public class CustomErrorJson {
 		this.custom = "Esto es un error personalizado";
 
 	}
-
+	
 	public void setFecha(LocalDateTime fecha) {
 		this.fecha = FechaUtils.formatearFecha(fecha);
 	}
