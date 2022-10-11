@@ -269,7 +269,7 @@ public class EventosController {
 			content = {
 					@Content(mediaType = "application/json",
 					schema = @Schema(implementation = Evento.class))}),
-			@ApiResponse(responseCode = "404", description = "No existe evento con ese ID", content = @Content)})
+			@ApiResponse(responseCode = "404", description = "No existen eventos en esa ciudad", content = @Content)})
 	@GetMapping("/ciudad/{ciudad}")
 	public EventoDto listaEventosCiudad(@Parameter(description = "Ciudad del evento a localizar", required=true)@PathVariable String ciudad) {
 		Optional<Evento> evento = eventosService.findAllByCiudad(ciudad);

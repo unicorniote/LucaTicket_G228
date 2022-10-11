@@ -8,9 +8,6 @@ import org.springframework.data.mongodb.repository.Query;
 
 import com.grupo2.eventos.model.Evento;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-
-import com.grupo2.eventos.model.Evento;
 
 /**
 * @Project LucaTicket
@@ -31,6 +28,7 @@ public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 	List<Evento> findAllByGenero(String genero);
 	Optional<Evento> findByNombre(String nombre);
 	Optional<Evento> findById(String id);
+	@Query()
 	Optional<Evento> findAllByCiudad(String ciudad);
 
 }

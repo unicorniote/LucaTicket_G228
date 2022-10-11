@@ -1,7 +1,6 @@
 package com.grupo2.eventos.controller.error;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.grupo2.eventos.utils.FechaUtils;

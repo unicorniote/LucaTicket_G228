@@ -1,7 +1,6 @@
 package com.grupo2.eventos.service;
 
 import com.grupo2.eventos.model.Evento;
-import com.grupo2.eventos.model.response.EventoDto;
 import com.grupo2.eventos.repository.EventosRepositoryI;
 
 import java.util.List;
