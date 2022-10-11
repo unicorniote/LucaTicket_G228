@@ -9,8 +9,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Schema(name = "UsuarioDto", description = "DTO de Usuario")
 public class UsuarioDto implements Serializable {
 

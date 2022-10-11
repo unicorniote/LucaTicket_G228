@@ -21,7 +21,7 @@ public class EventoDTOTestUnit {
 	// Valores por defecto
 	private final String NOMBRE_EVENTO = "Evento de prueba";
 	private final String DESCRIPCION_EVENTO = "Descripción del evento";
-	private final String FOTO = "http://www.fotosfestivales.com";
+	private final String FOTO = "URL";
 	private final LocalDate FECHA = LocalDate.parse("2022-10-06");
 	private final LocalTime HORA = LocalTime.parse("22:01:50");
 	private final Map<String, Double> PRECIOS = Map.of("General", 50.0, "VIP", 100.0);
@@ -32,12 +32,28 @@ public class EventoDTOTestUnit {
 	private final int AFORO = 100;
 	private final String GENERO = "Genero del evento";
 
+	void setUp() {
+		// EventoDTO
+		evento = new EventoDto();
+		evento.setNombre(NOMBRE_EVENTO);
+		evento.setDescripcionEvento(DESCRIPCION_EVENTO);
+		evento.setFoto(FOTO);
+		evento.setFechaEvento(FECHA);
+		evento.setHoraEvento(HORA);
+		evento.setRangoPreciosEvento(PRECIOS);
+		evento.setPolitcaAcceso(POLITICA);
+		evento.setCiudadEvento(CIUDAD);
+		evento.setDireccionEvento(DIRECCION);
+		evento.setAforoEvento(AFORO);
+		evento.setGenero(GENERO);
+
+	}
+
 	@Test
 	void eventDtoExists() {
 
 		assertThat(evento).isNotNull();
 	}
-
 
 	@Test
 	void eventDtoShouldHaveNombreEvento() {
@@ -163,25 +179,8 @@ public class EventoDTOTestUnit {
 	@Test
 	void eventDtoShouldBeCreated() {
 
-		// Given
-		EventoDto eventoCompleto = new EventoDto();
-
-		eventoCompleto.setNombre(NOMBRE_EVENTO);;
-		eventoCompleto.setDireccionEvento(DESCRIPCION_EVENTO);
-		eventoCompleto.setFoto(FOTO);
-		eventoCompleto.setFechaEvento(FECHA);
-		eventoCompleto.setHoraEvento(HORA);
-		eventoCompleto.setRangoPreciosEvento(PRECIOS);
-		eventoCompleto.setPolitcaAcceso(POLITICA);
-		eventoCompleto.setRecintoEvento(NOMBRE_RECINTO);
-		eventoCompleto.setCiudadEvento(CIUDAD);
-		eventoCompleto.setDireccionEvento(DIRECCION);
-		eventoCompleto.setAforoEvento(AFORO);
-		eventoCompleto.setGenero(GENERO);
-		
-
 		// Then
-		assertThat(eventoCompleto).isNotNull();
+		assertThat(evento).isNotNull();
 
 	}
 
