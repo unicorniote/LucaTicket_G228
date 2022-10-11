@@ -15,6 +15,7 @@ public class CustomErrorJson {
 	private List<String> message;
 	private String path;
 	private String jdk;
+	private String ruta;
 	
 	public CustomErrorJson() {
 		super();
@@ -23,7 +24,7 @@ public class CustomErrorJson {
 		this.error = "";
 		this.trace = "";
 		this.message = new ArrayList<>();
-		this.path = "";
+		this.ruta= "";
 		this.jdk = "ND";
 	}
 
@@ -35,7 +36,14 @@ public class CustomErrorJson {
 		this.error = error;
 		this.trace = trace;
 		this.message = message;
-		this.path = path;
+		this.ruta = ruta;
 		this.jdk = jdk;
 	}
+
+	public void setMensaje(List<String> mensajes) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }
