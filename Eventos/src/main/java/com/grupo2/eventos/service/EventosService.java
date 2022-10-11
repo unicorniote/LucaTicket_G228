@@ -117,4 +117,19 @@ public class EventosService implements EventosServiceI{
 		return repo.findByNombre(nombre);
 	}
 
+	/**
+	* Método findByNombre():
+	* Busca un evento por su nombre.
+	* 
+	* @return repo.findeByNombre()
+	* 
+	* @author Grupo 2 - Tamara Alvarez
+	* 
+	* @version 1.0
+	*/
+	@Override
+	public Optional<Evento> findById(String id) {
+		return repo.findById(id);
+	}
+
 }

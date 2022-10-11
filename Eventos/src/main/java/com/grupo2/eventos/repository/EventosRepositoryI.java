@@ -29,5 +29,6 @@ public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 	
 	List<Evento> findAllByGenero(String genero);
 	Optional<Evento> findByNombre(String nombre);
+	Optional<Evento> findById(String id);
 
 }

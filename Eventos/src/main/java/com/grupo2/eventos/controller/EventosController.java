@@ -210,12 +210,34 @@ public class EventosController {
 			@ApiResponse(responseCode = "400", description = "No existen eventos en la BBDD", content = @Content)})
 	
 	
-	@GetMapping("/eventos/{genero}")
+	@GetMapping("/{genero}")
 	public List<EventoDto> listarEventosGenero(@Parameter(description = "Párametro String Genero que recoge el getmapping", required=true)@PathVariable String genero){
 		
 		logger.info("Listando eventos por género");
 		List<EventoDto> eventosGenero =eventoAdapter.eventoToDto(eventosService.findAllByGenero(genero));
 		return eventosGenero;
+		
+	}
+	
+	@Operation(summary = "Lista un evento por su ID",
+			description = "Lista el evento existente en la BBDD de MongoDB según su ID",
+			tags={"Evento"})
+
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200",
+			description = "Evento encontrado",
+			content = {
+					@Content(mediaType = "application/json",
+					schema = @Schema(implementation = Evento.class))}),
+			@ApiResponse(responseCode = "400", description = "No existen eventos en la bbdd", content = @Content)})
+	@GetMapping("/detalles/{id}")
+	public EventoDto listaDetallesEvento(@Parameter(description = "ID del evento a localizar", required=true)@PathVariable String id) {
+		Optional<Evento> evento = eventosService.findById(id);
+		if (evento.isPresent()) {
+			return eventoAdapter.eventoToDto(evento.get());
+		}else {
+			throw new EventoNotFoundException();
+		}
 		
 	}
 
