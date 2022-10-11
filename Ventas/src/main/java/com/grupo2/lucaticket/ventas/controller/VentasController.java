@@ -23,7 +23,6 @@ import com.grupo2.lucaticket.ventas.service.VentasServiceI;
 @RestController
 @RequestMapping("/ventas")
 public class VentasController {
-
 	
 	@Autowired 
 	private VentasServiceI ventasService;
