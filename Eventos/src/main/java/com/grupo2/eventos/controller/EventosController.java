@@ -1,10 +1,12 @@
 package com.grupo2.eventos.controller;
 
+
 import com.grupo2.eventos.model.Evento;
 import com.grupo2.eventos.model.adapter.EventoAdapterI;
 import com.grupo2.eventos.model.response.EventoDto;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,6 +30,7 @@ import com.grupo2.eventos.service.EventosServiceI;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
+
 
 /**
 * @Project LucaTicket
@@ -137,7 +140,9 @@ public class EventosController {
 			tags={"Evento"})
 
 	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "Evento eliminado correctamente",content = @Content),
+			@ApiResponse(responseCode = "200", description = "Evento eliminado correctamente",
+					content = {@Content(mediaType = "application/json",
+					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "204", description = "El servidor registra la petición correctamente, pero no se ha encontrado el contenido a borrar", content = @Content),
 			@ApiResponse(responseCode = "202", description = "El evento aún no ha sido eliminado", content = @Content)})
 
@@ -163,18 +168,21 @@ public class EventosController {
 			tags={"Evento"})
 
 	@ApiResponses(value= {
-			@ApiResponse(responseCode = "200", description = "La petición listar eventos por género se ha realizado correctamente", content = @Content),
+			@ApiResponse(responseCode = "200", description = "La petición listar eventos por género se ha realizado correctamente", 
+					content ={@Content(mediaType = "application/json",
+					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "400", description = "No existen eventos en la BBDD", content = @Content)})
 	
 	
 	@GetMapping("/eventos/{genero}")
-	public List<EventoDto> listarEventosGenero(@PathVariable String genero){
+	public List<EventoDto> listarEventosGenero(@Parameter(description = "Párametro String Genero que recoge el getmapping", required=true)@PathVariable String genero){
 		
 		logger.info("Listando eventos por género");
 		List<EventoDto> eventosGenero =eventoAdapter.eventoToDto(eventosService.findAllByGenero(genero));
 		return eventosGenero;
+		
 	}
-			
+
 	
 			
 			

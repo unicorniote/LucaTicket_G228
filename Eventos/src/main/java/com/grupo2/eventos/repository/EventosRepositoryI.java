@@ -3,10 +3,9 @@ package com.grupo2.eventos.repository;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 
 import com.grupo2.eventos.model.Evento;
-import org.springframework.stereotype.Repository;
+
 
 /**
 * @Project LucaTicket
@@ -23,4 +22,5 @@ import org.springframework.stereotype.Repository;
 public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 	
 	List<Evento> findAllByGenero(String genero);
+	List<Evento> findAllByNombre(String nombre);
 }

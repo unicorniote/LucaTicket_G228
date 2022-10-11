@@ -26,5 +26,7 @@ public class EventoNotFoundException  extends RuntimeException{
 	public EventoNotFoundException(Long id) {
 		super ("Epic Fail: No existe el evento"+id);
 	}
+	
+	
 
 }
