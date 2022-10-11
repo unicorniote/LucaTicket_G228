@@ -32,7 +32,6 @@ public class EventoAdapterTestUnit {
 	Recinto recinto;
 	List<Evento> eventos;
 	EventoDto eventoDtoCompleto;
-	List<Evento> eventos = new ArrayList<>();
 
 	private final String NOMBRE_EVENTO = "Evento de prueba";
 	private final String DESCRIPCION_CORTA = "Descripción corta del evento";
@@ -126,8 +125,8 @@ public class EventoAdapterTestUnit {
 		eventoDtoCompleto.setNombre(NOMBRE_EVENTO);
 		eventoDtoCompleto.setDescripcionEvento(DESCRIPCION_CORTA);
 		eventoDtoCompleto.setFoto(FOTO);
-		eventoDtoCompleto.setFechaEvento(FECHACOMPLETA.toLocalDate());
-		eventoDtoCompleto.setHoraEvento(FECHACOMPLETA.toLocalTime());
+		eventoDtoCompleto.setFechaEvento(FECHA.toLocalDate());
+		eventoDtoCompleto.setHoraEvento(FECHA.toLocalTime());
 		eventoDtoCompleto.setRangoPreciosEvento(PRECIOS);
 		eventoDtoCompleto.setPolitcaAcceso(POLITICA);
 		eventoDtoCompleto.setRecintoEvento(NOMBRE_RECINTO);

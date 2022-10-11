@@ -90,7 +90,7 @@ public class EventosControllerTestUnit {
 		evento.setDescripcionCorta(DESCRIPCION_CORTA);
 		evento.setDescripcionLarga(DESCRIPCION_LARGA);
 		evento.setFoto(FOTO);
-		evento.setFechaEvento(FECHACOMPLETA);
+		evento.setFechaEvento(FECHA);
 		evento.setPrecio(PRECIOS);
 		evento.setPolitaAcceso(POLITICA);
 		evento.setRecinto(recinto);
@@ -101,7 +101,7 @@ public class EventosControllerTestUnit {
 		eventoNull.setDescripcionCorta(DESCRIPCION_CORTA);
 		eventoNull.setDescripcionLarga(DESCRIPCION_LARGA);
 		eventoNull.setFoto(FOTO);
-		eventoNull.setFechaEvento(FECHACOMPLETA);
+		eventoNull.setFechaEvento(FECHA);
 		eventoNull.setPrecio(PRECIOS);
 		eventoNull.setPolitaAcceso(POLITICA);
 		eventoNull.setRecinto(recinto);
