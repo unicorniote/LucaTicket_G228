@@ -14,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.WebRequest;
 
 import com.grupo2.lucaticket.eventos.controller.error.CustomErrorJson;
+import com.grupo2.lucaticket.eventos.controller.error.EventoNotFoundException;
 
 /**
  * Clase ErrorUtils que contiene métodos para el tratamiento de errores.
@@ -109,7 +110,7 @@ public class ErrorUtils {
 	 * @version 1.0
 	 */
 
-	public static CustomErrorJson customErrorMapper(EventoNotFoundExceptiono exception, HttpHeaders headers,
+	public static CustomErrorJson customErrorMapper(EventoNotFoundException exception, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
 
 		logger.info("Mapeando error a error custom...");
