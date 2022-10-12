@@ -1,6 +1,7 @@
 package com.grupo2.lucaticket.eventos.controller;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -104,7 +105,7 @@ public class EventosControllerTestUnit {
 		evento.setGenero(GENERO);
 
 		// EVENTODTO
-		eventoDto.setNombre(NOMBRE_EVENTO_NULL);
+		eventoDto.setNombre(NOMBRE_EVENTO);
 		eventoDto.setDescripcionEvento(DESCRIPCION_CORTA);
 		eventoDto.setFoto(FOTO);
 		eventoDto.setFechaEvento(FECHA.toLocalDate());
@@ -220,8 +221,7 @@ public class EventosControllerTestUnit {
 
 		logger.info("Aplicando test que devuelve listado");
 
-		// when
-		//when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn();
+		
 
 		// then
 		mockMvc.perform(get("/eventos/nombre/"+evento.getNombre()).contentType("application/json")).andExpect(status().isOk());

@@ -261,6 +261,12 @@ public class EventosController {
 			
 			return eventoAdapter.eventoToDto(evento.get());
 		}
+	}
 		
+	
+	@DeleteMapping("/{id}")
+    public void deleteEvento(@PathVariable String id) {
+        logger.info("Delete, id ->" + id);
+        eventosService.deleteById(id);
 	}		
 }
