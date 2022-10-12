@@ -1,10 +1,14 @@
 package com.grupo2.lucaticket.eventos.repository;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.grupo2.lucaticket.eventos.model.Evento;
+import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 
 /**
 * @Project LucaTicket
@@ -21,5 +25,8 @@ import com.grupo2.lucaticket.eventos.model.Evento;
 public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 	
 	List<Evento> findAllByGenero(String genero);
+	
 	List<Evento> findAllByNombre(String nombre);
+	
+	public Optional<EventoDto> update( @Valid Evento evento);
 }

@@ -1,16 +1,26 @@
 package com.grupo2.lucaticket.eventos.service;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import com.grupo2.lucaticket.eventos.model.Evento;
+import com.grupo2.lucaticket.eventos.model.response.EventoDto;
+
 
 
 /**
- * Interfaz EventosServiceI
- *
- * @author Grupo 2 - Lamia
- * @version 1.0 : 09/10/2022
- */
+* @Project LucaTicket
+*
+* Interfaz EventosServiceI
+*
+* @author Lamia
+* @date 11/10/2022
+*
+* @since 1.0
+*
+*/
 public interface EventosServiceI {
 	
 	public Evento save (Evento evento);
@@ -20,4 +30,10 @@ public interface EventosServiceI {
 	public void deleteById(String id);
 
 	public List<Evento> findAllByGenero(String genero);
+	
+	public Optional <EventoDto> update(@Valid Evento evento);
+	
 }
+		
+
+	

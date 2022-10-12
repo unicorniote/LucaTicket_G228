@@ -8,7 +8,7 @@ package com.grupo2.lucaticket.usuario.service;
 /**
 * @Project LucaTicket
 *
-* @Classname UsuarioNotFoundException
+* Interfaz UsuarioServiceI
 *
 * @author Alonso
 * @date 07/10/2022
