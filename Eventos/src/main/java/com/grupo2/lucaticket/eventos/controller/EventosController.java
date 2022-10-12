@@ -160,10 +160,11 @@ public class EventosController {
 			@PathVariable String nombre) {
 		logger.info("----------Buscando eventos por nombre");
 		Optional<Evento> evento = eventosService.findByNombre(nombre);
-		if (evento.isPresent()) {
-			return eventoAdapter.eventoToDto(evento.get());
-		}else {
+		if (evento.isEmpty()) {
 			throw new EventoNotFoundException();
+			
+		}else {
+			return eventoAdapter.eventoToDto(evento.get());
 		}
 	}
 

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.grupo2.lucaticket.eventos.model.Evento;
 import com.grupo2.lucaticket.eventos.model.Recinto;
 import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapter;
+import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 import com.grupo2.lucaticket.eventos.service.EventosServiceI;
 
 @WebMvcTest(EventosController.class)
@@ -46,10 +48,11 @@ public class EventosControllerTestUnit {
 	private EventosServiceI eventosService;
 
 	Evento evento;
-	Evento eventoNull;
+	EventoDto eventoDto;
+	EventoDto eventoNull;
 	Recinto recinto;
-	List<Evento> eventos = new ArrayList<>();
-	List<Evento> eventosVacio = new ArrayList<>();
+	List<Evento> eventos;
+	List<Evento> eventosVacio;
 
 	private final String NOMBRE_EVENTO = "Evento de prueba";
 	private final String NOMBRE_EVENTO_NULL = null;
@@ -69,9 +72,12 @@ public class EventosControllerTestUnit {
 	@BeforeEach
 	void setUp() {
 		evento = new Evento();
-		eventoNull = new Evento();
+		eventoDto = new EventoDto();
+		eventoNull = new EventoDto();
 		recinto = new Recinto();
 		objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+		eventos = new ArrayList<>();
+		eventosVacio = new ArrayList<>();
 
 		// RECINTO
 		recinto.setNombreRecinto(NOMBRE_RECINTO);
@@ -91,15 +97,32 @@ public class EventosControllerTestUnit {
 		evento.setRecinto(recinto);
 		evento.setGenero(GENERO);
 
+		// EVENTODTO
+		eventoDto.setNombre(NOMBRE_EVENTO_NULL);
+		eventoDto.setDescripcionEvento(DESCRIPCION_CORTA);
+		eventoDto.setFoto(FOTO);
+		eventoDto.setFechaEvento(FECHA.toLocalDate());
+		eventoDto.setHoraEvento(FECHA.toLocalTime());
+		eventoDto.setRangoPreciosEvento(PRECIOS);
+		eventoDto.setPolitcaAcceso(POLITICA);
+		eventoDto.setRecintoEvento(NOMBRE_RECINTO);
+		eventoDto.setCiudadEvento(CIUDAD);
+		eventoDto.setDireccionEvento(DIRECCION);
+		eventoDto.setAforoEvento(AFORO);
+		eventoDto.setGenero(GENERO);
+		
 		// EVENTONULL
 		eventoNull.setNombre(NOMBRE_EVENTO_NULL);
-		eventoNull.setDescripcionCorta(DESCRIPCION_CORTA);
-		eventoNull.setDescripcionLarga(DESCRIPCION_LARGA);
+		eventoNull.setDescripcionEvento(DESCRIPCION_CORTA);
 		eventoNull.setFoto(FOTO);
-		eventoNull.setFechaEvento(FECHA);
-		eventoNull.setPrecio(PRECIOS);
-		eventoNull.setPolitaAcceso(POLITICA);
-		eventoNull.setRecinto(recinto);
+		eventoNull.setFechaEvento(FECHA.toLocalDate());
+		eventoNull.setHoraEvento(FECHA.toLocalTime());
+		eventoNull.setRangoPreciosEvento(PRECIOS);
+		eventoNull.setPolitcaAcceso(POLITICA);
+		eventoNull.setRecintoEvento(NOMBRE_RECINTO);
+		eventoNull.setCiudadEvento(CIUDAD);
+		eventoNull.setDireccionEvento(DIRECCION);
+		eventoNull.setAforoEvento(AFORO);
 		eventoNull.setGenero(GENERO);
 
 		eventos.add(evento);
@@ -136,7 +159,20 @@ public class EventosControllerTestUnit {
 	}
 
 	@Test
-	public void cuandoListemosDevuelveLista() throws Exception {
+	public void cuandoListaNull_Devuelve404() throws Exception {
+
+		logger.info("Aplicando test que devuelve listado");
+
+		// when
+		when(eventosService.findAll()).thenReturn(eventosVacio);
+
+		// then
+		mockMvc.perform(get("/eventos/lista").contentType("application/json")).andExpect(status().isNotFound());
+
+	}
+	
+	@Test
+	public void cuandoListaEventos_Devuelve200() throws Exception {
 
 		logger.info("Aplicando test que devuelve listado");
 
@@ -144,7 +180,20 @@ public class EventosControllerTestUnit {
 		when(eventosService.findAll()).thenReturn(eventos);
 
 		// then
-		mockMvc.perform(get("/eventos/listar").contentType("application/json")).andExpect(status().isOk());
+		mockMvc.perform(get("/eventos/lista").contentType("application/json")).andExpect(status().isOk());
+
+	}
+	
+	@Test
+	public void cuandoListaNombre_Devuelve200() throws Exception {
+
+		logger.info("Aplicando test que devuelve listado");
+
+		// when
+		when(eventosService.findByNombre(NOMBRE_EVENTO)).equals(eventoDto);
+
+		// then
+		mockMvc.perform(get("/eventos/nombre/Evento de prueba").contentType("application/json")).andExpect(status().isNotFound());
 
 	}
 
