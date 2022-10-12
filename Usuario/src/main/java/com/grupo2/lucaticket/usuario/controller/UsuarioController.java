@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import com.grupo2.lucaticket.usuario.controller.error.UsuarioNotFoundException;
 import com.grupo2.lucaticket.usuario.model.Usuario;
 import com.grupo2.lucaticket.usuario.model.adapter.UsuarioAdapterI;
 import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
@@ -25,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -61,6 +61,8 @@ public class UsuarioController {
 
 	@Autowired
 	private UsuarioAdapterI usuarioAdapter;
+
+	private UsuarioDto usuarioDto;
 
 	/**
 	 * Descripción del método: Método que añade un usuario .
@@ -127,6 +129,47 @@ public class UsuarioController {
 		return usuarioAdapter.usuarioToDto(usuario.get());
 
 	}
-}
-	
 
+	/**
+	 * Método update - Modifica un usuario.
+	 * 
+	 * @return Devuelve un objeto usuario
+	 * 
+	 * @author Grupo 2 - Lamia
+	 * 
+	 * @version 1.0
+	 */
+	@Operation(summary = "Listar los usuarios", description = "Lista todo los eventos existentes en la BBDD de MySql", tags = {
+			"Usuario" })
+
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Usuarios encontrados", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Usuario.class)) }),
+			@ApiResponse(responseCode = "400", description = "No existen usuarios en la bbdd", content = @Content) })
+	@GetMapping("/listar")
+	public Collection<UsuarioDto> getUsuario() {
+		logger.info("Buscando usuario");
+		return usuarioAdapter.usuarioToDto((List<Usuario>) usuarioService.findAll());
+	}
+
+	@Operation(summary = "Buscar usuario por ID", description = "Dado un ID, devuelve un objeto usuario", tags = {
+			"usuario" })
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Usuario localizado", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Usuario.class)) }),
+			@ApiResponse(responseCode = "400", description = "No válido (NO implementado) ", content = @Content),
+			@ApiResponse(responseCode = "404", description = "Usuario no encontrado (NO implementado)", content = @Content) })
+
+	@PutMapping
+	public ResponseEntity<UsuarioDto> update(
+			@Parameter(description = "Párametro String Usuario id que recoge el usuario", required = true) @RequestBody Usuario usuario) {
+		logger.info(" ---- updateUsuario (PUT)");
+		Optional<UsuarioDto> usuarioActualizado = this.usuarioService.update(usuarioDto);
+		if (usuarioActualizado.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.of(usuarioActualizado);
+
+	}
+
+}
