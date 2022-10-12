@@ -4,6 +4,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
@@ -47,7 +48,7 @@ public class EventosControllerTestUnit {
 
 	@MockBean
 	private EventosServiceI eventosService;
-	
+
 	@MockBean
 	private EventosRepositoryI eventosRepository;
 
@@ -120,8 +121,8 @@ public class EventosControllerTestUnit {
 		eventoDto.setDireccionEvento(DIRECCION);
 		eventoDto.setAforoEvento(AFORO);
 		eventoDto.setGenero(GENERO);
-		
-		// EVENTONULL 
+
+		// EVENTONULL
 		eventoNull.setNombre(NOMBRE_EVENTO_NULL);
 		eventoNull.setDescripcionCorta(DESCRIPCION_CORTA);
 		eventoNull.setDescripcionLarga(DESCRIPCION_LARGA);
@@ -131,7 +132,7 @@ public class EventosControllerTestUnit {
 		eventoNull.setPolitaAcceso(POLITICA);
 		eventoNull.setRecinto(recinto);
 		eventoNull.setGenero(GENERO_NULL);
-		
+
 		// EVENTONULL2
 		eventoDtoNull.setNombre(NOMBRE_EVENTO);
 		eventoDtoNull.setDescripcionEvento(DESCRIPCION_CORTA);
@@ -191,15 +192,14 @@ public class EventosControllerTestUnit {
 		mockMvc.perform(get("/eventos/lista").contentType("application/json")).andExpect(status().isNotFound());
 
 	}
-	
+
 	/**
-	* Descripción del método:
-	* Test que da ok cuando se listan los eventos.
-	*
-	* @author Grupo 2- Tamara Álvarez
-	*
-	* @version 1.0
-	*/
+	 * Descripción del método: Test que da ok cuando se listan los eventos.
+	 *
+	 * @author Grupo 2- Tamara Álvarez
+	 *
+	 * @version 1.0
+	 */
 	@Test
 	public void cuandoListaEventos_Devuelve200() throws Exception {
 
@@ -212,15 +212,14 @@ public class EventosControllerTestUnit {
 		mockMvc.perform(get("/eventos/lista").contentType("application/json")).andExpect(status().isOk());
 
 	}
-	
+
 	/**
-	* Descripción del método:
-	* Test que da ok cuando se busca evento por nombre.
-	*
-	* @author Grupo 2 - Tamara Álvarez
-	*
-	* @version 1.0
-	*/
+	 * Descripción del método: Test que da ok cuando se busca evento por nombre.
+	 *
+	 * @author Grupo 2 - Tamara Álvarez
+	 *
+	 * @version 1.0
+	 */
 	@Test
 	public void cuandoEventoPorNombre_Devuelve200() throws Exception {
 
@@ -230,91 +229,94 @@ public class EventosControllerTestUnit {
 		when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn(eventos);
 
 		// then
-		mockMvc.perform(get("/eventos/nombre/" + eventoDto.getNombre()).contentType("application/json")).andExpect(status().isOk());
+		mockMvc.perform(get("/eventos/nombre/" + eventoDto.getNombre()).contentType("application/json"))
+				.andExpect(status().isOk());
 
 	}
-	
+
 	/**
-	* Descripción del método:
-	* Test que da NotFound cuando se busca evento por nombre null.
-	*
-	* @author Grupo 2 - Tamara Álvarez
-	*
-	* @version 1.0
-	*/
+	 * Descripción del método: Test que da NotFound cuando se busca evento por
+	 * nombre null.
+	 *
+	 * @author Grupo 2 - Tamara Álvarez
+	 *
+	 * @version 1.0
+	 */
 	@Test
-	public void cuandoEventoNombreNull_Devuelve404() throws Exception{
-		
+	public void cuandoEventoNombreNull_Devuelve404() throws Exception {
+
 		logger.info("Aplicando test que devuelve excepcion nombre no encontrado");
-		
+
 		// when
 		when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn(eventos);
 
 		// then
-		mockMvc.perform(get("/eventos/nombre/" + eventoNull.getNombre()).contentType("application/json")).andExpect(status().isNotFound());
-	}
-	
-	/**
-	* Descripción del método:
-	* Test que da ok cuando se busca evento por género.
-	*
-	* @author Carlos Jesús
-	*
-	* @version 1.0
-	*/
-	@Test
-	public void cuandoEventoGenero_daOk() throws Exception{
-	        
-	     logger.info("Aplicando test que devuelve listado por género");
-	     
-	     when(eventosService.findAllByGenero(GENERO)).thenReturn(eventos);
-	        
-	     mockMvc.perform(get("/eventos/genero/"+evento.getGenero()).contentType("application/json")).andExpect(status().isOk());
-	
+		mockMvc.perform(get("/eventos/nombre/" + eventoNull.getNombre()).contentType("application/json"))
+				.andExpect(status().isNotFound());
 	}
 
 	/**
-	* Descripción del método:
-	* Test que da error cuando se busca evento por género null.
-	*
-	* @author Carlos Jesús
-	*
-	* @version 1.0
-	*/
+	 * Descripción del método: Test que da ok cuando se busca evento por género.
+	 *
+	 * @author Carlos Jesús
+	 *
+	 * @version 1.0
+	 */
 	@Test
-	public void cuandoEventoGeneroNull_da404() throws Exception{
-	        
-	     logger.info("Aplicando test que devuelve listado por género");
-	     
-	     when(eventosService.findAllByGenero(GENERO_NULL)).thenReturn(eventos);
-	        
-	     mockMvc.perform(get("/eventos/genero/"+ eventoNull.getGenero()).contentType("application/json")).andExpect(status().isNotFound());
+	public void cuandoEventoGenero_daOk() throws Exception {
+
+		logger.info("Aplicando test que devuelve listado por género");
+
+		when(eventosService.findAllByGenero(GENERO)).thenReturn(eventos);
+
+		mockMvc.perform(get("/eventos/genero/" + evento.getGenero()).contentType("application/json"))
+				.andExpect(status().isOk());
 
 	}
-	
+
 	/**
-	* Descripción del método:
-	* Test que da Ok cuando se elimina un evento.
-	*
-	* @author Grupo 2 - Tamara Álvarez
-	*
-	* @version 1.0
-	*/
+	 * Descripción del método: Test que da error cuando se busca evento por género
+	 * null.
+	 *
+	 * @author Carlos Jesús
+	 *
+	 * @version 1.0
+	 */
+	@Test
+	public void cuandoEventoGeneroNull_da404() throws Exception {
+
+		logger.info("Aplicando test que devuelve listado por género");
+
+		when(eventosService.findAllByGenero(GENERO_NULL)).thenReturn(eventos);
+
+		mockMvc.perform(get("/eventos/genero/" + eventoNull.getGenero()).contentType("application/json"))
+				.andExpect(status().isNotFound());
+
+	}
+
+	/**
+	 * Descripción del método: Test que da Ok cuando se elimina un evento.
+	 *
+	 * @author Grupo 2 - Tamara Álvarez
+	 *
+	 * @version 1.0
+	 */
 	@Test
 	public void cuandoBorroEvento_daOk() throws Exception {
 		logger.info("Aplicando test que elimina un evento");
-	        
-	    mockMvc.perform(delete("/eventos/"+ evento.get_id()).contentType("application/json")).andExpect(status().isOk());
+
+		mockMvc.perform(delete("/eventos/" + evento.get_id()).contentType("application/json"))
+				.andExpect(status().isOk());
 	}
-	
+
 	/**
-	* Descripción del método:
-	* Test que da NotFound cuando se elimina un evento con id null.
-	*
-	* @author Grupo 2 - Tamara Álvarez
-	*
-	* @version 1.0
-	*/
+	 * Descripción del método: Test que da NotFound cuando se elimina un evento con
+	 * id null.
+	 *
+	 * @author Grupo 2 - Tamara Álvarez
+	 *
+	 * @version 1.0
+	 */
 	@Test
 	public void cuandoBorroEventoIdNull_da404() throws Exception {
 		Evento eventoNull = new Evento();
@@ -328,11 +330,11 @@ public class EventosControllerTestUnit {
 		eventoNull.setPolitaAcceso(POLITICA);
 		eventoNull.setRecinto(recinto);
 		eventoNull.setGenero(GENERO_NULL);
-		
 
 		logger.info("Aplicando test que no elimina un evento por tener Id null");
-        
-	    mockMvc.perform(delete("/eventos/"+ eventoNull.get_id()).contentType("application/json")).andExpect(status().isNotFound());
+
+		mockMvc.perform(delete("/eventos/" + eventoNull.get_id()).contentType("application/json"))
+				.andExpect(status().isNotFound());
 	}
 
 }
