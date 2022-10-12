@@ -2,16 +2,18 @@ package com.grupo2.lucaticket.usuario.model.adapter;
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
 import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+
 /**
  * Clase para adaptar entidades Usuario a Objetos DTO de Usuarios
  *
- * @author Grupo 2 - Alonso
+ * @author Grupo 2 - Alonso Gómez
  * @version 1.0 : 07/10/2022
  */
 @Component
@@ -26,7 +28,7 @@ public class UsuarioAdapter implements UsuarioAdapterI {
      * @return El objeto DTO correspondiente a la entidad pasada
      * @since 1.0
      */
-    @Override
+   @Override
     public UsuarioDto usuarioToDto(Usuario usuario) {
         logger.info("Mapeando objeto entidad Usuario a DTO de Usuario...");
         UsuarioDto response = new UsuarioDto();
@@ -50,4 +52,7 @@ public class UsuarioAdapter implements UsuarioAdapterI {
         logger.info("Mapeando lista de entidades Usuario a lista de DTO de Usuarios");
         return usuarios.stream().map(this::usuarioToDto).toList();
     }
+	
+
+	
 }

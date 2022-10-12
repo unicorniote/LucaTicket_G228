@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
@@ -31,7 +30,7 @@ public class Usuario{
     @Id
     @Schema(name = "id", description = "Identificador numerico del usuario")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
 
     @Size(max = 100)
     @Schema(name = "nombre", description = "Nombre del usuario")
@@ -52,5 +51,7 @@ public class Usuario{
 
     @Schema(name = "fechaAlta", description = "Fecha de cuando el usuario se registro en el sistema del usuario")
     private LocalDate fechaalta;
+
+	
 
 }
