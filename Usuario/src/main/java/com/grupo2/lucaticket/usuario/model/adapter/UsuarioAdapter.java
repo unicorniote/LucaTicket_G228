@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Clase para adaptar entidades Usuario a Objetos DTO de Usuarios
  *
- * @author Grupo 2 - Alonso
+ * @author Grupo 2 - Alonso Gómez
  * @version 1.0 : 07/10/2022
  */
 @Component
