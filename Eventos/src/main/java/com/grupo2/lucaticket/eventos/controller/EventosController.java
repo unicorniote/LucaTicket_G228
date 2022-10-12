@@ -67,9 +67,13 @@ public class EventosController {
 	/**
 	* Descripción del método:
 	* Método que añade un evento introducido por el administrador.
-	* @param evento evento
+	* 
+	* @param evento
+	* 
 	* @return {@ResponseEntity} Se devuelve un objeto evento
+	* 
 	* @author Carlos Jesús Pérez Márquez
+	* 
 	* @version 1.0
 	*/
 	
@@ -97,11 +101,43 @@ public class EventosController {
 		return ResponseEntity.created(location).build();
 	}
 	
+	/**
+	* Método findAll - Lista todos los eventos.
+	* 
+	* @return Lista objetos EventoDto
+	* 
+	* @author Grupo 2 - Tamara Alvarez
+	*/
+	
+	@Operation(summary = "Lista todos los eventos",
+			description = "Lista los eventos existentes en la BBDD de MongoDB",
+			tags={"Evento"})
+
+	@ApiResponses(value= {
+			@ApiResponse(responseCode = "200",
+			description = "Eventos encontrados",
+			content = {
+					@Content(mediaType = "application/json",
+					schema = @Schema(implementation = Evento.class))}),
+			@ApiResponse(responseCode = "400", description = "No existen eventos en la bbdd", content = @Content)})
+	@GetMapping("/lista")
+	public List<EventoDto> listaEventos() {
+		logger.info("----------Buscando eventos ");
+		List<Evento> evento = eventosService.findAll();
+		if (evento.isEmpty()) {
+			throw new EventoNotFoundException();
+		}else {
+			return eventoAdapter.eventoToDto(evento);
+			
+		}
+	}
+	
 	
 	/**
 	* Método findByNombre - Busca un evento por su nombre.
 	* 
 	* @param nombre
+	* 
 	* @return Devuelve un objeto eventoDTO
 	* 
 	* @author Grupo 2 - Tamara Alvarez
@@ -118,7 +154,7 @@ public class EventosController {
 					@Content(mediaType = "application/json",
 					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "400", description = "No existen eventos en la bbdd", content = @Content)})
-	@GetMapping("/{nombre}")
+	@GetMapping("/nombre/{nombre}")
 	public EventoDto listaEventosNombre(
 			@Parameter(description = "Nombre del evento a localizar", required=true) 
 			@PathVariable String nombre) {
@@ -134,8 +170,9 @@ public class EventosController {
 	/**
 	* Método listarEventosGenero - Lista los eventos según el género aportado.
 	* 
-	* @param String genero
-	* @return List<EventosDto>
+	* @param genero
+	* 
+	* @return eventosGenero
 	* 
 	* @author Grupo 2 - Carlos Jesús
 	* 
@@ -151,7 +188,7 @@ public class EventosController {
 					content ={@Content(mediaType = "application/json",
 					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "400", description = "No existen eventos en la BBDD", content = @Content)})
-	@GetMapping("/{genero}")
+	@GetMapping("/genero/{genero}")
 	public List<EventoDto> listarEventosGenero(@Parameter(description = "Párametro String Genero que recoge el getmapping", required=true)@PathVariable String genero){
 		
 		logger.info("Listando eventos por género");
@@ -162,9 +199,10 @@ public class EventosController {
 	
 	
 	/**
-	* Método findById - Busca un evento por su Id.
+	* Método listaDetallesEvento - Muestra los detalles de un evento buscado por su ID.
 	* 
 	* @param id
+	* 
 	* @return Devuelve un objeto eventoDTO
 	* 
 	* @author Grupo 2 - Tamara Alvarez
@@ -193,28 +231,29 @@ public class EventosController {
 	}
 	
 	/**
-	* Método findAllByCiudad - Busca eventos por su cuidad
+	* Método listaEventosCiudad - Busca eventos por ciudad
 	* 
 	* @param ciudad
+	* 
 	* @return Devuelve un objeto eventoDTO
 	* 
 	* @author Grupo 2 - Tamara Alvarez
 	*/
 	
-	@Operation(summary = "Lista un evento por su ID",
-			description = "Lista el evento existente en la BBDD de MongoDB según su ID",
+	@Operation(summary = "Lista eventos por ciudad",
+			description = "Lista eventos existentes en la BBDD de MongoDB según su ciudad",
 			tags={"Evento"})
 
 	@ApiResponses(value= {
 			@ApiResponse(responseCode = "200",
-			description = "Evento encontrado",
+			description = "Eventos encontrados",
 			content = {
 					@Content(mediaType = "application/json",
 					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "404", description = "No existen eventos en esa ciudad", content = @Content)})
 	@GetMapping("/ciudad/{ciudad}")
 	public EventoDto listaEventosCiudad(@Parameter(description = "Ciudad del evento a localizar", required=true)@PathVariable String ciudad) {
-		Optional<Evento> evento = eventosService.findAllByCiudad(ciudad);
+		Optional<Evento> evento = eventosService.findByCiudad(ciudad);
 		if(evento.isPresent()) {
 			return eventoAdapter.eventoToDto(evento.get());
 		}else {

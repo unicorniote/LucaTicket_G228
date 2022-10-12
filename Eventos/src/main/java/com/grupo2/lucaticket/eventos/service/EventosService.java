@@ -145,8 +145,8 @@ public class EventosService implements EventosServiceI{
 	* @version 1.0
 	*/
 	@Override
-	public Optional<Evento> findAllByCiudad(String ciudad) {
-		return repo.findAllByCiudad(ciudad);
+	public Optional<Evento> findByCiudad(String ciudad) {
+		return repo.findByCiudad(ciudad);
 	}
 
 }

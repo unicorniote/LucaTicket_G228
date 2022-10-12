@@ -22,12 +22,12 @@ import com.grupo2.lucaticket.eventos.model.Evento;
 */
 public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 	
-	@Query("{ 'genero' : ?0 }")
+	
 	List<Evento> findAllByGenero(String genero);
 	
-	@Query("{ $text: { $search: \"?0\" } }")
+	
 	Optional<Evento> findByNombre(String nombre);
 	
-	@Query("{ 'recinto.ciudad' : ?0 }")
-	Optional<Evento> findAllByCiudad(String ciudad);
+	@Query(" $lookup: { from : 'Eventos', localField: 'ciudadEvento', foreignField: '_id', as: 'sender' }, {$lookup: { from: 'Recintos', localField: 'ciudad', foreignField: '_id', as: 'receiver' }}")
+	Optional<Evento> findByCiudad(String ciudad);
 }

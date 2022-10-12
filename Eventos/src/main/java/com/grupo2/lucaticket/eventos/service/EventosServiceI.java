@@ -19,5 +19,5 @@ public interface EventosServiceI {
 	
 	public Optional<Evento> findById(String id);
 	
-	public Optional<Evento> findAllByCiudad(String ciudad);
+	public Optional<Evento> findByCiudad(String ciudad);
 }
