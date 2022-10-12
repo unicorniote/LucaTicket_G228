@@ -53,6 +53,7 @@ public class EventosControllerTestUnit {
 	List<Evento> eventos;
 	List<Evento> eventosVacio;
 
+	private final String ID = "1";
 	private final String NOMBRE_EVENTO = "Evento de prueba";
 	private final String NOMBRE_EVENTO_NULL = null;
 	private final String DESCRIPCION_CORTA = "Descripción corta del evento";
@@ -87,6 +88,7 @@ public class EventosControllerTestUnit {
 		recinto.setAforo(AFORO);
 
 		// EVENTO
+		evento.set_id(ID);
 		evento.setNombre(NOMBRE_EVENTO);
 		evento.setDescripcionCorta(DESCRIPCION_CORTA);
 		evento.setDescripcionLarga(DESCRIPCION_LARGA);
@@ -161,7 +163,7 @@ public class EventosControllerTestUnit {
 	@Test
 	public void cuandoListaNull_Devuelve404() throws Exception {
 
-		logger.info("Aplicando test que devuelve listado");
+		logger.info("Aplicando test que devuelve excepcion lista vacia");
 
 		// when
 		when(eventosService.findAll()).thenReturn(eventosVacio);
@@ -182,7 +184,7 @@ public class EventosControllerTestUnit {
 	@Test
 	public void cuandoListaEventos_Devuelve200() throws Exception {
 
-		logger.info("Aplicando test que devuelve listado");
+		logger.info("Aplicando test que devuelve listado de todos los eventos");
 
 		// when
 		when(eventosService.findAll()).thenReturn(eventos);
@@ -203,7 +205,7 @@ public class EventosControllerTestUnit {
 	@Test
 	public void cuandoEventoPorNombre_Devuelve200() throws Exception {
 
-		logger.info("Aplicando test que devuelve listado");
+		logger.info("Aplicando test que devuelve evento por nombre");
 
 		// when
 		when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn(eventos);
@@ -211,6 +213,26 @@ public class EventosControllerTestUnit {
 		// then
 		mockMvc.perform(get("/eventos/nombre/" + eventoDto.getNombre()).contentType("application/json")).andExpect(status().isOk());
 
+	}
+	
+	/**
+	* Descripción del método:
+	* Test que da NotFound cuando se busca evento por nombre null.
+	*
+	* @author Grupo 2 - Tamara Álvarez
+	*
+	* @version 1.0
+	*/
+	@Test
+	public void cuandoEventoNombreNull_Devuelve404() throws Exception{
+		
+		logger.info("Aplicando test que devuelve excepcion nombre no encontrado");
+		
+		// when
+		when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn(eventos);
+
+		// then
+		mockMvc.perform(get("/eventos/nombre/" + eventoNull.getNombre()).contentType("application/json")).andExpect(status().isNotFound());
 	}
 	
 	/**
@@ -249,6 +271,24 @@ public class EventosControllerTestUnit {
 	        
 	     mockMvc.perform(get("/eventos/genero/"+ eventoNull.getGenero()).contentType("application/json")).andExpect(status().isOk());
 
+	}
+	
+	/**
+	* Descripción del método:
+	* Test que da Ok cuando se elimina un evento.
+	*
+	* @author Grupo 2 - Tamara Álvarez
+	*
+	* @version 1.0
+	*/
+	@Test
+	public void cuandoBorroEvento_daOk() throws Exception {
+		
+		logger.info("Aplicando test que elimina un evento");
+	     
+	     eventosService.deleteById(ID);
+	        
+	     mockMvc.perform(get("/eventos/"+ evento.get_id()).contentType("application/json")).andExpect(status().isOk());
 	}
 
 }
