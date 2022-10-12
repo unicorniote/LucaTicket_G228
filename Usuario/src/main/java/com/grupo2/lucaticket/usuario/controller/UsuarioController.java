@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
-import com.grupo2.lucaticket.usuario.model.adapter.UsuarioAdapterI;
+import com.grupo2.lucaticket.usuario.model.adapter.UsuarioAdapter;
 import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
-import com.grupo2.lucaticket.usuario.repository.UsuarioRepositoryI;
-import com.grupo2.lucaticket.usuario.service.UsuarioService;
 import com.grupo2.lucaticket.usuario.service.UsuarioServiceI;
+import com.grupo2.lucaticket.ventas.usuario.model.adapter.UsuarioAdapterI;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -109,7 +108,7 @@ public class UsuarioController {
 	@GetMapping("/listar")
 	public Collection<UsuarioDto> getUsuarios() {
 		logger.info("Buscando usuario");
-		return usuarioAdapter.usuarioToDto((List<Usuario>) usuarioService.findAll());
+		return UsuarioAdapter.usuarioToDto((List<Usuario>) usuarioService.findAll());
 	}
 
 	@Operation(summary = "Buscar usuario por ID", description = "Dado un ID, devuelve un objeto usuario", tags = {
