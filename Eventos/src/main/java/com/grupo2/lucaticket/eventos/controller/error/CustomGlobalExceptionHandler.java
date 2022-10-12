@@ -1,8 +1,5 @@
 package com.grupo2.lucaticket.eventos.controller.error;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.http.HttpHeaders;
@@ -17,6 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.grupo2.lucaticket.eventos.utils.ErrorUtils;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Descripción de la clase: Clase CustomGlobalExceptionHandler que intercepta
  * errores
@@ -25,27 +24,32 @@ import com.grupo2.lucaticket.eventos.utils.ErrorUtils;
  * @version 07/10/2022
  */
 
+@Slf4j
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(EventoNotFoundException.class)
-	public void springHandleNotFound(HttpServletResponse response) throws IOException {
-		logger.info("EventoNotFoundException()");
-		response.sendError(HttpStatus.NOT_FOUND.value());
+	public ResponseEntity<Object> handleCvvNotValidException(EventoNotFoundException exception, HttpStatus status,
+			WebRequest request) {
+		log.info("Lanzando excepción TarjetaNotFoundException...");
+		CustomErrorJson customError = ErrorUtils.customErrorMapper(exception, request);
+		return new ResponseEntity<>(customError, status);
+
 	}
 
 	@ExceptionHandler(ConstraintViolationException.class)
-	public void constraintViolationException(HttpServletResponse response) throws IOException {
-		logger.info("------ ConstraintViolationException() ");
-		response.sendError(HttpStatus.BAD_REQUEST.value());
+	public ResponseEntity<Object> handleCvvNotValidException(ConstraintViolationException exception, HttpStatus status,
+			WebRequest request) {
+		log.info("Lanzando excepción TarjetaNotFoundException...");
+		CustomErrorJson customError = ErrorUtils.customErrorMapper(exception, request);
+		return new ResponseEntity<>(customError, status);
+
 	}
-	
-	
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		logger.info("HandleMethodArgumentNotValid()");
+		log.info("HandleMethodArgumentNotValid()");
 
 		CustomErrorJson customError = ErrorUtils.customErrorMapper(ex, headers, status, request);
 
@@ -62,13 +66,11 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	 */
 
 	@Override
-	
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		logger.info("------ handleHttpRequestMethodNotSupported()");
+		log.info("------ handleHttpRequestMethodNotSupported()");
 
 		CustomErrorJson customError = ErrorUtils.customErrorMapper(ex, headers, status, request);
-
 		return new ResponseEntity<Object>(customError, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
 
 		/**
