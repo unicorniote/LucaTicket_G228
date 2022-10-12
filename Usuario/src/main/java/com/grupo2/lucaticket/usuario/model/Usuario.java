@@ -32,10 +32,10 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Usuario {
 
-	@Id
-	@Schema(name = "id", description = "Identificador numerico del usuario")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @Schema(name = "id", description = "Identificador numerico del usuario")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
 	@Size(max = 100)
 	@Schema(name = "nombre", description = "Nombre del usuario")

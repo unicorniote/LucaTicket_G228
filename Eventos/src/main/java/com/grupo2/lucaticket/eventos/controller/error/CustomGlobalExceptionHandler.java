@@ -64,7 +64,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	 * @author Lamia
 	 * @version 1.0
 	 */
-
 	@Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {

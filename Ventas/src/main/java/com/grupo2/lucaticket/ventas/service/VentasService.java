@@ -1,9 +1,18 @@
 package com.grupo2.lucaticket.ventas.service;
 
+import com.grupo2.lucaticket.ventas.controller.VentasController;
+import com.grupo2.lucaticket.ventas.feignclients.EventoFeignClient;
+import com.grupo2.lucaticket.ventas.feignclients.UsuarioFeignClients;
+import com.grupo2.lucaticket.ventas.model.response.EventoDto;
+import com.grupo2.lucaticket.ventas.model.response.UsuarioDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.grupo2.lucaticket.ventas.model.Venta;
 import com.grupo2.lucaticket.ventas.repository.VentasRepositoryI;
+import org.springframework.stereotype.Service;
+
 /**
 * @Project LucaTicket
 *
@@ -16,13 +25,31 @@ import com.grupo2.lucaticket.ventas.repository.VentasRepositoryI;
 * @since 1.0
 *
 */
-public class VentasService implements VentasServiceI{ 
+@Service
+public class VentasService implements VentasServiceI{
+
+	private static final Logger logger = LoggerFactory.getLogger(VentasController.class);
+
 	@Autowired
 	private VentasRepositoryI repo;
 
+	@Autowired
+	private UsuarioFeignClients usuarioFeignClients;
+
+	@Autowired
+	private EventoFeignClient eventoFeignClient;
+
 	@Override
 	public Venta addVenta(Venta venta) {
-		return repo.save(venta);
+		logger.info("Comprobando usuario " + venta.getUsuario());
+		final UsuarioDto usuarioDto = usuarioFeignClients.getUsuario(venta.getUsuario());
+		logger.info("usuario encontrado ->: " + usuarioDto);
+		final EventoDto eventoDto = eventoFeignClient.getEvento(venta.getEvento());
+		logger.info("evento encontrado ->: " + eventoDto);
+		if (usuarioDto != null && eventoDto != null) {
+			venta = repo.save(venta);
+		}
+		return venta;
 	}
 
 	

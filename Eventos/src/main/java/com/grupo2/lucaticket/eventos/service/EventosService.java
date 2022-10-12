@@ -1,15 +1,13 @@
 package com.grupo2.lucaticket.eventos.service;
 
-import com.grupo2.lucaticket.eventos.model.Evento;
-import com.grupo2.lucaticket.eventos.model.response.EventoDto;
-import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
-
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
+
+import com.grupo2.lucaticket.eventos.model.Evento;
+import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
 
 /**
  * @Project LucaTicket

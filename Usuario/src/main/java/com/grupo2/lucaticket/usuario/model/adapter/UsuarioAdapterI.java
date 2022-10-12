@@ -4,7 +4,6 @@ import com.grupo2.lucaticket.usuario.model.Usuario;
 import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @Project LucaTicket
@@ -21,4 +20,7 @@ public interface UsuarioAdapterI {
 
 	public List<UsuarioDto> usuarioToDto(List<Usuario> usuarios);
 
+	public UsuarioDto usuarioToVentasDto(Usuario usuario);
+
+	public List<UsuarioDto> usuarioToVentasDto(List<Usuario> usuarios);
 }

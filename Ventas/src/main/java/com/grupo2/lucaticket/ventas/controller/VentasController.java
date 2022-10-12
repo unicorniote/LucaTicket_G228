@@ -1,6 +1,8 @@
 package com.grupo2.lucaticket.ventas.controller;
 
+import com.grupo2.lucaticket.ventas.feignclients.UsuarioFeignClients;
 import com.grupo2.lucaticket.ventas.model.Venta;
+import com.grupo2.lucaticket.ventas.model.response.UsuarioDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -68,16 +70,10 @@ public class VentasController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addVenta(@RequestBody Venta venta) {
-        //	{
-//		"usuario": 3,
-//		"evento": "6343bd3cf73ca953a3eda29f"
-//	}
         logger.info("Add venta ->: " + venta);
         venta = ventasService.addVenta(venta);
         logger.info("Venta from database ->: " + venta);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(venta.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
-    
-    // prueba comit
 }
