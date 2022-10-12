@@ -1,7 +1,9 @@
 package com.grupo2.lucaticket.ventas.service;
 
 import com.grupo2.lucaticket.ventas.controller.VentasController;
+import com.grupo2.lucaticket.ventas.feignclients.EventoFeignClient;
 import com.grupo2.lucaticket.ventas.feignclients.UsuarioFeignClients;
+import com.grupo2.lucaticket.ventas.model.response.EventoDto;
 import com.grupo2.lucaticket.ventas.model.response.UsuarioDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,18 +34,21 @@ public class VentasService implements VentasServiceI{
 	private VentasRepositoryI repo;
 
 	@Autowired
-	private UsuarioFeignClients feignClients;
+	private UsuarioFeignClients usuarioFeignClients;
+
+	@Autowired
+	private EventoFeignClient eventoFeignClient;
 
 	@Override
 	public Venta addVenta(Venta venta) {
 		logger.info("Comprobando usuario " + venta.getUsuario());
-		final UsuarioDto usuarioDto = feignClients.getUsuario(venta.getUsuario()); // controlar excepciones que vengan desde usuario
+		final UsuarioDto usuarioDto = usuarioFeignClients.getUsuario(venta.getUsuario());
 		logger.info("usuario encontrado ->: " + usuarioDto);
-		// falta comprobar que el evento exista
-		if (usuarioDto != null) {
+		final EventoDto eventoDto = eventoFeignClient.getEvento(venta.getEvento());
+		logger.info("evento encontrado ->: " + eventoDto);
+		if (usuarioDto != null && eventoDto != null) {
 			venta = repo.save(venta);
 		}
-
 		return venta;
 	}
 
