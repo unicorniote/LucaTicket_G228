@@ -79,6 +79,17 @@ public class UsuarioService implements UsuarioServiceI {
 		return repo.update(usuario);
 	}
 
+	/**
+	 * Metodo que elimina un usuario
+	 *
+	 * @param UsuarioDto
+	 * @return usuario
+	 * @since 1.0
+	 */
 	
 	
+	@Override
+    public void deleteUsuario(String id) {
+		repo.deleteById(id);
+    }
 }

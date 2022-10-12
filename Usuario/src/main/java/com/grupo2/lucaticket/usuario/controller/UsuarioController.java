@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,7 +80,7 @@ public class UsuarioController {
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content) })
 	@PostMapping("/add")
-	public ResponseEntity<?> addEvento(@RequestBody Usuario usuario) {
+	public ResponseEntity<?> addUsuario(@RequestBody Usuario usuario) {
 
 		logger.info("añadiendo Usuario");
 		usuario = this.usuarioService.save(usuario);
@@ -137,7 +138,7 @@ public class UsuarioController {
 	 * 
 	 * @version 1.0
 	 */
-	@Operation(summary = "Listar los usuarios", description = "Lista todo los eventos existentes en la BBDD de MySql", tags = {
+	@Operation(summary = "Listar los usuarios", description = "Lista todo los usuarios existentes en la BBDD de MySql", tags = {
 			"Usuario" })
 
 	@ApiResponses(value = {
@@ -169,5 +170,25 @@ public class UsuarioController {
 		return ResponseEntity.of(usuarioActualizado);
 
 	}
-
-}
+	
+	
+	
+	/**
+	 * Método Delete - Elimina un usuario.
+	 * 
+	 * @return Devuelve un objeto usuario
+	 * 
+	 * @author Grupo 2 - Lamia
+	 * 
+	 * @version 1.0
+	 */
+	
+	
+	@DeleteMapping("/{id}")
+	public void deleteUsuario(@PathVariable String id) {
+		logger.info("Delete, id ->" + id);
+		usuarioService.deleteById(id);
+	}
+	
+	
+	}
