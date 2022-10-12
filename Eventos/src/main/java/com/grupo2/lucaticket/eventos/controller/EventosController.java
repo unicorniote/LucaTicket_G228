@@ -306,6 +306,26 @@ public class EventosController {
 		}
 	}
 		
+	/**
+	    * Método deleteEvento - Elimina un evento por su Id.
+	    * 
+	    * @param String id
+	    * 
+	    * @author Grupo 2 - Alonso Gómez
+	    * 
+	    * @version 1.0
+	    */
+
+	    @Operation(summary = "Eliminar evento",
+	            description = "Permite eliminar el evento deseado y existente en la BBDD de MongoDB",
+	            tags={"Evento"})
+
+	    @ApiResponses(value= {
+	            @ApiResponse(responseCode = "200", description = "Evento eliminado correctamente",
+	                    content = {@Content(mediaType = "application/json",
+	                    schema = @Schema(implementation = Evento.class))}),
+	            @ApiResponse(responseCode = "204", description = "El servidor registra la petición correctamente, pero no se ha encontrado el contenido a borrar", content = @Content),
+	            @ApiResponse(responseCode = "202", description = "El evento aún no ha sido eliminado", content = @Content)})
 	
 	@DeleteMapping("/{id}")
     public void deleteEvento(@PathVariable String id) {
