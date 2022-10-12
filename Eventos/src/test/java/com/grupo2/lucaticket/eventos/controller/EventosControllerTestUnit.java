@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -67,6 +66,7 @@ public class EventosControllerTestUnit {
 	private final String DIRECCION = "LUCATIC";
 	private final int AFORO = 100;
 	private final String GENERO = "Genero del evento";
+	private final String GENERO_NULL = null;
 	private final String TIPO = "Tipo del recinto";
 
 	@BeforeEach
@@ -98,7 +98,7 @@ public class EventosControllerTestUnit {
 		evento.setGenero(GENERO);
 
 		// EVENTODTO
-		eventoDto.setNombre(NOMBRE_EVENTO_NULL);
+		eventoDto.setNombre(NOMBRE_EVENTO);
 		eventoDto.setDescripcionEvento(DESCRIPCION_CORTA);
 		eventoDto.setFoto(FOTO);
 		eventoDto.setFechaEvento(FECHA.toLocalDate());
@@ -123,7 +123,7 @@ public class EventosControllerTestUnit {
 		eventoNull.setCiudadEvento(CIUDAD);
 		eventoNull.setDireccionEvento(DIRECCION);
 		eventoNull.setAforoEvento(AFORO);
-		eventoNull.setGenero(GENERO);
+		eventoNull.setGenero(GENERO_NULL);
 
 		eventos.add(evento);
 		eventos.add(evento);
@@ -171,6 +171,14 @@ public class EventosControllerTestUnit {
 
 	}
 	
+	/**
+	* Descripción del método:
+	* Test que da ok cuando se listan los eventos.
+	*
+	* @author Grupo 2- Tamara Álvarez
+	*
+	* @version 1.0
+	*/
 	@Test
 	public void cuandoListaEventos_Devuelve200() throws Exception {
 
@@ -184,16 +192,62 @@ public class EventosControllerTestUnit {
 
 	}
 	
+	/**
+	* Descripción del método:
+	* Test que da ok cuando se busca evento por nombre.
+	*
+	* @author Grupo 2 - Tamara Álvarez
+	*
+	* @version 1.0
+	*/
 	@Test
 	public void cuandoEventoPorNombre_Devuelve200() throws Exception {
 
 		logger.info("Aplicando test que devuelve listado");
 
 		// when
-		//when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn();
+		when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn(eventos);
 
 		// then
-		mockMvc.perform(get("/eventos/nombre/{nombre}").contentType("application/json")).andExpect(status().isNotFound());
+		mockMvc.perform(get("/eventos/nombre/" + eventoDto.getNombre()).contentType("application/json")).andExpect(status().isOk());
+
+	}
+	
+	/**
+	* Descripción del método:
+	* Test que da ok cuando se busca evento por género.
+	*
+	* @author Carlos Jesús
+	*
+	* @version 1.0
+	*/
+	@Test
+	public void cuandoEventoGenero_daOk() throws Exception{
+	        
+	     logger.info("Aplicando test que devuelve listado por género");
+	     
+	     when(eventosService.findAllByGenero(GENERO)).thenReturn(eventos);
+	        
+	     mockMvc.perform(get("/eventos/genero/"+evento.getGenero()).contentType("application/json")).andExpect(status().isOk());
+	
+	}
+
+	/**
+	* Descripción del método:
+	* Test que da error cuando se busca evento por género null.
+	*
+	* @author Carlos Jesús
+	*
+	* @version 1.0
+	*/
+	@Test
+	public void cuandoEventoGeneroNull_daOk() throws Exception{
+	        
+	     logger.info("Aplicando test que devuelve listado por género");
+	     
+	     when(eventosService.findAllByGenero(GENERO)).thenReturn(eventos);
+	        
+	     mockMvc.perform(get("/eventos/genero/"+ eventoNull.getGenero()).contentType("application/json")).andExpect(status().isOk());
 
 	}
 

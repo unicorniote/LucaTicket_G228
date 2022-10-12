@@ -155,16 +155,15 @@ public class EventosController {
 					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "400", description = "No existen eventos en la bbdd", content = @Content)})
 	@GetMapping("/nombre/{nombre}")
-	public EventoDto listaEventosNombre(
+	public List<EventoDto> listaEventosNombre(
 			@Parameter(description = "Nombre del evento a localizar", required=true) 
 			@PathVariable String nombre) {
 		logger.info("----------Buscando eventos por nombre");
-		Optional<Evento> evento = eventosService.findByNombre(nombre);
+		List<Evento> evento = eventosService.findByNombre(nombre);
 		if (evento.isEmpty()) {
 			throw new EventoNotFoundException();
-			
 		}else {
-			return eventoAdapter.eventoToDto(evento.get());
+			return eventoAdapter.eventoToDto(evento);
 		}
 	}
 
@@ -191,9 +190,8 @@ public class EventosController {
 			@ApiResponse(responseCode = "400", description = "No existen eventos en la BBDD", content = @Content)})
 	@GetMapping("/genero/{genero}")
 	public List<EventoDto> listarEventosGenero(@Parameter(description = "Párametro String Genero que recoge el getmapping", required=true)@PathVariable String genero){
-		
 		logger.info("Listando eventos por género");
-		List<EventoDto> eventosGenero =eventoAdapter.eventoToDto(eventosService.findAllByGenero(genero));
+		List<EventoDto> eventosGenero = eventoAdapter.eventoToDto(eventosService.findAllByGenero(genero));
 		return eventosGenero;
 		
 	}
@@ -223,10 +221,11 @@ public class EventosController {
 	@GetMapping("/detalles/{id}")
 	public EventoDto eventosById(@Parameter(description = "ID del evento a localizar", required=true)@PathVariable String id) {
 		Optional<Evento> evento = eventosService.findById(id);
-		if (evento.isPresent()) {
-			return eventoAdapter.eventoToDto(evento.get());
-		}else {
+		if (evento.isEmpty()) {
 			throw new EventoNotFoundException();
+		}else {
+			return eventoAdapter.eventoToDto(evento.get());
+			
 		}
 		
 	}
@@ -253,13 +252,40 @@ public class EventosController {
 					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "404", description = "No existen eventos en esa ciudad", content = @Content)})
 	@GetMapping("/ciudad/{ciudad}")
-	public EventoDto listaEventosCiudad(@Parameter(description = "Ciudad del evento a localizar", required=true)@PathVariable String ciudad) {
-		Optional<Evento> evento = eventosService.findByCiudad(ciudad);
-		if(evento.isPresent()) {
-			return eventoAdapter.eventoToDto(evento.get());
-		}else {
+	public List<EventoDto> listaEventosCiudad(@Parameter(description = "Ciudad del evento a localizar", required=true)@PathVariable String ciudad) {
+		List<Evento> evento = eventosService.findByCiudad(ciudad);
+		if(evento.isEmpty()) {
 			throw new EventoNotFoundException();
+		}else {
+			return eventoAdapter.eventoToDto(evento);
 		}
 		
-	}		
+	}
+	
+	/**
+	    * Método deleteEvento - Elimina un evento por su Id.
+	    * 
+	    * @param String id
+	    * 
+	    * @author Grupo 2 - Alonso Gómez
+	    * 
+	    * @version 1.0
+	    */
+
+	    @Operation(summary = "Eliminar evento",
+	            description = "Permite eliminar el evento deseado y existente en la BBDD de MongoDB",
+	            tags={"Evento"})
+
+	    @ApiResponses(value= {
+	            @ApiResponse(responseCode = "200", description = "Evento eliminado correctamente",
+	                    content = {@Content(mediaType = "application/json",
+	                    schema = @Schema(implementation = Evento.class))}),
+	            @ApiResponse(responseCode = "204", description = "El servidor registra la petición correctamente, pero no se ha encontrado el contenido a borrar", content = @Content),
+	            @ApiResponse(responseCode = "202", description = "El evento aún no ha sido eliminado", content = @Content)})
+
+	    @DeleteMapping("/{id}")
+	    public void deleteEvento(@PathVariable String id) {
+	        logger.info("Delete, id ->" + id);
+	        eventosService.deleteById(id);
+	    }
 }

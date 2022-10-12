@@ -26,8 +26,8 @@ public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 	List<Evento> findAllByGenero(String genero);
 	
 	
-	Optional<Evento> findByNombre(String nombre);
+	List<Evento> findByNombre(String nombre);
 	
 	@Query(" $lookup: { from : 'Eventos', localField: 'ciudadEvento', foreignField: '_id', as: 'sender' }, {$lookup: { from: 'Recintos', localField: 'ciudad', foreignField: '_id', as: 'receiver' }}")
-	Optional<Evento> findByCiudad(String ciudad);
+	List<Evento> findByCiudad(String ciudad);
 }

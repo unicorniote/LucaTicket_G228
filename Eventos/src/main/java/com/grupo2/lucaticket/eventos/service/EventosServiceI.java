@@ -15,9 +15,9 @@ public interface EventosServiceI {
 
 	public List<Evento> findAllByGenero(String genero);
 	
-	public Optional<Evento> findByNombre(String nombre);
+	public List<Evento> findByNombre(String nombre);
 	
 	public Optional<Evento> findById(String id);
 	
-	public Optional<Evento> findByCiudad(String ciudad);
+	public List<Evento> findByCiudad(String ciudad);
 }
