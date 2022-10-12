@@ -5,17 +5,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import com.grupo2.lucaticket.usuario.controller.error.UsuarioNotFoundException;
+
 import com.grupo2.lucaticket.usuario.model.Usuario;
 import com.grupo2.lucaticket.usuario.model.adapter.UsuarioAdapterI;
 import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
-import com.grupo2.lucaticket.usuario.repository.UsuarioRepositoryI;
-import com.grupo2.lucaticket.usuario.service.UsuarioService;
+
 import com.grupo2.lucaticket.usuario.service.UsuarioServiceI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
