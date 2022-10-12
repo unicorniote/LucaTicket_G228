@@ -1,6 +1,7 @@
 package com.grupo2.lucaticket.eventos.controller;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -25,6 +26,7 @@ import com.grupo2.lucaticket.eventos.model.Evento;
 import com.grupo2.lucaticket.eventos.model.Recinto;
 import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapter;
 import com.grupo2.lucaticket.eventos.model.response.EventoDto;
+import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
 import com.grupo2.lucaticket.eventos.service.EventosServiceI;
 
 @WebMvcTest(EventosController.class)
@@ -45,15 +47,20 @@ public class EventosControllerTestUnit {
 
 	@MockBean
 	private EventosServiceI eventosService;
+	
+	@MockBean
+	private EventosRepositoryI eventosRepository;
 
 	Evento evento;
+	Evento eventoNull;
 	EventoDto eventoDto;
-	EventoDto eventoNull;
+	EventoDto eventoDtoNull;
 	Recinto recinto;
 	List<Evento> eventos;
 	List<Evento> eventosVacio;
 
 	private final String ID = "1";
+	private final String ID_NULL = "";
 	private final String NOMBRE_EVENTO = "Evento de prueba";
 	private final String NOMBRE_EVENTO_NULL = null;
 	private final String DESCRIPCION_CORTA = "Descripción corta del evento";
@@ -73,8 +80,9 @@ public class EventosControllerTestUnit {
 	@BeforeEach
 	void setUp() {
 		evento = new Evento();
+		eventoNull = new Evento();
 		eventoDto = new EventoDto();
-		eventoNull = new EventoDto();
+		eventoDtoNull = new EventoDto();
 		recinto = new Recinto();
 		objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 		eventos = new ArrayList<>();
@@ -113,19 +121,30 @@ public class EventosControllerTestUnit {
 		eventoDto.setAforoEvento(AFORO);
 		eventoDto.setGenero(GENERO);
 		
-		// EVENTONULL
+		// EVENTONULL 
 		eventoNull.setNombre(NOMBRE_EVENTO_NULL);
-		eventoNull.setDescripcionEvento(DESCRIPCION_CORTA);
+		eventoNull.setDescripcionCorta(DESCRIPCION_CORTA);
+		eventoNull.setDescripcionLarga(DESCRIPCION_LARGA);
 		eventoNull.setFoto(FOTO);
-		eventoNull.setFechaEvento(FECHA.toLocalDate());
-		eventoNull.setHoraEvento(FECHA.toLocalTime());
-		eventoNull.setRangoPreciosEvento(PRECIOS);
-		eventoNull.setPolitcaAcceso(POLITICA);
-		eventoNull.setRecintoEvento(NOMBRE_RECINTO);
-		eventoNull.setCiudadEvento(CIUDAD);
-		eventoNull.setDireccionEvento(DIRECCION);
-		eventoNull.setAforoEvento(AFORO);
+		eventoNull.setFechaEvento(FECHA);
+		eventoNull.setPrecio(PRECIOS);
+		eventoNull.setPolitaAcceso(POLITICA);
+		eventoNull.setRecinto(recinto);
 		eventoNull.setGenero(GENERO_NULL);
+		
+		// EVENTONULL2
+		eventoDtoNull.setNombre(NOMBRE_EVENTO);
+		eventoDtoNull.setDescripcionEvento(DESCRIPCION_CORTA);
+		eventoDtoNull.setFoto(FOTO);
+		eventoDtoNull.setFechaEvento(FECHA.toLocalDate());
+		eventoDtoNull.setHoraEvento(FECHA.toLocalTime());
+		eventoDtoNull.setRangoPreciosEvento(PRECIOS);
+		eventoDtoNull.setPolitcaAcceso(POLITICA);
+		eventoDtoNull.setRecintoEvento(NOMBRE_RECINTO);
+		eventoDtoNull.setCiudadEvento(CIUDAD);
+		eventoDtoNull.setDireccionEvento(DIRECCION);
+		eventoDtoNull.setAforoEvento(AFORO);
+		eventoDtoNull.setGenero(GENERO);
 
 		eventos.add(evento);
 		eventos.add(evento);
@@ -156,7 +175,7 @@ public class EventosControllerTestUnit {
 		logger.info("Aplicando test que devuelve 400");
 
 		// then
-		mockMvc.perform(post("/eventos/add").content(objectMapper.writeValueAsString(eventoNull))
+		mockMvc.perform(post("/eventos/add").content(objectMapper.writeValueAsString(eventoDtoNull))
 				.contentType("application/json")).andExpect(status().isBadRequest());
 	}
 
@@ -283,12 +302,37 @@ public class EventosControllerTestUnit {
 	*/
 	@Test
 	public void cuandoBorroEvento_daOk() throws Exception {
-		
 		logger.info("Aplicando test que elimina un evento");
-	     
-	     eventosService.deleteById(ID);
 	        
-	     mockMvc.perform(get("/eventos/"+ evento.get_id()).contentType("application/json")).andExpect(status().isOk());
+	    mockMvc.perform(delete("/eventos/"+ evento.get_id()).contentType("application/json")).andExpect(status().isOk());
+	}
+	
+	/**
+	* Descripción del método:
+	* Test que da NotFound cuando se elimina un evento con id null.
+	*
+	* @author Grupo 2 - Tamara Álvarez
+	*
+	* @version 1.0
+	*/
+	@Test
+	public void cuandoBorroEventoIdNull_da404() throws Exception {
+		Evento eventoNull = new Evento();
+		eventoNull.set_id(ID_NULL);
+		eventoNull.setNombre(NOMBRE_EVENTO_NULL);
+		eventoNull.setDescripcionCorta(DESCRIPCION_CORTA);
+		eventoNull.setDescripcionLarga(DESCRIPCION_LARGA);
+		eventoNull.setFoto(FOTO);
+		eventoNull.setFechaEvento(FECHA);
+		eventoNull.setPrecio(PRECIOS);
+		eventoNull.setPolitaAcceso(POLITICA);
+		eventoNull.setRecinto(recinto);
+		eventoNull.setGenero(GENERO_NULL);
+		
+
+		logger.info("Aplicando test que no elimina un evento por tener Id null");
+        
+	    mockMvc.perform(delete("/eventos/"+ eventoNull.get_id()).contentType("application/json")).andExpect(status().isNotFound());
 	}
 
 }
