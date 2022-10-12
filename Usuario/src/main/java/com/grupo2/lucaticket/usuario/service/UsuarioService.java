@@ -1,8 +1,10 @@
 package com.grupo2.lucaticket.usuario.service;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
@@ -36,7 +38,16 @@ public class UsuarioService implements UsuarioServiceI {
 	}
 
 	@Override
-	public void deleteById(int id) {
+	public void deleteById(String id) {
 		repo.deleteById(id);
 	}
+
+	public Optional<Usuario> findById(String id) {
+		return repo.findById(id);
+	}
+
+
+
+	
+	
 }

@@ -1,6 +1,10 @@
 package com.grupo2.lucaticket.usuario.service;
 
 import java.util.Collection;
+
+import java.util.Optional;
+
+
 import javax.validation.Valid;
 import com.grupo2.lucaticket.usuario.model.Usuario;
 
@@ -11,5 +15,9 @@ public interface UsuarioServiceI {
 
     public Collection<Usuario> findAll();
     
-    public void deleteById (int id);
+    public void deleteById (String id);
+
+	public Optional<Usuario> findById(String id);
+
+
 }
