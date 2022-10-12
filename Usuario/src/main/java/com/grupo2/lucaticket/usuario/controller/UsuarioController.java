@@ -187,7 +187,7 @@ public class UsuarioController {
 	@DeleteMapping("/{id}")
 	public void deleteUsuario(@PathVariable String id) {
 		logger.info("Delete, id ->" + id);
-		usuarioService.deleteById(id);
+		usuarioService.deleteUsuario(id);
 	}
 	
 	
