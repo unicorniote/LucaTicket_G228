@@ -8,12 +8,16 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import org.springframework.http.ResponseEntity;
+
+import com.grupo2.lucaticket.ventas.usuario.model.Usuario;
+
 @Data
 @Schema(name = "UsuarioDto", description = "DTO de Usuario")
 public class UsuarioDto implements Serializable {
 
     @Schema(name = "id", description = "Identificador numerico del usuario")
-    private int id;
+    private String id;
 
     @Schema(name = "nombre", description = "Nombre del usuario")
     private String nombre;
@@ -29,5 +33,10 @@ public class UsuarioDto implements Serializable {
 
     @Schema(name = "fechaAlta", description = "Fecha de cuando el usuario se registro en el sistema del usuario")
     private LocalDate fechaalta;
+
+
+
+    
+    
 
 }

@@ -15,11 +15,12 @@ package com.grupo2.lucaticket.ventas.usuario.controller.error;
 public class UsuarioNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID =1L;
+	
 	public UsuarioNotFoundException() {
 		super ("Fail: Este usuario no existe");
 	}
 	
-	public UsuarioNotFoundException(Long id) {
+	public UsuarioNotFoundException(int id) {
 		super ("Fail: No existe el usuario");
 	}
 }
