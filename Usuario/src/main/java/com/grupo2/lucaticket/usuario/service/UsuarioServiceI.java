@@ -8,7 +8,7 @@ package com.grupo2.lucaticket.usuario.service;
 /**
 * @Project LucaTicket
 *
-* @Classname UsuarioNotFoundException
+* Interfaz UsuarioServiceI
 *
 * @author Alonso
 * @date 07/10/2022
@@ -72,5 +72,13 @@ public interface UsuarioServiceI {
 	 */
 	public Optional <UsuarioDto> update(@Valid UsuarioDto usuario);
 
+	/**
+	 * Metodo que elimina un usuario
+	 *
+	 * @param UsuarioDto
+	 * @return usuario
+	 * @since 1.0
+	 */
+	public void deleteUsuario(String id);
 
 }

@@ -1,9 +1,13 @@
 package com.grupo2.lucaticket.eventos.service;
 
 import com.grupo2.lucaticket.eventos.model.Evento;
+import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -97,6 +101,23 @@ public class EventosService implements EventosServiceI{
 	public List<Evento> findAllByGenero(String genero){
 		
 		return repo.findAllByGenero(genero);
+	}
+
+	
+	/**
+	* Método Update:
+	* Modificar un evento
+	* 
+	* @param evento
+	* 
+	* @author Grupo 2 - Lamia
+	* 
+	* @version 1.0
+	*/
+ @Override
+	public Optional<EventoDto> update(@Valid Evento evento) {
+		return repo.update(evento);
+		
 	}
 	
 	
