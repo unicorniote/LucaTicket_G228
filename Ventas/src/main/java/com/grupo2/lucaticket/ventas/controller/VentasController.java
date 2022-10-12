@@ -74,4 +74,6 @@ public class VentasController {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(venta.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
+    
+    // prueba comit
 }
