@@ -221,7 +221,7 @@ public class EventosController {
 					schema = @Schema(implementation = Evento.class))}),
 			@ApiResponse(responseCode = "404", description = "No existe evento con ese ID", content = @Content)})
 	@GetMapping("/detalles/{id}")
-	public EventoDto listaDetallesEvento(@Parameter(description = "ID del evento a localizar", required=true)@PathVariable String id) {
+	public EventoDto eventosById(@Parameter(description = "ID del evento a localizar", required=true)@PathVariable String id) {
 		Optional<Evento> evento = eventosService.findById(id);
 		if (evento.isPresent()) {
 			return eventoAdapter.eventoToDto(evento.get());
