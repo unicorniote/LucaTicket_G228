@@ -1,16 +1,20 @@
 package com.grupo2.lucaticket.eventos.controller;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,8 +23,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.grupo2.lucaticket.eventos.model.Evento;
@@ -54,15 +62,17 @@ public class EventosControllerTestUnit {
 
 	Evento evento;
 	Evento eventoNull;
+	Evento eventoActualizado;
 	EventoDto eventoDto;
 	EventoDto eventoDtoNull;
 	Recinto recinto;
 	List<Evento> eventos;
 	List<Evento> eventosVacio;
 
-	private final String ID = "1";
+	private final String ID = "6342ffa7db6b886e7104d2fe";
 	private final String ID_NULL = "";
-	private final String NOMBRE_EVENTO = "Evento de prueba";
+	private final String NOMBRE_EVENTO = "TomorrowLand";
+	private final String NOMBRE_EVENTO_ACTUALIZADO = "Evento actualizado";
 	private final String NOMBRE_EVENTO_NULL = null;
 	private final String DESCRIPCION_CORTA = "Descripción corta del evento";
 	private final String DESCRIPCION_LARGA = "Descripción larga del evento";
@@ -82,6 +92,7 @@ public class EventosControllerTestUnit {
 	void setUp() {
 		evento = new Evento();
 		eventoNull = new Evento();
+		eventoActualizado=new Evento();
 		eventoDto = new EventoDto();
 		eventoDtoNull = new EventoDto();
 		recinto = new Recinto();
@@ -107,6 +118,18 @@ public class EventosControllerTestUnit {
 		evento.setPolitaAcceso(POLITICA);
 		evento.setRecinto(recinto);
 		evento.setGenero(GENERO);
+		
+		// EVENTO ACTUALIZADO
+		eventoActualizado.set_id(ID);
+		eventoActualizado.setNombre(NOMBRE_EVENTO_ACTUALIZADO);
+		eventoActualizado.setDescripcionCorta(DESCRIPCION_CORTA);
+		eventoActualizado.setDescripcionLarga(DESCRIPCION_LARGA);
+		eventoActualizado.setFoto(FOTO);
+		eventoActualizado.setFechaEvento(FECHA);
+		eventoActualizado.setPrecio(PRECIOS);
+		eventoActualizado.setPolitaAcceso(POLITICA);
+		eventoActualizado.setRecinto(recinto);
+		eventoActualizado.setGenero(GENERO);
 
 		// EVENTODTO
 		eventoDto.setNombre(NOMBRE_EVENTO);
@@ -134,7 +157,7 @@ public class EventosControllerTestUnit {
 		eventoNull.setGenero(GENERO_NULL);
 
 		// EVENTONULL2
-		eventoDtoNull.setNombre(NOMBRE_EVENTO);
+		eventoDtoNull.setNombre(NOMBRE_EVENTO_NULL);
 		eventoDtoNull.setDescripcionEvento(DESCRIPCION_CORTA);
 		eventoDtoNull.setFoto(FOTO);
 		eventoDtoNull.setFechaEvento(FECHA.toLocalDate());
@@ -248,11 +271,11 @@ public class EventosControllerTestUnit {
 		logger.info("Aplicando test que devuelve excepcion nombre no encontrado");
 
 		// when
-		when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn(eventos);
+		when(eventosService.findByNombre(eventoNull.getNombre())).thenReturn(eventos);
 
 		// then
 		mockMvc.perform(get("/eventos/nombre/" + eventoNull.getNombre()).contentType("application/json"))
-				.andExpect(status().isNotFound());
+				.andExpect(status().isBadRequest());
 	}
 
 	/**
@@ -336,5 +359,23 @@ public class EventosControllerTestUnit {
 		mockMvc.perform(delete("/eventos/" + eventoNull2.get_id()).contentType("application/json"))
 				.andExpect(status().isNotFound());
 	}
-
+	
+	@Test
+	public void actualizarEvento_Success() throws Exception {
+		
+		when(eventosService.findById(evento.get_id())).thenReturn(Optional.of(evento));
+		when(eventosService.save(eventoActualizado)).thenReturn(eventoActualizado);
+		
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/editar/"+evento.get_id())
+	            .contentType(MediaType.APPLICATION_JSON)
+	            .accept(MediaType.APPLICATION_JSON)
+	            .content(objectMapper.writeValueAsString(eventoActualizado));
+		
+		mockMvc.perform(mockRequest)
+        .andExpect(status().isOk())
+        .andExpect(jsonPath(eventoActualizado.get_id(), is("6342ffa7db6b886e7104d2fe")))
+        .andExpect(jsonPath(eventoActualizado.getNombre(), is("TomorrowLand")));
+	}
+	
+	
 }
