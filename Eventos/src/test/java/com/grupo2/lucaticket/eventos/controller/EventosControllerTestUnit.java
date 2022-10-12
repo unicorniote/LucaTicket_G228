@@ -319,21 +319,21 @@ public class EventosControllerTestUnit {
 	 */
 	@Test
 	public void cuandoBorroEventoIdNull_da404() throws Exception {
-		Evento eventoNull = new Evento();
-		eventoNull.set_id(ID_NULL);
-		eventoNull.setNombre(NOMBRE_EVENTO_NULL);
-		eventoNull.setDescripcionCorta(DESCRIPCION_CORTA);
-		eventoNull.setDescripcionLarga(DESCRIPCION_LARGA);
-		eventoNull.setFoto(FOTO);
-		eventoNull.setFechaEvento(FECHA);
-		eventoNull.setPrecio(PRECIOS);
-		eventoNull.setPolitaAcceso(POLITICA);
-		eventoNull.setRecinto(recinto);
-		eventoNull.setGenero(GENERO_NULL);
+		Evento eventoNull2 = new Evento();
+		eventoNull2.set_id(ID_NULL);
+		eventoNull2.setNombre(NOMBRE_EVENTO_NULL);
+		eventoNull2.setDescripcionCorta(DESCRIPCION_CORTA);
+		eventoNull2.setDescripcionLarga(DESCRIPCION_LARGA);
+		eventoNull2.setFoto(FOTO);
+		eventoNull2.setFechaEvento(FECHA);
+		eventoNull2.setPrecio(PRECIOS);
+		eventoNull2.setPolitaAcceso(POLITICA);
+		eventoNull2.setRecinto(recinto);
+		eventoNull2.setGenero(GENERO_NULL);
 
 		logger.info("Aplicando test que no elimina un evento por tener Id null");
 
-		mockMvc.perform(delete("/eventos/" + eventoNull.get_id()).contentType("application/json"))
+		mockMvc.perform(delete("/eventos/" + eventoNull2.get_id()).contentType("application/json"))
 				.andExpect(status().isNotFound());
 	}
 
