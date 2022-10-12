@@ -8,9 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
-import javax.persistence.MappedSuperclass;
 
 /**
  * Clase para adaptar entidades Usuario a Objetos DTO de Usuarios
@@ -54,13 +52,6 @@ public class UsuarioAdapter implements UsuarioAdapterI {
         logger.info("Mapeando lista de entidades Usuario a lista de DTO de Usuarios");
         return usuarios.stream().map(this::usuarioToDto).toList();
     }
-
-	@Override
-	public UsuarioDto usuarioToDto(Optional<Usuario> optional) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 
 	

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 import org.springframework.http.ResponseEntity;
 
-import com.grupo2.lucaticket.ventas.usuario.model.Usuario;
+import com.grupo2.lucaticket.usuario.model.Usuario;
 
 @Data
 @Schema(name = "UsuarioDto", description = "DTO de Usuario")

@@ -1,6 +1,6 @@
-package com.grupo2.lucaticket.ventas.usuario.repository;
+package com.grupo2.lucaticket.usuario.repository;
 
-import com.grupo2.lucaticket.ventas.usuario.model.Usuario;
+import com.grupo2.lucaticket.usuario.model.Usuario;
 
 import java.util.Optional;
 

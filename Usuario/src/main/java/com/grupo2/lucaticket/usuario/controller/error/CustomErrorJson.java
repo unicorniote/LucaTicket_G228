@@ -1,4 +1,4 @@
-package com.grupo2.lucaticket.ventas.usuario.controller.error;
+package com.grupo2.lucaticket.usuario.controller.error;
 
 public class CustomErrorJson {
 
