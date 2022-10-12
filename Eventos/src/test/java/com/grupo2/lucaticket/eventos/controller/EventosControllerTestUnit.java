@@ -185,15 +185,15 @@ public class EventosControllerTestUnit {
 	}
 	
 	@Test
-	public void cuandoListaNombre_Devuelve200() throws Exception {
+	public void cuandoEventoPorNombre_Devuelve200() throws Exception {
 
 		logger.info("Aplicando test que devuelve listado");
 
 		// when
-		when(eventosService.findByNombre(NOMBRE_EVENTO)).equals(eventoDto);
+		//when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn();
 
 		// then
-		mockMvc.perform(get("/eventos/nombre/Evento de prueba").contentType("application/json")).andExpect(status().isNotFound());
+		mockMvc.perform(get("/eventos/nombre/{nombre}").contentType("application/json")).andExpect(status().isNotFound());
 
 	}
 
