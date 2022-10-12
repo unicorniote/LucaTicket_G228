@@ -7,6 +7,7 @@ import com.grupo2.lucaticket.eventos.utils.FechaUtils;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Clase CustomErrorJson que sirve como molde para crear nuestras excepciones
@@ -15,8 +16,16 @@ import lombok.NoArgsConstructor;
  * @author Álvaro Román Gómez
  * @version 1.0: 06/10/2022
  */
+/**
+ * Clase CustomErrorJson que sirve como molde para crear nuestras excepciones
+ * personalizadas.
+ *
+ * @author Álvaro Román Gómez
+ * @version 1.0: 11/10/2022
+ */
 @Data
 @NoArgsConstructor
+@Slf4j
 public class CustomErrorJson {
 
 	private String fecha;
@@ -29,6 +38,7 @@ public class CustomErrorJson {
 	public CustomErrorJson(LocalDateTime fecha, int estado, String error, List<String> mensaje, String ruta) {
 
 		super();
+		log.info("Creando error custom...");
 		this.fecha = FechaUtils.formatearFecha(fecha);
 		this.estado = estado;
 		this.error = error;
@@ -40,6 +50,6 @@ public class CustomErrorJson {
 
 	public void setFecha(LocalDateTime fecha) {
 		this.fecha = FechaUtils.formatearFecha(fecha);
+		log.info("Establaciendo fecha en error custom...");
 	}
-
 }
