@@ -223,10 +223,10 @@ public class EventosController {
 	@GetMapping("/detalles/{id}")
 	public EventoDto eventosById(@Parameter(description = "ID del evento a localizar", required=true)@PathVariable String id) {
 		Optional<Evento> evento = eventosService.findById(id);
-		if (evento.isPresent()) {
-			return eventoAdapter.eventoToDto(evento.get());
-		}else {
+		if (evento.isEmpty()) {
 			throw new EventoNotFoundException();
+		}else {
+			return eventoAdapter.eventoToDto(evento.get());
 		}
 		
 	}
@@ -255,10 +255,11 @@ public class EventosController {
 	@GetMapping("/ciudad/{ciudad}")
 	public EventoDto listaEventosCiudad(@Parameter(description = "Ciudad del evento a localizar", required=true)@PathVariable String ciudad) {
 		Optional<Evento> evento = eventosService.findByCiudad(ciudad);
-		if(evento.isPresent()) {
-			return eventoAdapter.eventoToDto(evento.get());
-		}else {
+		if(evento.isEmpty()) {
 			throw new EventoNotFoundException();
+		}else {
+			
+			return eventoAdapter.eventoToDto(evento.get());
 		}
 		
 	}		

@@ -1,5 +1,6 @@
 package com.grupo2.lucaticket.eventos.controller;
 
+
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -54,6 +55,8 @@ public class EventosControllerTestUnit {
 	List<Evento> eventos;
 	List<Evento> eventosVacio;
 
+	private final String ID_EVENTO = "1";
+	private final String ID_RECINTO = "1";
 	private final String NOMBRE_EVENTO = "Evento de prueba";
 	private final String NOMBRE_EVENTO_NULL = null;
 	private final String DESCRIPCION_CORTA = "Descripción corta del evento";
@@ -67,6 +70,7 @@ public class EventosControllerTestUnit {
 	private final String DIRECCION = "LUCATIC";
 	private final int AFORO = 100;
 	private final String GENERO = "Genero del evento";
+	private final String GENERO_NULL = null;
 	private final String TIPO = "Tipo del recinto";
 
 	@BeforeEach
@@ -80,6 +84,7 @@ public class EventosControllerTestUnit {
 		eventosVacio = new ArrayList<>();
 
 		// RECINTO
+		recinto.set_idRecinto(ID_RECINTO);
 		recinto.setNombreRecinto(NOMBRE_RECINTO);
 		recinto.setCiudad(CIUDAD);
 		recinto.setDireccion(DIRECCION);
@@ -87,6 +92,7 @@ public class EventosControllerTestUnit {
 		recinto.setAforo(AFORO);
 
 		// EVENTO
+		evento.set_id(ID_EVENTO);
 		evento.setNombre(NOMBRE_EVENTO);
 		evento.setDescripcionCorta(DESCRIPCION_CORTA);
 		evento.setDescripcionLarga(DESCRIPCION_LARGA);
@@ -123,7 +129,7 @@ public class EventosControllerTestUnit {
 		eventoNull.setCiudadEvento(CIUDAD);
 		eventoNull.setDireccionEvento(DIRECCION);
 		eventoNull.setAforoEvento(AFORO);
-		eventoNull.setGenero(GENERO);
+		eventoNull.setGenero(GENERO_NULL);
 
 		eventos.add(evento);
 		eventos.add(evento);
@@ -135,6 +141,15 @@ public class EventosControllerTestUnit {
 	 * POST es correcto y el tipo de contenido de solicitud es correcto
 	 */
 
+	/**
+	* Descripción del método:
+	* Test que añade un evento introducido por el administrador correctamente.
+	* 
+	* @author Carlos Jesús Pérez Márquez
+	* 
+	* @version 1.0
+	*/
+	
 	@Test
 	public void cuandoEntradaValida_entoncesDevuelve201() throws Exception {
 
@@ -147,6 +162,15 @@ public class EventosControllerTestUnit {
 				post("/eventos/add").content(objectMapper.writeValueAsString(evento)).contentType("application/json"))
 				.andExpect(status().isCreated());
 	}
+	
+	/**
+	* Descripción del método:
+	* Test que origina error cuando evento es null.
+	* 
+	* @author Carlos Jesús Pérez Márquez
+	* 
+	* @version 1.0
+	*/
 
 	@Test
 	public void cuandoEntradaNull_entoncesDevuelve400() throws Exception {
@@ -157,19 +181,16 @@ public class EventosControllerTestUnit {
 		mockMvc.perform(post("/eventos/add").content(objectMapper.writeValueAsString(eventoNull))
 				.contentType("application/json")).andExpect(status().isBadRequest());
 	}
+	
+	/**
+	* Descripción del método:
+	* Test que da ok cuando lista eventos.
+	* 
+	* @author Tamara
+	* 
+	* @version 1.0
+	*/
 
-	@Test
-	public void cuandoListaNull_Devuelve404() throws Exception {
-
-		logger.info("Aplicando test que devuelve listado");
-
-		// when
-		when(eventosService.findAll()).thenReturn(eventosVacio);
-
-		// then
-		mockMvc.perform(get("/eventos/lista").contentType("application/json")).andExpect(status().isNotFound());
-
-	}
 	
 	@Test
 	public void cuandoListaEventos_Devuelve200() throws Exception {
@@ -184,6 +205,16 @@ public class EventosControllerTestUnit {
 
 	}
 	
+	
+	/**
+	* Descripción del método:
+	* Test que da ok cuando se busca evento por nombre.
+	* 
+	* @author Tamara
+	* 
+	* @version 1.0
+	*/
+	
 	@Test
 	public void cuandoEventoPorNombre_Devuelve200() throws Exception {
 
@@ -193,8 +224,47 @@ public class EventosControllerTestUnit {
 		//when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn();
 
 		// then
-		mockMvc.perform(get("/eventos/nombre/{nombre}").contentType("application/json")).andExpect(status().isNotFound());
+		mockMvc.perform(get("/eventos/nombre/"+evento.getNombre()).contentType("application/json")).andExpect(status().isOk());
 
 	}
+	
+	/**
+	* Descripción del método:
+	* Test que da ok cuando se busca evento por género.
+	* 
+	* @author Carlos Jesús
+	* 
+	* @version 1.0
+	*/
 
+	@Test
+	public void cuandoEventoGenero_daOk() throws Exception{
+		
+		logger.info("Aplicando test que devuelve listado por género");
+		
+		mockMvc.perform(get("/eventos/genero/"+evento.getGenero()).contentType("application/json")).andExpect(status().isOk());
+
+		
+	}
+	
+	/**
+	* Descripción del método:
+	* Test que da error cuando se busca evento por género null.
+	* 
+	* @author Carlos Jesús
+	* 
+	* @version 1.0
+	*/
+
+	@Test
+	public void cuandoEventoGeneroNull_daOk() throws Exception{
+		
+		logger.info("Aplicando test que devuelve listado por género");
+		
+		mockMvc.perform(get("/eventos/genero/"+eventoNull.getGenero()).contentType("application/json")).andExpect(status().isOk());
+
+		
+	}
+	
+	
 }
