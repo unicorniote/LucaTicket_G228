@@ -132,7 +132,7 @@ public class EventosService implements EventosServiceI{
 	* 
 	* @version 1.0
 	*/
-	public Optional<Evento> findByNombre(String nombre) {
+	public List<Evento> findByNombre(String nombre) {
 		return repo.findByNombre(nombre);
 	}
 
@@ -165,7 +165,7 @@ public class EventosService implements EventosServiceI{
 	* @version 1.0
 	*/
 	@Override
-	public Optional<Evento> findByCiudad(String ciudad) {
+	public List<Evento> findByCiudad(String ciudad) {
 		return repo.findByCiudad(ciudad);
 	}
 
