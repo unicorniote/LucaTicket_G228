@@ -18,14 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -124,33 +117,21 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "404", description = "Usuario no encontrado (NO implementado)", content = @Content) })
 
 	@GetMapping("/{id}")
-
-	public UsuarioDto findById(@PathVariable String Id) {
-		Optional<Usuario> usuario = usuarioService.findById(Id);
-		return usuarioAdapter.usuarioToDto(usuario.get());
-
-	}
-
-	/**
-	 * Método update - Modifica un usuario.
-	 * 
-	 * @return Devuelve un objeto usuario
-	 * 
-	 * @author Grupo 2 - Lamia
-	 * 
-	 * @version 1.0
-	 */
-	@Operation(summary = "Listar los usuarios", description = "Lista todo los usuarios existentes en la BBDD de MySql", tags = {
-			"Usuario" })
-
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "201", description = "Usuarios encontrados", content = {
-					@Content(mediaType = "application/json", schema = @Schema(implementation = Usuario.class)) }),
-			@ApiResponse(responseCode = "400", description = "No existen usuarios en la bbdd", content = @Content) })
-	@GetMapping("/listar")
-	public Collection<UsuarioDto> getUsuario() {
-		logger.info("Buscando usuario");
-		return usuarioAdapter.usuarioToDto((List<Usuario>) usuarioService.findAll());
+	public UsuarioDto findById(@PathVariable String id, @RequestParam(defaultValue = "false", required = false) boolean simple) {
+		Optional<Usuario> usuario = usuarioService.findById(Integer.parseInt(id));
+		if (usuario.isEmpty()) {
+			// lanzamos la excepcion
+			throw new UsuarioNotFoundException();
+		}
+		if (simple) {
+			// devolver el dto de ventas (id, nombre, apellidos)
+			logger.info("Devolviendo usuario sencillo");
+			return usuarioAdapter.usuarioToVentasDto(usuario.get());
+		} else {
+			// devolver el dto normal
+			logger.info("Devolviendo usuario completo");
+			return usuarioAdapter.usuarioToDto(usuario.get());
+		}
 	}
 
 	@Operation(summary = "Buscar usuario por ID", description = "Dado un ID, devuelve un objeto usuario", tags = {
@@ -165,7 +146,7 @@ public class UsuarioController {
 	public ResponseEntity<UsuarioDto> update(
 			@Parameter(description = "Párametro String Usuario id que recoge el usuario", required = true) @RequestBody Usuario usuario) {
 		logger.info(" ---- updateUsuario (PUT)");
-		Optional<UsuarioDto> usuarioActualizado = this.usuarioService.update(usuarioDto);
+		Optional<UsuarioDto> usuarioActualizado = Optional.of(usuarioAdapter.usuarioToDto(this.usuarioService.save(usuario)));
 		if (usuarioActualizado.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
@@ -189,7 +170,7 @@ public class UsuarioController {
 	@DeleteMapping("/{id}")
 	public void deleteUsuario(@PathVariable String id) {
 		logger.info("Delete, id ->" + id);
-		usuarioService.deleteUsuario(id);
+		usuarioService.deleteUsuario(Integer.parseInt(id));
 	}
 	
 	

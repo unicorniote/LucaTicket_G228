@@ -1,12 +1,9 @@
-package com.grupo2.lucaticket.usuario.model.response;
+package com.grupo2.lucaticket.ventas.model.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
 import lombok.Data;
 
-
 import java.io.Serializable;
-import java.time.LocalDate;
 
 /**
  * @author Alonso
@@ -28,10 +25,3 @@ public class UsuarioDto implements Serializable {
     @Schema(name = "apellido", description = "Apellidos del usuario")
     private String apellido;
 }
-
-
-
-    
-    
-
-

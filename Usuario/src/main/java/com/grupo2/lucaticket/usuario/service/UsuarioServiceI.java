@@ -23,7 +23,6 @@ import javax.validation.Valid;
 
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
-import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
 
 public interface UsuarioServiceI {
 
@@ -34,7 +33,7 @@ public interface UsuarioServiceI {
 	 * @return usuario
 	 * @since 1.0
 	 */
-    public Usuario save(@Valid Usuario usuario);
+    public Usuario save(Usuario usuario);
 
     /**
 	 * Metodo que devuelve la lista de usuarios
@@ -52,7 +51,7 @@ public interface UsuarioServiceI {
 	 * @return usuario
 	 * @since 1.0
 	 */
-    public void deleteById (String id);
+    public void deleteById (int id);
 
     /**
 	 * Metodo que encuentra un usuario por su ID
@@ -61,16 +60,16 @@ public interface UsuarioServiceI {
 	 * @return usuario
 	 * @since 1.0
 	 */
-	public Optional<Usuario> findById(String id);
+	public Optional<Usuario> findById(int id);
 	
 	/**
-	 * Metodo que modifica un usuario
-	 *
-	 * @param UsuarioDto
-	 * @return usuario
-	 * @since 1.0
-	 */
-	public Optional <UsuarioDto> update(@Valid UsuarioDto usuario);
+     * Metodo que modifica un usuario
+     *
+     * @param UsuarioDto
+     * @return usuario
+     * @since 1.0
+     */
+	public Usuario update(Usuario usuario);
 
 	/**
 	 * Metodo que elimina un usuario
@@ -79,6 +78,6 @@ public interface UsuarioServiceI {
 	 * @return usuario
 	 * @since 1.0
 	 */
-	public void deleteUsuario(String id);
+	public void deleteUsuario(int id);
 
 }
