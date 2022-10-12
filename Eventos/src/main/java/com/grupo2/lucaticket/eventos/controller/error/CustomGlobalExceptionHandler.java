@@ -40,11 +40,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		response.sendError(HttpStatus.BAD_REQUEST.value());
 	}
 	
-	@ExceptionHandler(EventoNotFoundExceptionByGenre.class)
-	public void springHandleNotFoundExceptionByGenre(HttpServletResponse response) throws IOException {
-		logger.info("EventoNotFoundExceptionByGenre()");
-		response.sendError(HttpStatus.NOT_FOUND.value());
-	}
+	
 
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,

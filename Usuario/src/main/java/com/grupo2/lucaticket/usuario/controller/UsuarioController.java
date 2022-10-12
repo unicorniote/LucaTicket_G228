@@ -1,12 +1,14 @@
-package com.grupo2.lucaticket.ventas.usuario.controller;
+package com.grupo2.lucaticket.usuario.controller;
 
 import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 
-import com.grupo2.lucaticket.ventas.usuario.model.adapter.UsuarioAdapterI;
-import com.grupo2.lucaticket.ventas.usuario.model.response.UsuarioDto;
-import com.grupo2.lucaticket.ventas.usuario.service.UsuarioServiceI;
+import com.grupo2.lucaticket.usuario.model.Usuario;
+import com.grupo2.lucaticket.usuario.model.adapter.UsuarioAdapterI;
+import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
+import com.grupo2.lucaticket.usuario.service.UsuarioServiceI;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.grupo2.lucaticket.ventas.usuario.model.Usuario;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

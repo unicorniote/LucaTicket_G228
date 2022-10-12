@@ -1,12 +1,12 @@
-package com.grupo2.lucaticket.ventas.usuario.service;
+package com.grupo2.lucaticket.usuario.service;
 
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.grupo2.lucaticket.ventas.usuario.model.Usuario;
-import com.grupo2.lucaticket.ventas.usuario.repository.UsuarioRepositoryI;
+import com.grupo2.lucaticket.usuario.model.Usuario;
+import com.grupo2.lucaticket.usuario.repository.UsuarioRepositoryI;
 
 /**
  * @author Grupo 2 - Alonso

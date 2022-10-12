@@ -1,4 +1,4 @@
-package com.grupo2.lucaticket.ventas.usuario;
+package com.grupo2.lucaticket.usuario;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

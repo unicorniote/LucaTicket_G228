@@ -1,7 +1,8 @@
-package com.grupo2.lucaticket.ventas.usuario.model.adapter;
+package com.grupo2.lucaticket.usuario.model.adapter;
 
-import com.grupo2.lucaticket.ventas.usuario.model.Usuario;
-import com.grupo2.lucaticket.ventas.usuario.model.response.UsuarioDto;
+import com.grupo2.lucaticket.usuario.model.Usuario;
+import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

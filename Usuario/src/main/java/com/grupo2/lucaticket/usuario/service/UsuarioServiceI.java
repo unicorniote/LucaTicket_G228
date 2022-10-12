@@ -1,4 +1,4 @@
-package com.grupo2.lucaticket.ventas.usuario.service;
+package com.grupo2.lucaticket.usuario.service;
 
 import java.util.Collection;
 import javax.validation.Valid;

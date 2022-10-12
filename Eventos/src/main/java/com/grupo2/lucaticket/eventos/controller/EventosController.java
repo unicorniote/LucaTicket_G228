@@ -1,11 +1,12 @@
 package com.grupo2.lucaticket.eventos.controller;
 
 
-import com.grupo2.eventos.model.Evento;
-import com.grupo2.eventos.model.adapter.EventoAdapterI;
-import com.grupo2.eventos.model.response.EventoDto;
+import com.grupo2.lucaticket.eventos.model.Evento;
+import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapterI;
+import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.grupo2.eventos.service.EventosServiceI;
+import com.grupo2.lucaticket.eventos.service.EventosServiceI;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
