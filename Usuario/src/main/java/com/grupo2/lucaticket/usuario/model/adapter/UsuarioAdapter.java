@@ -2,19 +2,18 @@ package com.grupo2.lucaticket.usuario.model.adapter;
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
 import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
-import javax.persistence.MappedSuperclass;
 
 /**
  * Clase para adaptar entidades Usuario a Objetos DTO de Usuarios
  *
- * @author Grupo 2 - Alonso
+ * @author Grupo 2 - Alonso Gómez
  * @version 1.0 : 07/10/2022
  */
 @Component
@@ -53,13 +52,6 @@ public class UsuarioAdapter implements UsuarioAdapterI {
         logger.info("Mapeando lista de entidades Usuario a lista de DTO de Usuarios");
         return usuarios.stream().map(this::usuarioToDto).toList();
     }
-
-	@Override
-	public UsuarioDto usuarioToDto(Optional<Usuario> optional) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 
 	

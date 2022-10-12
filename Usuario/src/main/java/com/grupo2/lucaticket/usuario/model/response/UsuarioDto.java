@@ -1,16 +1,15 @@
 package com.grupo2.lucaticket.usuario.model.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 import org.springframework.http.ResponseEntity;
 
-import com.grupo2.lucaticket.ventas.usuario.model.Usuario;
+import com.grupo2.lucaticket.usuario.model.Usuario;
 
 @Data
 @Schema(name = "UsuarioDto", description = "DTO de Usuario")

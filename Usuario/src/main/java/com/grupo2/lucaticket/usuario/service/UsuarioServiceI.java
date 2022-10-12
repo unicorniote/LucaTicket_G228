@@ -1,13 +1,14 @@
 package com.grupo2.lucaticket.usuario.service;
 
-import java.util.Collection;
 
+
+import java.util.Collection;
 import java.util.Optional;
 
-
 import javax.validation.Valid;
-import com.grupo2.lucaticket.usuario.model.Usuario;
 
+
+import com.grupo2.lucaticket.usuario.model.Usuario;
 
 public interface UsuarioServiceI {
 
