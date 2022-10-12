@@ -3,11 +3,14 @@ package com.grupo2.lucaticket.usuario.service;
 import java.util.Collection;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
+import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
 import com.grupo2.lucaticket.usuario.repository.UsuarioRepositoryI;
 
 /**
@@ -44,6 +47,11 @@ public class UsuarioService implements UsuarioServiceI {
 
 	public Optional<Usuario> findById(String id) {
 		return repo.findById(id);
+	}
+
+	@Override
+	public Optional<UsuarioDto> update(@Valid UsuarioDto usuario) {
+		return repo.update(usuario);
 	}
 
 

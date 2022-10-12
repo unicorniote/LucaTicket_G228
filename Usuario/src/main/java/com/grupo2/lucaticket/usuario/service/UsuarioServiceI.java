@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
+import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
 
 public interface UsuarioServiceI {
 
@@ -19,6 +20,8 @@ public interface UsuarioServiceI {
     public void deleteById (String id);
 
 	public Optional<Usuario> findById(String id);
+	
+	public Optional <UsuarioDto> update(@Valid UsuarioDto usuario);
 
 
 }
