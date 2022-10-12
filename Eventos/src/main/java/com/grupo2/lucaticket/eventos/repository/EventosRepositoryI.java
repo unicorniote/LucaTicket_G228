@@ -3,8 +3,6 @@ package com.grupo2.lucaticket.eventos.repository;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -32,9 +30,8 @@ public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 	List<Evento> findByNombre(String nombre);
 	
 	@Query(" $lookup: { from : 'Eventos', localField: 'ciudadEvento', foreignField: '_id', as: 'sender' }, {$lookup: { from: 'Recintos', localField: 'ciudad', foreignField: '_id', as: 'receiver' }}")
-	
-	List<Evento> findAllByNombre(String nombre);
-	
-	public Optional<EventoDto> update( @Valid Evento evento);
 	List<Evento> findByCiudad(String ciudad);
+
+	//Evento save(String id, Evento evento);
+	
 }
