@@ -1,6 +1,7 @@
 package com.grupo2.lucaticket.usuario.model.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 
 
@@ -12,6 +13,17 @@ import org.springframework.http.ResponseEntity;
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
 
+/**
+* @Project LucaTicket
+*
+* @Classname UsuarioDto
+*
+* @author Alonso
+* @date 09/10/2022
+*
+* @since 1.0
+*
+*/
 @Data
 @Schema(name = "UsuarioDto", description = "DTO de Usuario")
 public class UsuarioDto implements Serializable {

@@ -4,6 +4,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+/**
+* @Project LucaTicket
+*
+* @Classname UsuarioNotFoundException
+*
+* @author Alonso
+* @date 07/10/2022
+*
+* @since 1.0
+*
+*/
 @SpringBootApplication
 @EnableDiscoveryClient
 public class UsuarioApplication {
