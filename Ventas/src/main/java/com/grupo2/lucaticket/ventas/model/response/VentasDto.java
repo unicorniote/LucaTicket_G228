@@ -25,10 +25,13 @@ import lombok.Data;
 @Schema(name = "VentasDto", description = "DTO de Ventas")
 public class VentasDto implements Serializable {
 
+	@Schema(name = "id", description = "Identificador de la compra")
+	private int id;
+
 	@Schema(name = "usuario", description = "Identificador del usuario")
-	private int usuario;
+	private UsuarioDto usuario;
 
 	@Size(max = 30)
 	@Schema(name = "evento", description = "Identificador del evento")
-	private String evento;
+	private EventoDto evento;
 }
