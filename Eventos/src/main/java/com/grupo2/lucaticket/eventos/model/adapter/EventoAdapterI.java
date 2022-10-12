@@ -7,7 +7,8 @@ import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 
 /**
  * Interfaz EveptoAdapterI
- * @author Grupo 2 -
+ * 
+ * @author Grupo 2 - Álvaro Román
  * @version 1.0 : 07/10/2022
  */
 public interface EventoAdapterI {

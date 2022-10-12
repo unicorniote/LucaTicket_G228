@@ -13,14 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * Clase CustomErrorJson que sirve como molde para crear nuestras excepciones
  * personalizadas.
  *
- * @author Álvaro Román Gómez
- * @version 1.0: 06/10/2022
- */
-/**
- * Clase CustomErrorJson que sirve como molde para crear nuestras excepciones
- * personalizadas.
- *
- * @author Álvaro Román Gómez
+ * @author Álvaro Román
  * @version 1.0: 11/10/2022
  */
 @Data

@@ -1,19 +1,9 @@
 package com.grupo2.lucaticket.eventos.controller;
 
-import com.grupo2.lucaticket.eventos.controller.error.EventoNotFoundException;
-import com.grupo2.lucaticket.eventos.model.Evento;
-import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapter;
-import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapterI;
-import com.grupo2.lucaticket.eventos.model.response.EventoDto;
-import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
+import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +18,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.grupo2.lucaticket.eventos.service.EventosServiceI;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
+
+import com.grupo2.lucaticket.eventos.controller.error.EventoNotFoundException;
+import com.grupo2.lucaticket.eventos.model.Evento;
+import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapterI;
+import com.grupo2.lucaticket.eventos.model.response.EventoDto;
+import com.grupo2.lucaticket.eventos.service.EventosServiceI;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @Project LucaTicket
@@ -289,18 +288,19 @@ public class EventosController {
 
 	@PutMapping("/editar/{id}")
 	public ResponseEntity<?> update(
-			@Parameter(description = "Párametro Evento que actualiza el evento", required = true) 
-			@PathVariable("id") String id, @RequestBody Evento evento) {
+			@Parameter(description = "Párametro Evento que actualiza el evento", required = true) @PathVariable("id") String id,
+			@RequestBody Evento evento) {
 		logger.info(" ---- updateEvento (PUT)");
-		
+
 		Optional<Evento> eventoActualizado = eventosService.findById(id);
-		
-		if(!eventoActualizado.isPresent()) {
+
+		if (!eventoActualizado.isPresent()) {
 			throw new EventoNotFoundException();
-		};
-		
-		logger.info("------------- evento " + evento.getFechaEvento()); //Fecha se devuelve null
-		
+		}
+		;
+
+		logger.info("------------- evento " + evento.getFechaEvento()); // Fecha se devuelve null
+
 		eventoActualizado.ifPresent(e -> {
 			e.setNombre(evento.getNombre());
 			e.setDescripcionCorta(evento.getDescripcionCorta());
@@ -313,8 +313,7 @@ public class EventosController {
 			e.setGenero(evento.getGenero());
 			eventosService.save(e);
 		});
-		
-		
+
 		return new ResponseEntity<>(eventoAdapter.eventoToDto(eventoActualizado.get()), HttpStatus.OK);
 	}
 

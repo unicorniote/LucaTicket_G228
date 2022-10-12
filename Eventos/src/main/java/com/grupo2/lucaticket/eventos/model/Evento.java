@@ -28,12 +28,11 @@ import lombok.NoArgsConstructor;
  * @since 1.0
  *
  */
-
 @Data
 @NoArgsConstructor
 @Schema(name = "Evento", description = "Entidad que representa el model de datos de un evento.")
 @Document(collection = "Eventos")
-public class Evento{
+public class Evento {
 
 	@Id
 	private String _id;
@@ -56,7 +55,6 @@ public class Evento{
 	@NotEmpty
 	@Schema(name = "rangoPrecio", description = "Precio del evento")
 	private Map<String, Double> precio;
-
 
 	private String politaAcceso;
 

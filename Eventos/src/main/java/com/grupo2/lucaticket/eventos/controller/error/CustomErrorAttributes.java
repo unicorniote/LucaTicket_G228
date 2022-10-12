@@ -13,14 +13,30 @@ import com.grupo2.lucaticket.eventos.utils.FechaUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Clase que se encarga de interceptar los atributos del error producido y
+ * pasarlos al formato deseado.
+ * 
+ * @author Álvaro Román
+ * @version 13/10/2022
+ */
 @Slf4j
 @Component
 public class CustomErrorAttributes extends DefaultErrorAttributes {
 
+	/**
+	 * Método que se encargar de formatear los atributos de los errores producidos.
+	 * 
+	 * @param WebRequest            webRequest
+	 * @param ErrorAttributeOptions options
+	 * @return Map<String, Object>
+	 * @author Álvaro Román
+	 * @version 1.0
+	 */
 	public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {
-		log.info("------ getErrorAttributes(): " + options);
+
+		log.info("Formateando errores de la excepción...");
 		Map<String, Object> errorAttributes = super.getErrorAttributes(webRequest, options);
-		log.info("------ getErrorAttributes(): " + options);
 
 		Object timestamp = errorAttributes.get("timestamp");
 		if (timestamp == null) {

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.grupo2.lucaticket.eventos.model.Evento;
-import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 
 public interface EventosServiceI {
 
@@ -21,6 +20,6 @@ public interface EventosServiceI {
 	public Optional<Evento> findById(String id);
 
 	public List<Evento> findByCiudad(String ciudad);
-	
+
 	public Evento update(Evento evento);
 }
