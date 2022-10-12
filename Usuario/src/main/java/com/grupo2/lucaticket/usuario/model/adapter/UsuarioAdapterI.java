@@ -10,4 +10,5 @@ public interface UsuarioAdapterI {
     public UsuarioDto usuarioToDto(Usuario usuario);
 
     public List<UsuarioDto> usuarioToDto(List<Usuario> usuarios);
+    
 }
