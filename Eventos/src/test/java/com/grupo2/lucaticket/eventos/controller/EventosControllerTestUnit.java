@@ -263,13 +263,13 @@ public class EventosControllerTestUnit {
 	* @version 1.0
 	*/
 	@Test
-	public void cuandoEventoGeneroNull_daOk() throws Exception{
+	public void cuandoEventoGeneroNull_da404() throws Exception{
 	        
 	     logger.info("Aplicando test que devuelve listado por género");
 	     
-	     when(eventosService.findAllByGenero(GENERO)).thenReturn(eventos);
+	     when(eventosService.findAllByGenero(GENERO_NULL)).thenReturn(eventos);
 	        
-	     mockMvc.perform(get("/eventos/genero/"+ eventoNull.getGenero()).contentType("application/json")).andExpect(status().isOk());
+	     mockMvc.perform(get("/eventos/genero/"+ eventoNull.getGenero()).contentType("application/json")).andExpect(status().isNotFound());
 
 	}
 	
