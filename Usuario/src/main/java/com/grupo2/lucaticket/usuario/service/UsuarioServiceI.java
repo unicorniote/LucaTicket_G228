@@ -72,5 +72,13 @@ public interface UsuarioServiceI {
 	 */
 	public Optional <UsuarioDto> update(@Valid UsuarioDto usuario);
 
+	/**
+	 * Metodo que elimina un usuario
+	 *
+	 * @param UsuarioDto
+	 * @return usuario
+	 * @since 1.0
+	 */
+	public void deleteUsuario(String id);
 
 }
