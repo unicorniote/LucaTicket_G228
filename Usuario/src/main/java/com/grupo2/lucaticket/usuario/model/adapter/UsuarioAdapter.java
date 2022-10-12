@@ -1,6 +1,7 @@
 package com.grupo2.lucaticket.usuario.model.adapter;
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
+import com.grupo2.lucaticket.usuario.model.response.UsuarioCompletoDto;
 import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
 
 import org.slf4j.Logger;
@@ -31,7 +32,7 @@ public class UsuarioAdapter implements UsuarioAdapterI {
    @Override
     public UsuarioDto usuarioToDto(Usuario usuario) {
         logger.info("Mapeando objeto entidad Usuario a DTO de Usuario...");
-        UsuarioDto response = new UsuarioDto();
+        UsuarioCompletoDto response = new UsuarioCompletoDto();
         response.setId(usuario.getId());
         response.setNombre(usuario.getNombre());
         response.setApellido(usuario.getApellido());
@@ -52,7 +53,27 @@ public class UsuarioAdapter implements UsuarioAdapterI {
         logger.info("Mapeando lista de entidades Usuario a lista de DTO de Usuarios");
         return usuarios.stream().map(this::usuarioToDto).toList();
     }
-	
 
-	
+    /**
+     * Metodo que devuelve el DTO con informacion para la venta de un usuario
+     * @param usuario
+     * @return
+     */
+    @Override
+    public UsuarioDto usuarioToVentasDto(Usuario usuario) {
+        logger.info("Mapeando objeto entidad Usuario a DTO de Usuario para ventas...");
+        UsuarioDto usuarioVentasDto = new UsuarioDto();
+        usuarioVentasDto.setId(usuario.getId());
+        usuarioVentasDto.setNombre(usuario.getNombre());
+        usuarioVentasDto.setApellido(usuario.getApellido());
+        return usuarioVentasDto;
+    }
+
+    @Override
+    public List<UsuarioDto> usuarioToVentasDto(List<Usuario> usuarios) {
+        logger.info("Mapeando lista de entidades Usuario a lista de DTO de Usuarios");
+        return usuarios.stream().map(this::usuarioToVentasDto).toList();
+    }
+
+
 }

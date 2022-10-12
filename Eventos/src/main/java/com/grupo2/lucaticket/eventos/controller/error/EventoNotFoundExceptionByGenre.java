@@ -1,4 +1,4 @@
-package com.grupo2.eventos.controller.error;
+package com.grupo2.lucaticket.eventos.controller.error;
 
 
 

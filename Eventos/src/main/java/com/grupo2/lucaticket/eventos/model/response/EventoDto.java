@@ -22,6 +22,8 @@ public class EventoDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Schema(name = "id", description = "Identificador del evento")
+    private String id;
     @Schema(name = "Nombre", description = "Nombre del evento")
     private String nombre;
     @Schema(name = "Descripción", description = "Descripción del evento")
