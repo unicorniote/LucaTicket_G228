@@ -97,4 +97,39 @@ public class ErrorUtils {
 		return customError;
 	}
 
+	/**
+	 * Método CustomErrorJson que mapea un error a un error custom.
+	 * 
+	 * @param MethodArgumentNotValidException exception
+	 * @param HttpHeaders                     headers
+	 * @param HttpStatus                      status
+	 * @param WebRequest                      request
+	 * @return CustomErrorJson
+	 * @author Álvaro Román Gómez
+	 * @version 1.0
+	 */
+
+	public static CustomErrorJson customErrorMapper(EventoNotFoundExceptiono exception, HttpHeaders headers,
+			HttpStatus status, WebRequest request) {
+
+		logger.info("Mapeando error a error custom...");
+		CustomErrorJson customError = new CustomErrorJson();
+
+		customError.setFecha(LocalDateTime.now());
+		customError.setEstado(status.value());
+		customError.setError(status.name());
+
+		List<String> mensajes = new ArrayList<String>();
+		for (FieldError error : exception.getBindingResult().getFieldErrors()) {
+			mensajes.add(error.getField() + ": " + error.getDefaultMessage());
+		}
+		customError.setMensaje(mensajes);
+
+		String uri = request.getDescription(false);
+		uri = uri.substring(uri.lastIndexOf("=") + 1);
+		customError.setRuta(uri);
+
+		return customError;
+	}
+
 }
