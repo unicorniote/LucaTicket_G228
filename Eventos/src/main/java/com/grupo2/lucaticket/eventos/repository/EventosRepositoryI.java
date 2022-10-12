@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import com.grupo2.lucaticket.eventos.model.Evento;
+import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 
 /**
 * @Project LucaTicket
@@ -30,4 +31,7 @@ public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 	
 	@Query(" $lookup: { from : 'Eventos', localField: 'ciudadEvento', foreignField: '_id', as: 'sender' }, {$lookup: { from: 'Recintos', localField: 'ciudad', foreignField: '_id', as: 'receiver' }}")
 	List<Evento> findByCiudad(String ciudad);
+
+	//Evento save(String id, Evento evento);
+	
 }

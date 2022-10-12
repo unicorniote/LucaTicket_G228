@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * @Project LucaTicket
@@ -131,6 +132,21 @@ public class EventosService implements EventosServiceI {
 	@Override
 	public List<Evento> findByCiudad(String ciudad) {
 		return repo.findByCiudad(ciudad);
+	}
+
+	/**
+	 * Método Update: Modificar un evento
+	 * 
+	 * @param evento
+	 * 
+	 * @author Grupo 2 - Lamia
+	 * 
+	 * @version 1.0
+	 */
+	@Override
+	public Evento update(Evento evento) {
+		return repo.save(evento);
+
 	}
 
 }

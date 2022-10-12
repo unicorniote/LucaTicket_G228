@@ -2,8 +2,10 @@ package com.grupo2.lucaticket.eventos.controller;
 
 import com.grupo2.lucaticket.eventos.controller.error.EventoNotFoundException;
 import com.grupo2.lucaticket.eventos.model.Evento;
+import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapter;
 import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapterI;
 import com.grupo2.lucaticket.eventos.model.response.EventoDto;
+import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -264,6 +267,55 @@ public class EventosController {
 	public void deleteEvento(@PathVariable String id) {
 		logger.info("Delete, id ->" + id);
 		eventosService.deleteById(id);
+	}
+
+	/**
+	 * Método update para modificar Evento
+	 * 
+	 * @return devuelve un objeto evento
+	 * 
+	 * @author Grupo 2 - Lamia
+	 * 
+	 * @version 1.0
+	 */
+
+	@Operation(summary = "Busca un evento por id ", description = "Permite modificar el evento seleccionado", tags = {
+			"Evento" })
+
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "La petición listar eventos por género se ha realizado correctamente", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Evento.class)) }),
+			@ApiResponse(responseCode = "400", description = "No existen eventos en la BBDD", content = @Content) })
+
+	@PutMapping("/editar/{id}")
+	public ResponseEntity<?> update(
+			@Parameter(description = "Párametro Evento que actualiza el evento", required = true) 
+			@PathVariable("id") String id, @RequestBody Evento evento) {
+		logger.info(" ---- updateEvento (PUT)");
+		
+		Optional<Evento> eventoActualizado = eventosService.findById(id);
+		
+		if(!eventoActualizado.isPresent()) {
+			throw new EventoNotFoundException();
+		};
+		
+		logger.info("------------- evento " + evento.getFechaEvento()); //Fecha se devuelve null
+		
+		eventoActualizado.ifPresent(e -> {
+			e.setNombre(evento.getNombre());
+			e.setDescripcionCorta(evento.getDescripcionCorta());
+			e.setDescripcionLarga(evento.getDescripcionLarga());
+			e.setFoto(evento.getFoto());
+			e.setFechaEvento(evento.getFechaEvento());
+			e.setPrecio(evento.getPrecio());
+			e.setPolitaAcceso(evento.getPolitaAcceso());
+			e.setRecinto(evento.getRecinto());
+			e.setGenero(evento.getGenero());
+			eventosService.save(e);
+		});
+		
+		
+		return new ResponseEntity<>(eventoAdapter.eventoToDto(eventoActualizado.get()), HttpStatus.OK);
 	}
 
 }
