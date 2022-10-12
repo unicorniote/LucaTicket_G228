@@ -4,6 +4,7 @@ import com.grupo2.lucaticket.eventos.model.Evento;
 import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,6 @@ public class EventosService implements EventosServiceI{
 	* @version 1.0
 	*/
 	
-
 	@Override
 	public Evento save (Evento evento) {
 		return repo.save(evento);
@@ -82,6 +82,7 @@ public class EventosService implements EventosServiceI{
 		repo.deleteById(id);
     }
 	
+	
 	/**
 	* Método findAllByGenero(String genero):
 	* Mostrador listado de eventos según el género
@@ -100,5 +101,52 @@ public class EventosService implements EventosServiceI{
 	}
 	
 	
+
+	/**
+	* Método findByNombre():
+	* Busca un evento por su nombre.
+	* 
+	* @return repo.findeByNombre()
+	* 
+	* @author Grupo 2 - Tamara Alvarez
+	* 
+	* @version 1.0
+	*/
+	public Optional<Evento> findByNombre(String nombre) {
+		return repo.findByNombre(nombre);
+	}
+
+	
+	
+	/**
+	* Método findById():
+	* Busca un evento por id.
+	* 
+	* @return repo.findeByNombre()
+	* 
+	* @author Grupo 2 - Tamara Alvarez
+	* 
+	* @version 1.0
+	*/
+	@Override
+	public Optional<Evento> findById(String id) {
+		return repo.findById(id);
+	}
+
+
+	/**
+	* Método findByNombre():
+	* Busca un evento por su nombre.
+	* 
+	* @return repo.findeByNombre()
+	* 
+	* @author Grupo 2 - Tamara Alvarez
+	* 
+	* @version 1.0
+	*/
+	@Override
+	public Optional<Evento> findAllByCiudad(String ciudad) {
+		return repo.findAllByCiudad(ciudad);
+	}
 
 }

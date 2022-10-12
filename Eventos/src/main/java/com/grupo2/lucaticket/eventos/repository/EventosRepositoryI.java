@@ -1,8 +1,10 @@
 package com.grupo2.lucaticket.eventos.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import com.grupo2.lucaticket.eventos.model.Evento;
 
@@ -20,6 +22,12 @@ import com.grupo2.lucaticket.eventos.model.Evento;
 */
 public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 	
+	@Query("{ 'genero' : ?0 }")
 	List<Evento> findAllByGenero(String genero);
-	List<Evento> findAllByNombre(String nombre);
+	
+	@Query("{ $text: { $search: \"?0\" } }")
+	Optional<Evento> findByNombre(String nombre);
+	
+	@Query("{ 'recinto.ciudad' : ?0 }")
+	Optional<Evento> findAllByCiudad(String ciudad);
 }
