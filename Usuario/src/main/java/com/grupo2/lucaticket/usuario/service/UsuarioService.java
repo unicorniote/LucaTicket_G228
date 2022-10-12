@@ -34,27 +34,50 @@ public class UsuarioService implements UsuarioServiceI {
 	public Usuario save(Usuario usuario) {
 		return repo.save(usuario);
 	}
-
+	/**
+	 * Metodo para encontrar usuarios
+	 * @param usuario 
+	 * @return Lista d usuarios
+	 * @since 1.0
+	 */
 	@Override
 	public Collection<Usuario> findAll() {
 		return repo.findAll();
 	}
 
+	/**
+	 * Metodo para eliminar un usuario por su ID
+	 * @param usuario 
+	 * @return Lista d usuarios
+	 * @since 1.0
+	 */
+	
 	@Override
 	public void deleteById(String id) {
 		repo.deleteById(id);
 	}
-
+	
+	/**
+	 * Metodo para encontrar un  usuario por su ID
+	 * @param usuario 
+	 * @return un usuario por ID
+	 * @since 1.0
+	 */
 	public Optional<Usuario> findById(String id) {
 		return repo.findById(id);
 	}
+	
+	/**
+	 * Metodo para modificar un  usuario por su ID
+	 * @param usuario 
+	 * @return usuario
+	 * @since 1.0
+	 */
 
 	@Override
 	public Optional<UsuarioDto> update(@Valid UsuarioDto usuario) {
 		return repo.update(usuario);
 	}
-
-
 
 	
 	

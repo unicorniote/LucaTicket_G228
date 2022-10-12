@@ -16,7 +16,13 @@ package com.grupo2.lucaticket.eventos.controller.error;
 
 public class EventoNotFoundException  extends RuntimeException{
 	
-	
+	/**
+	 * Metodo que lanza una excepción
+	 *
+	 * @param evento
+	 * @return Mensaje que avisa que el evento buscado no existe
+	 * @since 1.0
+	 */
 	private static final long serialVersionUID =1L;
 	public EventoNotFoundException() {
 		super ("Epic fail: Este evento no existe");

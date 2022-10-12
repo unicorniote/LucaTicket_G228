@@ -5,7 +5,12 @@ import java.util.List;
 
 import lombok.Data;
 
-
+/**
+ * Clase CustomErrorJson , plantilla de errores personalizados de Ventas
+ *
+ * @author Grupo 2 - Lamia
+ * @version 1.0 : 11/10/2022
+ */
 @Data
 public class CustomErrorJson {
 	private String timestamp;

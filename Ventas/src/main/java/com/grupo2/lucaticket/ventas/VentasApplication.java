@@ -4,6 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+
+
+/**
+ * @author Grupo 2 - Lamia
+ * @version 1.0 : 11/10/2022
+ */
 @SpringBootApplication
 @EnableDiscoveryClient
 public class VentasApplication {

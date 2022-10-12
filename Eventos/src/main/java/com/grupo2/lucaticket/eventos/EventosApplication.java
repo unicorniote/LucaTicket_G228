@@ -7,6 +7,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
 @EnableDiscoveryClient
+
+/**
+ * EventosApplication
+ * @author Grupo 2 -
+ * @version 1.0 : 07/10/2022
+ */
 public class EventosApplication {
 
 	public static void main(String[] args) {
