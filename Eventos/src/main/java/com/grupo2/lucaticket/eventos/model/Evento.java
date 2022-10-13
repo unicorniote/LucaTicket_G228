@@ -11,6 +11,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
+import org.springframework.stereotype.Component;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

@@ -2,6 +2,8 @@ package com.grupo2.lucaticket.eventos.controller;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -63,6 +66,7 @@ public class EventosControllerTestUnit {
 	Evento evento;
 	Evento eventoNull;
 	Evento eventoActualizado;
+	Evento eventoActualizado2;
 	EventoDto eventoDto;
 	EventoDto eventoDtoNull;
 	Recinto recinto;
@@ -93,6 +97,7 @@ public class EventosControllerTestUnit {
 		evento = new Evento();
 		eventoNull = new Evento();
 		eventoActualizado=new Evento();
+		eventoActualizado2 = new Evento();
 		eventoDto = new EventoDto();
 		eventoDtoNull = new EventoDto();
 		recinto = new Recinto();
@@ -108,7 +113,7 @@ public class EventosControllerTestUnit {
 		recinto.setAforo(AFORO);
 
 		// EVENTO
-		evento.set_id(ID);
+		evento.set_id("6342ffa7db6b886e7104d2fe");
 		evento.setNombre(NOMBRE_EVENTO);
 		evento.setDescripcionCorta(DESCRIPCION_CORTA);
 		evento.setDescripcionLarga(DESCRIPCION_LARGA);
@@ -120,7 +125,7 @@ public class EventosControllerTestUnit {
 		evento.setGenero(GENERO);
 		
 		// EVENTO ACTUALIZADO
-		eventoActualizado.set_id(ID);
+		eventoActualizado.set_id("6342ffa7db6b886e7104d2fe");
 		eventoActualizado.setNombre(NOMBRE_EVENTO_ACTUALIZADO);
 		eventoActualizado.setDescripcionCorta(DESCRIPCION_CORTA);
 		eventoActualizado.setDescripcionLarga(DESCRIPCION_LARGA);
@@ -130,6 +135,19 @@ public class EventosControllerTestUnit {
 		eventoActualizado.setPolitaAcceso(POLITICA);
 		eventoActualizado.setRecinto(recinto);
 		eventoActualizado.setGenero(GENERO);
+		
+		
+		// EVENTO ACTUALIZADO2
+		eventoActualizado2.set_id("6342ffa7db6b886e7104d2fe");
+		eventoActualizado2.setNombre(NOMBRE_EVENTO_ACTUALIZADO);
+		eventoActualizado2.setDescripcionCorta(DESCRIPCION_CORTA);
+		eventoActualizado2.setDescripcionLarga(DESCRIPCION_LARGA);
+		eventoActualizado2.setFoto(FOTO);
+		eventoActualizado2.setFechaEvento(FECHA);
+		eventoActualizado2.setPrecio(PRECIOS);
+		eventoActualizado2.setPolitaAcceso(POLITICA);
+		eventoActualizado2.setRecinto(recinto);
+		eventoActualizado2.setGenero(GENERO);
 
 		// EVENTODTO
 		eventoDto.setNombre(NOMBRE_EVENTO);
@@ -146,6 +164,7 @@ public class EventosControllerTestUnit {
 		eventoDto.setGenero(GENERO);
 
 		// EVENTONULL
+		eventoNull.set_id("efrvdr");
 		eventoNull.setNombre(NOMBRE_EVENTO_NULL);
 		eventoNull.setDescripcionCorta(DESCRIPCION_CORTA);
 		eventoNull.setDescripcionLarga(DESCRIPCION_LARGA);
@@ -154,7 +173,7 @@ public class EventosControllerTestUnit {
 		eventoNull.setPrecio(PRECIOS);
 		eventoNull.setPolitaAcceso(POLITICA);
 		eventoNull.setRecinto(recinto);
-		eventoNull.setGenero(GENERO_NULL);
+		eventoNull.setGenero(GENERO);
 
 		// EVENTONULL2
 		eventoDtoNull.setNombre(NOMBRE_EVENTO_NULL);
@@ -168,7 +187,7 @@ public class EventosControllerTestUnit {
 		eventoDtoNull.setCiudadEvento(CIUDAD);
 		eventoDtoNull.setDireccionEvento(DIRECCION);
 		eventoDtoNull.setAforoEvento(AFORO);
-		eventoDtoNull.setGenero(GENERO);
+		eventoDtoNull.setGenero(GENERO_NULL);
 
 		eventos.add(evento);
 		eventos.add(evento);
@@ -360,6 +379,14 @@ public class EventosControllerTestUnit {
 				.andExpect(status().isNotFound());
 	}
 	
+	/**
+	 * Descripción del método: Test que da ok cuando actualiza evento
+	 *
+	 * @author Grupo 2 - Carlos Jesus
+	 *
+	 * @version 1.0
+	 */
+	
 	@Test
 	public void actualizarEvento_Success() throws Exception {
 		
@@ -367,16 +394,40 @@ public class EventosControllerTestUnit {
 		
 		when(eventosService.findById(evento.get_id())).thenReturn(Optional.of(evento));
 		when(eventosService.save(eventoActualizado)).thenReturn(eventoActualizado);
+	
 		
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/editar/"+evento.get_id())
+		mockMvc.perform(
+				post("/eventos/add").content(objectMapper.writeValueAsString(eventoActualizado)).contentType("application/json"))
+				.andExpect(status().isCreated());
+
+	}
+	
+	/**
+	 * Descripción del método: Test que da NotFound cuando actualiza evento que no existe
+	 *
+	 * @author Grupo 2 - Carlos Jesus
+	 *
+	 * @version 1.0
+	 */
+	
+	@Test
+	public void actualizarEvento_DevuelveNotFound() throws Exception {
+		
+		when(eventosService.findById(eventoActualizado2.get_id())).thenReturn(null);
+		
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/eventos/add")
 	            .contentType(MediaType.APPLICATION_JSON)
 	            .accept(MediaType.APPLICATION_JSON)
-	            .content(objectMapper.writeValueAsString(eventoActualizado));
-		
+	            .content(objectMapper.writeValueAsString(eventoActualizado2));
+
 		mockMvc.perform(mockRequest)
-        .andExpect(status().isOk())
-        .andExpect(jsonPath("/eventos/editar/6342ffa7db6b886e7104d2fe", is("6342ffa7db6b886e7104d2fe")));
-        
+        .andExpect(status().isNotFound())
+        .andExpect(result ->  
+        assertTrue(result.getResolvedException() instanceof NotFoundException))
+        .andExpect(result->
+        assertEquals("Evento con ese id no existe", result.getResolvedException().getMessage()));
+		
+		
 	}
 	
 	
