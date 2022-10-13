@@ -32,7 +32,7 @@ public class UsuarioNotFoundException extends RuntimeException {
 	}
 
 	public UsuarioNotFoundException(int id) {
-		super("Fail: No existe el usuario");
+		super("Fail: Este usuario no existe");
 	}
 
 }
