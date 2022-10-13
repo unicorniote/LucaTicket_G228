@@ -1,4 +1,4 @@
-package com.grupo2.lucaticket.ventas.usuario.model;
+package com.grupo2.lucaticket.usuario.model;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,6 +16,22 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
+
+
+
+
+/**
+ * @Project LucaTicket
+ *
+ * @Classname Usuario Test
+ *
+ * @author Grupo 2 - Carlos Jesúa
+ *
+ * @date 12/10/2022
+ *
+ * @since 1.0
+ *
+ */
 
 @ExtendWith(MockitoExtension.class)
 public class UsuarioTest {
