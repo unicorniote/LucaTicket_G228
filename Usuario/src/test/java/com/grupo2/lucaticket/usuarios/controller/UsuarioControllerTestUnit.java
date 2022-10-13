@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +82,36 @@ private final String PASS = "passdeprueba";
 private final String PASS_NULL = null;
 private final LocalDate FECHAALTA = LocalDate.now(); 
 
+@BeforeEach
 void setUp() {
+	
+	//USUARIO
+	usuario = new Usuario();
+	usuarioNull = new Usuario();
+	usuarioDto = new UsuarioDto();
+	usuarioDtoNull = new UsuarioDto();
+	
+	usuario.setNombre(NOMBRE);
+	usuario.setApellido(APELLIDO);
+	usuario.setEmail(EMAIL);
+	usuario.setFechaalta(FECHAALTA);
+	
+	//UsuarioDTO
+	usuarioDto.setNombre(NOMBRE);
+	usuarioDto.setApellido(APELLIDO);
+	
+	//USUARIONOTNULL2
+	Usuario usuarioNull2 = new Usuario();
+	usuarioNull2.setId(ID_NULL);
+	usuarioNull2.setNombre(NOMBRE_NULL);
+	usuarioNull2.setApellido(APELLIDO);
+	usuarioNull2.setApellido(APELLIDO_NULL);
+	usuarioNull2.setEmail(EMAIL);
+	usuarioNull2.setEmail(EMAIL_NULL);
+	usuarioNull2.setFechaalta(FECHAALTA);
+	usuarioNull2.setPass(PASS);
+	usuarioNull2.setPass(PASS_NULL);
+	
 	// When
 		/*
 		 * Verifica que el controlador responde a una determinada URL, que el método
