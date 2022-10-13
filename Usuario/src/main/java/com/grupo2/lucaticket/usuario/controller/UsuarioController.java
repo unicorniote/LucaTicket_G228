@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -125,7 +126,7 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "404", description = "Usuario no encontrado (NO implementado)", content = @Content) })
 
 	@GetMapping("/{id}")
-	public UsuarioDto findById(@PathVariable String id,
+	public ResponseEntity<?> findById(@PathVariable String id,
 			@RequestParam(defaultValue = "false", required = false) boolean simple) {
 		Optional<Usuario> usuario = usuarioService.findById(Integer.parseInt(id));
 		if (usuario.isEmpty()) {
@@ -135,11 +136,11 @@ public class UsuarioController {
 		if (simple) {
 			// devolver el dto de ventas (id, nombre, apellidos)
 			logger.info("Devolviendo usuario sencillo");
-			return usuarioAdapter.usuarioToVentasDto(usuario.get());
+			return new ResponseEntity<>(usuarioAdapter.usuarioToVentasDto(usuario.get()), HttpStatus.ACCEPTED);
 		} else {
 			// devolver el dto normal
 			logger.info("Devolviendo usuario completo");
-			return usuarioAdapter.usuarioToDto(usuario.get());
+			return new ResponseEntity<>(usuarioAdapter.usuarioToDto(usuario.get()), HttpStatus.ACCEPTED);
 		}
 	}
 
