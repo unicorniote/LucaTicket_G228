@@ -28,6 +28,16 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+	/**
+	 * Método que devuelve una excepción EventoNotFoundException personalizada.
+	 * 
+	 * @param exception
+	 * @param status
+	 * @param request
+	 * @return ResponseEntity
+	 * @author Álvaro Román
+	 * @version 1.0
+	 */
 	@ExceptionHandler(EventoNotFoundException.class)
 	public ResponseEntity<Object> handleCvvNotValidException(EventoNotFoundException exception, HttpStatus status,
 			WebRequest request) {
@@ -37,6 +47,16 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
 	}
 
+	/**
+	 * Método que devuelve una excepción ConstraintViolationException personalizada.
+	 * 
+	 * @param exception
+	 * @param status
+	 * @param request
+	 * @return ResponseEntity
+	 * @author Álvaro Román
+	 * @version 1.0
+	 */
 	@ExceptionHandler(ConstraintViolationException.class)
 	public ResponseEntity<Object> handleCvvNotValidException(ConstraintViolationException exception, HttpStatus status,
 			WebRequest request) {
@@ -46,21 +66,37 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
 	}
 
+	/**
+	 * Método que devuelve una excepción MethodArgumentNotValidException
+	 * personalizada.
+	 * 
+	 * @param exception
+	 * @param status
+	 * @param request
+	 * @param headers
+	 * @return ResponseEntity
+	 * @author Lamia
+	 * @version 1.0
+	 */
 	@Override
-	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		log.info("HandleMethodArgumentNotValid()");
 
-		CustomErrorJson customError = ErrorUtils.customErrorMapper(ex, headers, status, request);
+		CustomErrorJson customError = ErrorUtils.customErrorMapper(exception, headers, status, request);
 
 		return new ResponseEntity<>(customError, headers, status);
 	}
 
 	/**
-	 * Descripción del método: Intercepta CustomErrorJson
+	 * Método que devuelve una excepción HttpRequestMethodNotSupportedException
+	 * personalizada.
 	 * 
-	 * @param
-	 * @return CustomError
+	 * @param exception
+	 * @param status
+	 * @param request
+	 * @param headers
+	 * @return ResponseEntity
 	 * @author Lamia
 	 * @version 1.0
 	 */
@@ -72,14 +108,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		CustomErrorJson customError = ErrorUtils.customErrorMapper(ex, headers, status, request);
 		return new ResponseEntity<Object>(customError, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
 
-		/**
-		 * Descripción del método: Método que señaliza que una petición no existe
-		 * 
-		 * @param
-		 * @return
-		 * @author Lamia
-		 * @version 1.0
-		 */
-
 	}
+
 }
