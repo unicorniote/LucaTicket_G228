@@ -233,7 +233,7 @@ public class EventosController {
 	@GetMapping("/ciudad/{ciudad}")
 	public List<EventoDto> listaEventosCiudad(
 			@Parameter(description = "Ciudad del evento a localizar", required = true) @PathVariable String ciudad) {
-		List<Evento> evento = eventosService.findByCiudad(ciudad);
+		List<Evento> evento = eventosService.findAllByCiudad(ciudad);
 		if (evento.isEmpty()) {
 			throw new EventoNotFoundException();
 		} else {

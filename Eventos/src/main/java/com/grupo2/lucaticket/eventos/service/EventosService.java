@@ -128,8 +128,8 @@ public class EventosService implements EventosServiceI {
 	 * @version 1.0
 	 */
 	@Override
-	public List<Evento> findByCiudad(String ciudad) {
-		return repo.findByCiudad(ciudad);
+	public List<Evento> findAllByCiudad(String ciudad) {
+		return repo.findAllByCiudad(ciudad);
 	}
 
 	/**

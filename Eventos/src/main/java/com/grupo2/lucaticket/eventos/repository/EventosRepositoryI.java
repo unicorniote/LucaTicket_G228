@@ -29,6 +29,6 @@ public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 
 	//Lanza una excepcion evento not found
 	@Aggregation("{$match: {ciudad: '?0'}}, {$lookup: {\"from\": \"eventos\", \"localField\": \"_id\", \"foreignField\": \"recinto\", \"as\": \"evento\"}}")
-	List<Evento> findByCiudad(String ciudad);
+	List<Evento> findAllByCiudad(String ciudad);
 
 }

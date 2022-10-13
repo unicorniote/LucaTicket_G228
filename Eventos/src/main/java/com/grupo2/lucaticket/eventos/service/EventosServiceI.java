@@ -19,7 +19,7 @@ public interface EventosServiceI {
 
 	public Optional<Evento> findById(String id);
 
-	public List<Evento> findByCiudad(String ciudad);
+	public List<Evento> findAllByCiudad(String ciudad);
 
 	public Evento update(Evento evento);
 }
