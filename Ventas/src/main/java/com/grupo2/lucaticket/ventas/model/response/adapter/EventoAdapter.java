@@ -17,14 +17,9 @@ public class EventoAdapter implements EventoAdapterI {
     @Override
     public EventoDto of(EventoResponseDto responseDto) {
         EventoDto eventoDto = new EventoDto();
-        eventoDto.setId(responseDto.getId());
         eventoDto.setNombre(responseDto.getNombre());
         eventoDto.setDescripcionEvento(responseDto.getDescripcionEvento());
         eventoDto.setFechaEvento(responseDto.getFechaEvento());
-        eventoDto.setHoraEvento(responseDto.getHoraEvento());
-        eventoDto.setRangoPreciosEvento(responseDto.getRangoPreciosEvento());
-        eventoDto.setPolitcaAcceso(responseDto.getPolitcaAcceso());
-        eventoDto.setRecintoEvento(responseDto.getRecintoEvento());
         return eventoDto;
     }
 }

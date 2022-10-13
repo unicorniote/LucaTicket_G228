@@ -1,11 +1,11 @@
 package com.grupo2.lucaticket.ventas.controller;
 
 import com.grupo2.lucaticket.ventas.feignclients.EventoFeignClient;
+import com.grupo2.lucaticket.ventas.feignclients.PasarelaFeignClient;
 import com.grupo2.lucaticket.ventas.feignclients.UsuarioFeignClients;
+import com.grupo2.lucaticket.ventas.model.Tarjeta;
 import com.grupo2.lucaticket.ventas.model.Venta;
-import com.grupo2.lucaticket.ventas.model.response.EventoResponseDto;
-import com.grupo2.lucaticket.ventas.model.response.UsuarioDto;
-import com.grupo2.lucaticket.ventas.model.response.VentasDto;
+import com.grupo2.lucaticket.ventas.model.response.*;
 import com.grupo2.lucaticket.ventas.model.response.adapter.EventoAdapterI;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo2.lucaticket.ventas.service.VentasServiceI;
+
+import java.util.LinkedHashMap;
 
 
 /**
@@ -37,7 +40,7 @@ import com.grupo2.lucaticket.ventas.service.VentasServiceI;
 
 @RestController
 @RequestMapping("/ventas")
-@Tag(name="Ventas Controller", description = "Listado de endpoints relacionados con Ventas")
+@Tag(name = "Ventas Controller", description = "Listado de endpoints relacionados con Ventas")
 
 public class VentasController {
 
@@ -54,12 +57,15 @@ public class VentasController {
     private EventoFeignClient eventoFeignClient;
 
     @Autowired
+    private PasarelaFeignClient pasarelaFeignClient;
+
+    @Autowired
     private EventoAdapterI eventoAdapter;
 
     /**
      * Endpoint para crear una venta en base al usuario y evento
      *
-     * @param venta Objeto serializado donde obtenemos el usuario y el evento
+     * @param ventaBody Objeto serializado donde obtenemos el usuario y el evento
      * @return La ruta del enpoint con el id del objeto generado y guardado en la base de datos
      * @author Grupo 2 - Alonso
      * @version 1.0 : 11/10/2022
@@ -81,21 +87,38 @@ public class VentasController {
     })
 
     @PostMapping("/add")
-    public ResponseEntity<?> addVenta(@RequestBody Venta venta) {
-        logger.info("Add venta ->: " + venta);
-        logger.info("Comprobando usuario " + venta.getUsuario());
-        final UsuarioDto usuarioDto = usuarioFeignClients.getUsuario(venta.getUsuario());
+    public ResponseEntity<?> addVenta(@RequestBody VentaBodyDto ventaBody) {
+        logger.info("Add venta ->: " + ventaBody);
+        logger.info("Comprobando usuario " + ventaBody.getUsuario());
+        final UsuarioDto usuarioDto = usuarioFeignClients.getUsuario(ventaBody.getUsuario());
         logger.info("usuario encontrado ->: " + usuarioDto);
-        final EventoResponseDto eventoDto = eventoFeignClient.getEvento(venta.getEvento());
+        final EventoResponseDto eventoDto = eventoFeignClient.getEvento(ventaBody.getEvento());
         logger.info("evento encontrado ->: " + eventoDto);
+
+        VentasDto ventasDto;
+        ResultadoDto resultadoDto = new ResultadoDto();
+        ResponseEntity<?> pagoCompletado = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         if (usuarioDto != null && eventoDto != null) {
-            venta = ventasService.addVenta(venta);
+
+
+            ventasDto = new VentasDto();
+            ventasDto.setUsuario(usuarioDto);
+            ventasDto.setEvento(eventoAdapter.of(eventoDto));
+            ventasDto.setTarjeta(new Tarjeta(ventaBody.getTarjetaNum(), ventaBody.getCvv()));
+
+            pagoCompletado = pasarelaFeignClient.checkCompra(ventasDto);
+            Venta venta = new Venta();
+            if (pagoCompletado.getStatusCode() == HttpStatus.ACCEPTED) {
+                venta = ventasService.addVenta(new Venta(0, ventaBody.getUsuario(), ventaBody.getEvento()));
+                resultadoDto.setIdVenta(venta.getId());
+            }
+
+            logger.info("Venta from database ->: " + venta);
+            resultadoDto.setUsuario(usuarioDto);
+            resultadoDto.setEvento(eventoAdapter.of(eventoDto));
+            resultadoDto.setResultado((LinkedHashMap<?, ?>) pagoCompletado.getBody());
         }
-        logger.info("Venta from database ->: " + venta);
-        VentasDto ventasDto = new VentasDto();
-        ventasDto.setId(venta.getId());
-        ventasDto.setUsuario(usuarioDto);
-        ventasDto.setEvento(eventoAdapter.of(eventoDto));
-        return new ResponseEntity<>(ventasDto, HttpStatus.ACCEPTED);
+
+        return new ResponseEntity<>(resultadoDto, pagoCompletado.getStatusCode());
     }
 }
