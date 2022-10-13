@@ -1,4 +1,4 @@
-package com.grupo2.lucaticket.eventos.utils;
+package com.grupo2.lucaticket.usuario.utils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.WebRequest;
 
-import com.grupo2.lucaticket.eventos.controller.error.CustomErrorJson;
+import com.grupo2.lucaticket.usuario.controller.error.CustomErrorJson;
 
 import lombok.extern.slf4j.Slf4j;
 

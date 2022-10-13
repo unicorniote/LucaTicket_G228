@@ -15,6 +15,7 @@ import com.lucaticket.pasarela.controller.exceptions.CvvNotValidException;
 import com.lucaticket.pasarela.controller.exceptions.SinFondosException;
 import com.lucaticket.pasarela.controller.exceptions.TarjetaNotFoundException;
 import com.lucaticket.pasarela.model.Tarjeta;
+import com.lucaticket.pasarela.model.response.PagoCompletado;
 import com.lucaticket.pasarela.service.ValidarPagosService;
 import com.lucaticket.pasarela.utils.ValidationUtils;
 

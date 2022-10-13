@@ -5,21 +5,29 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.grupo2.lucaticket.usuario.controller.error.UsuarioNotFoundException;
 import com.grupo2.lucaticket.usuario.model.Usuario;
 import com.grupo2.lucaticket.usuario.model.adapter.UsuarioAdapterI;
 import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
-import com.grupo2.lucaticket.usuario.repository.UsuarioRepositoryI;
-import com.grupo2.lucaticket.usuario.service.UsuarioService;
 import com.grupo2.lucaticket.usuario.service.UsuarioServiceI;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -75,7 +83,7 @@ public class UsuarioController {
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content) })
 	@PostMapping("/add")
-	public ResponseEntity<?> addUsuario(@RequestBody Usuario usuario) {
+	public ResponseEntity<?> addUsuario(@Valid @RequestBody Usuario usuario) {
 
 		logger.info("añadiendo Usuario");
 		usuario = this.usuarioService.save(usuario);
@@ -117,7 +125,8 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "404", description = "Usuario no encontrado (NO implementado)", content = @Content) })
 
 	@GetMapping("/{id}")
-	public UsuarioDto findById(@PathVariable String id, @RequestParam(defaultValue = "false", required = false) boolean simple) {
+	public UsuarioDto findById(@PathVariable String id,
+			@RequestParam(defaultValue = "false", required = false) boolean simple) {
 		Optional<Usuario> usuario = usuarioService.findById(Integer.parseInt(id));
 		if (usuario.isEmpty()) {
 			// lanzamos la excepcion
@@ -146,16 +155,15 @@ public class UsuarioController {
 	public ResponseEntity<UsuarioDto> update(
 			@Parameter(description = "Párametro String Usuario id que recoge el usuario", required = true) @RequestBody Usuario usuario) {
 		logger.info(" ---- updateUsuario (PUT)");
-		Optional<UsuarioDto> usuarioActualizado = Optional.of(usuarioAdapter.usuarioToDto(this.usuarioService.save(usuario)));
+		Optional<UsuarioDto> usuarioActualizado = Optional
+				.of(usuarioAdapter.usuarioToDto(this.usuarioService.save(usuario)));
 		if (usuarioActualizado.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.of(usuarioActualizado);
 
 	}
-	
-	
-	
+
 	/**
 	 * Método Delete - Elimina un usuario.
 	 * 
@@ -165,13 +173,11 @@ public class UsuarioController {
 	 * 
 	 * @version 1.0
 	 */
-	
-	
+
 	@DeleteMapping("/{id}")
 	public void deleteUsuario(@PathVariable String id) {
 		logger.info("Delete, id ->" + id);
 		usuarioService.deleteUsuario(Integer.parseInt(id));
 	}
-	
-	
-	}
+
+}
