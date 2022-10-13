@@ -26,6 +26,7 @@ import com.grupo2.lucaticket.eventos.controller.error.CiudadEventoNotFoundExcept
 import com.grupo2.lucaticket.eventos.controller.error.EventoNotFoundException;
 import com.grupo2.lucaticket.eventos.controller.error.EventosEmptyDatabaseException;
 import com.grupo2.lucaticket.eventos.controller.error.GeneroEventoNotFoundException;
+import com.grupo2.lucaticket.eventos.controller.error.NombreEventoNotFoundException;
 import com.grupo2.lucaticket.eventos.model.Evento;
 import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapterI;
 import com.grupo2.lucaticket.eventos.model.response.EventoDto;
@@ -149,7 +150,7 @@ public class EventosController {
 		logger.info("----------Buscando eventos por nombre");
 		List<Evento> evento = eventosService.findByNombre(nombre);
 		if (evento.isEmpty()) {
-			throw new EventoNotFoundException();
+			throw new NombreEventoNotFoundException();
 		} else {
 			return eventoAdapter.eventoToDto(evento);
 		}
