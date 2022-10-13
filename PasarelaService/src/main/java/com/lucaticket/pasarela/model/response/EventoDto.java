@@ -1,4 +1,4 @@
-package com.grupo2.lucaticket.ventas.model.response;
+package com.lucaticket.pasarela.model.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

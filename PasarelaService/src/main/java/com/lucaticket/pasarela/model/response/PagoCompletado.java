@@ -1,5 +1,6 @@
-package com.lucaticket.pasarela.controller;
+package com.lucaticket.pasarela.model.response;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.lucaticket.pasarela.utils.FechaUtils;
@@ -9,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Slf4j
-public class PagoCompletado {
+public class PagoCompletado implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String fecha;
 	private int estado;

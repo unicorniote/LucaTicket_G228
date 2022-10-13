@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,10 +85,9 @@ public class EventosController {
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content) })
 	@PostMapping("/add")
-	public ResponseEntity<?> addEvento(@RequestBody Evento evento) {
+	public ResponseEntity<?> addEvento(@Valid @RequestBody Evento evento) {
 
-		logger.info("añadiendo Evento");
-		System.out.println(evento);
+		logger.info("añadiendo Evento: " + evento);
 		evento = this.eventosService.save(evento);
 		logger.info("El evento se ha añadido correctamente");
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(evento.get_id())
