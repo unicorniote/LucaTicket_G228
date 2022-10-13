@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.grupo2.lucaticket.eventos.model.Evento;
 
@@ -19,14 +20,15 @@ import com.grupo2.lucaticket.eventos.model.Evento;
  * @since 1.0
  *
  */
+@Repository
 public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 
 	List<Evento> findAllByGenero(String genero);
 
 	List<Evento> findByNombre(String nombre);
 
-	@Query(" $lookup: { from : 'Eventos', localField: 'ciudadEvento', foreignField: '_id', as: 'sender' }, {$lookup: { from: 'Recintos', localField: ?0, foreignField: '_id', as: 'receiver' }}")
-	//@Query("{ 'Recinto.ciudad' : ?0 }")
+	//@Query(" $lookup: { from : 'Eventos', localField: 'ciudadEvento', foreignField: '_id', as: 'sender' }, {$lookup: { from: 'Recintos', localField: 'ciudad: ?0', foreignField: '_id', as: 'receiver' }}")
+	@Query("{ciudadEvento: {'$regex': '?0', '$options':'i'} }")
 	List<Evento> findByCiudad(String ciudad);
 
 }

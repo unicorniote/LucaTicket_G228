@@ -85,7 +85,7 @@ public class EventosController {
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content) })
 	@PostMapping("/add")
-	public ResponseEntity<?> addEvento(@Valid @RequestBody Evento evento) {
+	public ResponseEntity<?> addEvento(@RequestBody Evento evento) {
 
 		logger.info("añadiendo Evento: " + evento);
 		evento = this.eventosService.save(evento);

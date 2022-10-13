@@ -4,7 +4,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
@@ -165,8 +164,9 @@ public class EventosControllerTestUnit {
 		// When
 		when(eventosService.save(evento)).thenReturn(evento);
 
-		mockMvc.perform(
-				post("/eventos/add").content(objectMapper.writeValueAsString(evento)).contentType("application/json"))
+		mockMvc.perform(post("/eventos/add")
+				.content(objectMapper.writeValueAsString(evento))
+				.contentType("application/json"))
 				.andExpect(status().isCreated());
 	}
 
@@ -176,7 +176,8 @@ public class EventosControllerTestUnit {
 		logger.info("Aplicando test que devuelve 400");
 
 		// then
-		mockMvc.perform(post("/eventos/add").content(objectMapper.writeValueAsString(eventoDtoNull))
+		mockMvc.perform(post("/eventos/add")
+				.content(objectMapper.writeValueAsString(eventoDtoNull))
 				.contentType("application/json")).andExpect(status().isBadRequest());
 	}
 
@@ -189,7 +190,8 @@ public class EventosControllerTestUnit {
 		when(eventosService.findAll()).thenReturn(eventosVacio);
 
 		// then
-		mockMvc.perform(get("/eventos/lista").contentType("application/json")).andExpect(status().isNotFound());
+		mockMvc.perform(get("/eventos/lista").contentType("application/json"))
+				.andExpect(status().isNotFound());
 
 	}
 
@@ -209,7 +211,8 @@ public class EventosControllerTestUnit {
 		when(eventosService.findAll()).thenReturn(eventos);
 
 		// then
-		mockMvc.perform(get("/eventos/lista").contentType("application/json")).andExpect(status().isOk());
+		mockMvc.perform(get("/eventos/lista").contentType("application/json"))
+				.andExpect(status().isOk());
 
 	}
 
@@ -229,7 +232,8 @@ public class EventosControllerTestUnit {
 		when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn(eventos);
 
 		// then
-		mockMvc.perform(get("/eventos/nombre/" + eventoDto.getNombre()).contentType("application/json"))
+		mockMvc.perform(get("/eventos/nombre/" + eventoDto.getNombre())
+				.contentType("application/json"))
 				.andExpect(status().isOk());
 
 	}
@@ -251,7 +255,8 @@ public class EventosControllerTestUnit {
 		when(eventosService.findByNombre(NOMBRE_EVENTO)).thenReturn(eventos);
 
 		// then
-		mockMvc.perform(get("/eventos/nombre/" + eventoNull.getNombre()).contentType("application/json"))
+		mockMvc.perform(get("/eventos/nombre/" + eventoNull.getNombre())
+				.contentType("application/json"))
 				.andExpect(status().isNotFound());
 	}
 
@@ -269,7 +274,8 @@ public class EventosControllerTestUnit {
 
 		when(eventosService.findAllByGenero(GENERO)).thenReturn(eventos);
 
-		mockMvc.perform(get("/eventos/genero/" + evento.getGenero()).contentType("application/json"))
+		mockMvc.perform(get("/eventos/genero/" + evento.getGenero())
+				.contentType("application/json"))
 				.andExpect(status().isOk());
 
 	}
@@ -289,7 +295,8 @@ public class EventosControllerTestUnit {
 
 		when(eventosService.findAllByGenero(GENERO_NULL)).thenReturn(eventos);
 
-		mockMvc.perform(get("/eventos/genero/" + eventoNull.getGenero()).contentType("application/json"))
+		mockMvc.perform(get("/eventos/genero/" + eventoNull.getGenero())
+				.contentType("application/json"))
 				.andExpect(status().isNotFound());
 
 	}
@@ -305,7 +312,8 @@ public class EventosControllerTestUnit {
 	public void cuandoBorroEvento_daOk() throws Exception {
 		logger.info("Aplicando test que elimina un evento");
 
-		mockMvc.perform(delete("/eventos/" + evento.get_id()).contentType("application/json"))
+		mockMvc.perform(delete("/eventos/" + evento.get_id())
+				.contentType("application/json"))
 				.andExpect(status().isOk());
 	}
 
@@ -333,7 +341,8 @@ public class EventosControllerTestUnit {
 
 		logger.info("Aplicando test que no elimina un evento por tener Id null");
 
-		mockMvc.perform(delete("/eventos/" + eventoNull2.get_id()).contentType("application/json"))
+		mockMvc.perform(delete("/eventos/" + eventoNull2.get_id())
+				.contentType("application/json"))
 				.andExpect(status().isNotFound());
 	}
 
