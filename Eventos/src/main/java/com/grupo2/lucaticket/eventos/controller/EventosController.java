@@ -298,7 +298,6 @@ public class EventosController {
 		if (!eventoActualizado.isPresent()) {
 			throw new EventoNotFoundException();
 		}
-		;
 
 		logger.info("------------- evento " + evento.getFechaEvento()); // Fecha se devuelve null
 
