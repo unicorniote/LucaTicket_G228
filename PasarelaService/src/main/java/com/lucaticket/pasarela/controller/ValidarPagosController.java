@@ -2,6 +2,7 @@ package com.lucaticket.pasarela.controller;
 
 import javax.validation.Valid;
 
+import com.lucaticket.pasarela.feignclients.PasarelaFeignClient;
 import com.lucaticket.pasarela.model.response.InfoCompraDto;
 import com.lucaticket.pasarela.model.response.VentasDto;
 import com.lucaticket.pasarela.model.response.adapter.InfoAdapterI;
@@ -42,6 +43,9 @@ public class ValidarPagosController {
     @Autowired
     InfoAdapterI infoAdapterI;
 
+    @Autowired
+    PasarelaFeignClient pasarelaFeignClient;
+
     @Operation(summary = "Validar pago con tarjeta", description = "Dado un número de tarjeta y un código CVV se valida el pago", tags = {"student"})
     @ApiResponses(value = {@ApiResponse(responseCode = "203", description = "El CVV de la tarjeta no es válido", content = {@Content}), @ApiResponse(responseCode = "207", description = "La tarjeta no tiene fondos", content = @Content), @ApiResponse(responseCode = "404", description = "La tarjeta no existe en la base de datos", content = @Content)})
     @PostMapping("/pagar")
@@ -67,6 +71,6 @@ public class ValidarPagosController {
     @ApiResponses(value = {@ApiResponse(responseCode = "202", description = "Mostrando informacion correctamente", content = {@Content})})
     @PostMapping("/info")
     public ResponseEntity<?> addInfo(@RequestBody VentasDto ventasDto) {
-        return new ResponseEntity<>(infoAdapterI.of(ventasDto), HttpStatus.ACCEPTED);
+        return pasarelaFeignClient.checkCompra(ventasDto.getTarjeta());
     }
 }
