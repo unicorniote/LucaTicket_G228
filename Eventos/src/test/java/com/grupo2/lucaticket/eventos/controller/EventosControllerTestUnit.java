@@ -275,7 +275,7 @@ public class EventosControllerTestUnit {
 
 		// then
 		mockMvc.perform(get("/eventos/nombre/" + eventoNull.getNombre()).contentType("application/json"))
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isNotFound());
 	}
 
 	/**
@@ -363,6 +363,8 @@ public class EventosControllerTestUnit {
 	@Test
 	public void actualizarEvento_Success() throws Exception {
 		
+		logger.info("Aplicando test que actualiza evento ");
+		
 		when(eventosService.findById(evento.get_id())).thenReturn(Optional.of(evento));
 		when(eventosService.save(eventoActualizado)).thenReturn(eventoActualizado);
 		
@@ -373,8 +375,8 @@ public class EventosControllerTestUnit {
 		
 		mockMvc.perform(mockRequest)
         .andExpect(status().isOk())
-        .andExpect(jsonPath(eventoActualizado.get_id(), is("6342ffa7db6b886e7104d2fe")))
-        .andExpect(jsonPath(eventoActualizado.getNombre(), is("TomorrowLand")));
+        .andExpect(jsonPath("/eventos/editar/6342ffa7db6b886e7104d2fe", is("6342ffa7db6b886e7104d2fe")));
+        
 	}
 	
 	
