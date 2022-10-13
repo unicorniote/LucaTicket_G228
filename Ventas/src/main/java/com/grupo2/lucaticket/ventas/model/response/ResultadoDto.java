@@ -6,6 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 
 @Data
 public class ResultadoDto implements Serializable {
@@ -20,5 +21,5 @@ public class ResultadoDto implements Serializable {
     private EventoDto evento;
 
     @Schema(name = "resultado", description = "Resultado del pago")
-    private PagoCompletado resultado;
+    private LinkedHashMap<?, ?> resultado;
 }

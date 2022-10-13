@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo2.lucaticket.ventas.service.VentasServiceI;
 
+import java.util.LinkedHashMap;
+
 
 /**
  * @author Lamia
@@ -95,6 +97,7 @@ public class VentasController {
 
         VentasDto ventasDto;
         ResultadoDto resultadoDto = new ResultadoDto();
+        ResponseEntity<?> pagoCompletado = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         if (usuarioDto != null && eventoDto != null) {
 
 
@@ -102,11 +105,10 @@ public class VentasController {
             ventasDto.setUsuario(usuarioDto);
             ventasDto.setEvento(eventoAdapter.of(eventoDto));
             ventasDto.setTarjeta(new Tarjeta(ventaBody.getTarjetaNum(), ventaBody.getCvv()));
-            PagoCompletado pagoCompletado = pasarelaFeignClient.checkCompra(ventasDto);
 
-
+            pagoCompletado = pasarelaFeignClient.checkCompra(ventasDto);
             Venta venta = new Venta();
-            if (pagoCompletado.getEstado() == HttpStatus.ACCEPTED.value()) {
+            if (pagoCompletado.getStatusCode() == HttpStatus.ACCEPTED) {
                 venta = ventasService.addVenta(new Venta(0, ventaBody.getUsuario(), ventaBody.getEvento()));
                 resultadoDto.setIdVenta(venta.getId());
             }
@@ -114,9 +116,9 @@ public class VentasController {
             logger.info("Venta from database ->: " + venta);
             resultadoDto.setUsuario(usuarioDto);
             resultadoDto.setEvento(eventoAdapter.of(eventoDto));
-            resultadoDto.setResultado(pagoCompletado);
+            resultadoDto.setResultado((LinkedHashMap<?, ?>) pagoCompletado.getBody());
         }
 
-        return new ResponseEntity<>(resultadoDto, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(resultadoDto, pagoCompletado.getStatusCode());
     }
 }
