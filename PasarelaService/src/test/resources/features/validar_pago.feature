@@ -2,29 +2,31 @@ Feature: Validar el pago.
 	Es posible validar el pago.
 
 	Scenario: Validar pago sin fondos
-  	Given numero de tarjeta valido
+  	Given numero tarjeta valido
   	And cvv valido
-  	And No hay fondos
+  	And sin fondos
   	When intento validar pago
-  	Then operacion denegada
+  	Then operacion denegada no hay fondos
         
-	Scenario: validar pago con Cvv incorrecto
-  	Given numero de tarjeta valido
+	Scenario: Validar pago con Cvv incorrecto
+  	Given numero tarjeta valido
     And cvv incorrecto
+    And fondos suficientes
     When intento validar pago
-  	Then operacion denegada
+  	Then operacion denegada cvv incorrecto
   	
-  	Scenario: validar pago con tarjeta invalida
-			Given numero de tarjeta invalido
-			And cvv valido
-			When intento validar pago con tarjeta invalida
-			Then operacion denegada
+  Scenario: Validar pago con tarjeta invalida
+		Given numero tarjeta no valido
+		And cvv valido
+		And fondos suficientes
+		When intento validar pago
+		Then operacion denegada numero tarjeta no valido
 
-	Scenario: validar pago con todo correcto
-			Given numero de tarjeta valido
-			And cvv valido
-			And si hay fondos
-			When intento validar pago con todo correcto
-			Then operacion aprobada
+	Scenario: Validar pago con todo correcto
+		Given numero tarjeta valido
+		And cvv valido
+		And fondos suficientes
+		When intento validar pago
+		Then operacion aprobada
 		
 		

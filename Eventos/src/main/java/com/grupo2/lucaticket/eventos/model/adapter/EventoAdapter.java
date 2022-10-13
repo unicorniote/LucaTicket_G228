@@ -3,17 +3,18 @@ package com.grupo2.lucaticket.eventos.model.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.grupo2.lucaticket.eventos.model.Evento;
-import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.grupo2.lucaticket.eventos.model.Evento;
+import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 
 /**
  * Clase EventoAdapter que contiene los métodos para pasar de entidad Evento a
  * objeto DTO.
  *
- * @author Álvaro Román Gómez
+ * @author Álvaro Román
  * @version 1.0: 06/10/2022
  */
 @Component
@@ -35,13 +36,17 @@ public class EventoAdapter implements EventoAdapterI {
 		// TODO Auto-generated method stub
 		logger.info("Mapeando objeto entidad Evento a DTO de Evento...");
 		EventoDto eventoDto = new EventoDto();
-
-
+		eventoDto.setId(evento.get_id());
 		eventoDto.setNombre(evento.getNombre());
 		eventoDto.setDescripcionEvento(evento.getDescripcionCorta());
 		eventoDto.setFoto(evento.getFoto());
-		eventoDto.setFechaEvento(evento.getFechaEvento().toLocalDate());
-		eventoDto.setHoraEvento(evento.getFechaEvento().toLocalTime());
+		try {
+			eventoDto.setFechaEvento(evento.getFechaEvento().toLocalDate());
+			eventoDto.setHoraEvento(evento.getFechaEvento().toLocalTime());
+		} catch (Exception e) {
+			eventoDto.setFechaEvento(null);
+			eventoDto.setHoraEvento(null);
+		}
 		eventoDto.setRangoPreciosEvento(evento.getPrecio());
 		eventoDto.setPolitcaAcceso(evento.getPolitaAcceso());
 		eventoDto.setRecintoEvento(evento.getRecinto().getNombreRecinto());

@@ -7,49 +7,27 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Optional;
-
-import org.springframework.http.ResponseEntity;
-
-import com.grupo2.lucaticket.usuario.model.Usuario;
 
 /**
-* @Project LucaTicket
-*
-* @Classname UsuarioDto
-*
-* @author Alonso
-* @date 09/10/2022
-*
-* @since 1.0
-*
-*/
+ * @author Alonso
+ * @Project LucaTicket
+ * @Classname UsuarioDto
+ * @date 09/10/2022
+ * @since 1.0
+ */
 @Data
 @Schema(name = "UsuarioDto", description = "DTO de Usuario")
 public class UsuarioDto implements Serializable {
 
     @Schema(name = "id", description = "Identificador numerico del usuario")
-    private String id;
+    private int id;
 
     @Schema(name = "nombre", description = "Nombre del usuario")
     private String nombre;
 
     @Schema(name = "apellido", description = "Apellidos del usuario")
     private String apellido;
-
-    @Schema(name = "email", description = "Direccion de correo electronico del usuario")
-    private String email;
-
-    @Schema(name = "pass", description = "Contraseña del usuario")
-    private String pass;
-
-    @Schema(name = "fechaAlta", description = "Fecha de cuando el usuario se registro en el sistema del usuario")
-    private LocalDate fechaalta;
-
-
-
-	
-	}
+}
 
 
 

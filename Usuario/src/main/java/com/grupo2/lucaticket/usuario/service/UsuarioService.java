@@ -3,14 +3,10 @@ package com.grupo2.lucaticket.usuario.service;
 import java.util.Collection;
 import java.util.Optional;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.grupo2.lucaticket.usuario.model.Usuario;
-import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
 import com.grupo2.lucaticket.usuario.repository.UsuarioRepositoryI;
 
 /**
@@ -53,7 +49,7 @@ public class UsuarioService implements UsuarioServiceI {
 	 */
 	
 	@Override
-	public void deleteById(String id) {
+	public void deleteById(int id) {
 		repo.deleteById(id);
 	}
 	
@@ -63,20 +59,21 @@ public class UsuarioService implements UsuarioServiceI {
 	 * @return un usuario por ID
 	 * @since 1.0
 	 */
-	public Optional<Usuario> findById(String id) {
+	public Optional<Usuario> findById(int id) {
 		return repo.findById(id);
 	}
 	
 	/**
 	 * Metodo para modificar un  usuario por su ID
-	 * @param usuario 
+	 *
+	 * @param usuario
 	 * @return usuario
 	 * @since 1.0
 	 */
 
 	@Override
-	public Optional<UsuarioDto> update(@Valid UsuarioDto usuario) {
-		return repo.update(usuario);
+	public Usuario update(Usuario usuario) {
+		return repo.save(usuario);
 	}
 
 	/**
@@ -89,7 +86,7 @@ public class UsuarioService implements UsuarioServiceI {
 	
 	
 	@Override
-    public void deleteUsuario(String id) {
+    public void deleteUsuario(int id) {
 		repo.deleteById(id);
     }
 }

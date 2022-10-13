@@ -1,106 +1,122 @@
 package com.lucaticket.pasarela.cucumber.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.mockito.InjectMocks;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lucaticket.pasarela.controller.ValidarPagosController;
+import com.lucaticket.pasarela.model.Tarjeta;
+import com.lucaticket.pasarela.service.ValidarPagosService;
 import com.lucaticket.pasarela.utils.ValidationUtils;
 
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
+import lombok.extern.slf4j.Slf4j;
 
+@CucumberContextConfiguration
+@WebMvcTest(ValidarPagosController.class)
+@Slf4j
 public class validar_pago {
-	private static final Logger logger = LoggerFactory.getLogger(validar_pago.class);
 
-	boolean ntarjeta;
-	boolean nCVV;
-	boolean nFondos;
+	@Autowired
+	private MockMvc mockMvc;
 
-	ValidationUtils validationUtils = new ValidationUtils();
+//	@MockBean
+//	private ValidarPagosRepositoryI validarRepository;
 
-	@Given("numero de tarjeta valido")
-	public void numero_de_tarjeta_valido() {
-		ntarjeta = validationUtils.validarTarjeta(2);
-		assertThat(ntarjeta).isTrue();
-		logger.info("numero tajeta añadido");
+	@InjectMocks
+	private ValidarPagosController validarController;
+
+	@Autowired
+	@MockBean
+	private ValidarPagosService validarService;
+
+	private MvcResult respuesta;
+
+	@InjectMocks
+	ValidationUtils validationUtils;
+
+	// CASOS TARJETA
+	@Given("numero tarjeta valido")
+	public void numero_tarjeta_valido() {
+		log.info("Dado que el número de tarjeta es válido...");
+		when(validarService.encontrarTarjeta()).thenReturn(2);
 	}
 
+	@Given("numero tarjeta no valido")
+	public void numero_tarjeta_no_valido() {
+		log.info("Dado que el número de tarjeta no es válido...");
+		when(validarService.encontrarTarjeta()).thenReturn(1);
+	}
+
+	// CASOS CVV
 	@Given("cvv valido")
 	public void cvv_valido() {
-		nCVV = validationUtils.validarCvv(2);
-		assertThat(nCVV).isTrue();
-		logger.info("añadido cvv");
+		log.info("Dado que el CVV es válido...");
+		when(validarService.validarCvv()).thenReturn(2);
 	}
 
 	@Given("cvv incorrecto")
 	public void cvv_incorrecto() {
-		nCVV = validationUtils.validarCvv(2);
-		assertThat(nCVV).isTrue();
-		logger.info("añadido cvv");
+		log.info("Dado que el CVV no es válido...");
+		when(validarService.validarCvv()).thenReturn(1);
 	}
 
-	@Given("No hay fondos")
-	public void no_hay_fondos() {
-		logger.info("intentando validar pago");
-		nFondos = validationUtils.validarFondos(1);
-		assertThat(nFondos).isFalse();
+	// CASOS FONDOS
+	@Given("sin fondos")
+	public void sin_fondos() {
+		log.info("Dado que no hay fondos sucientes...");
+		when(validarService.consultarFondos()).thenReturn(1);
 	}
 
+	@Given("fondos suficientes")
+	public void fondos_suficientes() {
+		log.info("Dado que hay fondos sucientes...");
+		when(validarService.consultarFondos()).thenReturn(2);
+	}
+
+	// LLAMADA A MÉTODO VALIDAR
 	@When("intento validar pago")
-	public void intento_validar_pago() {
-		logger.info("intentando validar pago");
-		assertThat(ntarjeta).isTrue();
-		assertThat(nCVV).isTrue();
-		assertThat(nFondos).isFalse();
+	public void intento_validar_pago() throws Exception {
+		log.info("Intentando validar el pago...");
+		respuesta = mockMvc.perform(post("http://localhost:8080/pasarela/pagar")
+				.content(new ObjectMapper().writeValueAsString(new Tarjeta("123456789", "123")))
+				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)).andReturn();
 	}
 
-	@When("intento validar pago sin fondos")
-	public void intento_validar_pago_sin_fondos() {
-		logger.info("intentando validar pago");
-		assertThat(ntarjeta).isTrue();
-		assertThat(nCVV).isTrue();
-		assertThat(nFondos).isFalse();
+	// RESULTADOS
+	@Then("operacion denegada no hay fondos")
+	public void operacion_denegada_no_hay_fondos() throws Exception {
+		log.info("La operación es denegada por falta de fondos...");
+		assertThat(respuesta.getResponse().getStatus()).isEqualTo(207);
 	}
 
-	@Then("operacion denegada")
-	public void operacion_denegada() {
-		logger.info("operacion denegada");
-		assertThat(true).isTrue();
+	@Then("operacion denegada cvv incorrecto")
+	public void operacion_denegada_cvv_incorrecto() throws Exception {
+		log.info("La operación es denegada por CVV incorrecto...");
+		assertThat(respuesta.getResponse().getStatus()).isEqualTo(203);
 	}
 
-	@Given("numero de tarjeta invalido")
-	public void numeroDeTarjetaInvalido() {
-		ntarjeta = validationUtils.validarTarjeta(1);
-		assertThat(ntarjeta).isFalse();
-		logger.info("numero tajeta invalido");
-	}
-
-	@When("intento validar pago con tarjeta invalida")
-	public void intentoValidarPagoConTarjetaInvalida() {
-		assertThat(ntarjeta).isFalse();
-		logger.info("intento validar pago con tarjeta invalida");
-	}
-
-	@And("si hay fondos")
-	public void siHayFondos() {
-		logger.info("intentando validar pago");
-		nFondos = validationUtils.validarFondos(2);
-		assertThat(nFondos).isTrue();
-	}
-
-	@When("intento validar pago con todo correcto")
-	public void intentoValidarPagoConTodoCorrecto() {
-		logger.info("intentando validar pago");
-		assertThat(ntarjeta).isTrue();
-		assertThat(nCVV).isTrue();
-		assertThat(nFondos).isTrue();
+	@Then("operacion denegada numero tarjeta no valido")
+	public void operacion_denegada_numero_tarjeta_no_valido() throws Exception {
+		log.info("La operación es denegada por número de tarjeta incorrecto...");
+		assertThat(respuesta.getResponse().getStatus()).isEqualTo(404);
 	}
 
 	@Then("operacion aprobada")
-	public void operacionAprobada() {
-		logger.info("operacion aprobada");
+	public void operacion_aprobada() throws Exception {
+		log.info("La operación es aprobada...");
+		assertThat(respuesta.getResponse().getStatus()).isEqualTo(202);
 	}
 }
