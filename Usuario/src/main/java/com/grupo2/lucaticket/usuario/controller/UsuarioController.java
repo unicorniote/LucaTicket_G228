@@ -176,9 +176,9 @@ public class UsuarioController {
 	 */
 
 	@DeleteMapping("/{id}")
-	public void deleteUsuario(@PathVariable String id) {
+	public void deleteUsuario(@PathVariable int id) {
 		logger.info("Delete, id ->" + id);
-		usuarioService.deleteUsuario(Integer.parseInt(id));
+		usuarioService.deleteUsuario(id);
 	}
 
 }

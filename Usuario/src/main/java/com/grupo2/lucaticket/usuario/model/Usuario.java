@@ -58,4 +58,7 @@ public class Usuario {
 	@Schema(name = "fechaAlta", description = "Fecha de cuando el usuario se registro en el sistema del usuario")
 	private LocalDate fechaalta;
 
-}
+	
+	}
+
+
