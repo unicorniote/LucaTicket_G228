@@ -88,7 +88,7 @@ public class EventosService implements EventosServiceI {
 
 	public List<Evento> findAllByGenero(String genero) {
 
-		return repo.findAllByGenero(genero);
+		return repo.findAllByGeneroIgnoreCase(genero);
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class EventosService implements EventosServiceI {
 	 * @version 1.0
 	 */
 	public List<Evento> findByNombre(String nombre) {
-		return repo.findByNombre(nombre);
+		return repo.findByNombreIgnoreCase(nombre);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class EventosService implements EventosServiceI {
 	 */
 	@Override
 	public List<Evento> findByCiudad(String ciudad) {
-		return repo.findByCiudad(ciudad);
+		return repo.findByCiudadIgnoreCase(ciudad);
 	}
 
 	/**

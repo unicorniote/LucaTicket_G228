@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.grupo2.lucaticket.usuario.controller.error.UsuarioNotFoundException;
+import com.grupo2.lucaticket.usuario.controller.error.UsuariosEmptyDatabaseException;
 import com.grupo2.lucaticket.usuario.model.Usuario;
 import com.grupo2.lucaticket.usuario.model.adapter.UsuarioAdapterI;
 import com.grupo2.lucaticket.usuario.model.response.UsuarioDto;
@@ -78,8 +79,6 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioAdapterI usuarioAdapter;
 
-	private UsuarioDto usuarioDto;
-
 	/**
 	 * Descripción del método: Método que añade un usuario .
 	 * 
@@ -99,13 +98,13 @@ public class UsuarioController {
 	@PostMapping("/add")
 	public ResponseEntity<?> addUsuario(@Valid @RequestBody Usuario usuario) {
 
-		logger.info("añadiendo Usuario");
+		logger.info("Añadiendo usuario en la base de datos...");
 		usuario = this.usuarioService.save(usuario);
-		logger.info("El usuario se ha añadido correctamente");
+		logger.info("El usuario se ha añadido correctamente...");
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuario.getId())
 				.toUri();
 
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).body(usuarioAdapter.usuarioToDto(usuario));
 	}
 
 	/**
@@ -126,8 +125,15 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "400", description = "No existen usuarios en la bbdd", content = @Content) })
 	@GetMapping("/listar")
 	public Collection<UsuarioDto> getUsuarios() {
-		logger.info("Buscando usuario");
-		return usuarioAdapter.usuarioToDto((List<Usuario>) usuarioService.findAll());
+		logger.info("Buscando usuarios...");
+		List<UsuarioDto> usuarios = usuarioAdapter.usuarioToDto((List<Usuario>) usuarioService.findAll());
+
+		if (usuarios.isEmpty()) {
+			throw new UsuariosEmptyDatabaseException();
+		} else {
+			return usuarios;
+		}
+
 	}
 
 	@Operation(summary = "Buscar usuario por ID", description = "Dado un ID, devuelve un objeto usuario", tags = {
@@ -165,16 +171,22 @@ public class UsuarioController {
 			@ApiResponse(responseCode = "400", description = "No válido (NO implementado) ", content = @Content),
 			@ApiResponse(responseCode = "404", description = "Usuario no encontrado (NO implementado)", content = @Content) })
 
-	@PutMapping
+	@PutMapping("/edit/{id}")
 	public ResponseEntity<UsuarioDto> update(
-			@Parameter(description = "Párametro String Usuario id que recoge el usuario", required = true) @RequestBody Usuario usuario) {
-		logger.info(" ---- updateUsuario (PUT)");
-		Optional<UsuarioDto> usuarioActualizado = Optional
-				.of(usuarioAdapter.usuarioToDto(this.usuarioService.save(usuario)));
-		if (usuarioActualizado.isEmpty()) {
-			return ResponseEntity.notFound().build();
+			@Parameter(description = "Párametro String Usuario id que recoge el usuario", required = true) @Valid @RequestBody Usuario usuarioActualizar,
+			@PathVariable int id) {
+		logger.info("Obteniendo usuario a modificar...");
+		Optional<Usuario> usuarioOptional = usuarioService.findById(id);
+		if (usuarioOptional.isEmpty()) {
+			throw new UsuarioNotFoundException();
+		} else {
+			Usuario usuario = usuarioOptional.get();
+			usuario.setNombre(usuarioActualizar.getNombre());
+			usuario.setApellido(usuarioActualizar.getApellido());
+			usuario.setPass(usuarioActualizar.getPass());
+			usuarioService.update(usuario);
+			return new ResponseEntity<UsuarioDto>(usuarioAdapter.usuarioToDto(usuario), HttpStatus.ACCEPTED);
 		}
-		return ResponseEntity.of(usuarioActualizado);
 
 	}
 
@@ -187,11 +199,19 @@ public class UsuarioController {
 	 * 
 	 * @version 1.0
 	 */
-
 	@DeleteMapping("/{id}")
-	public void deleteUsuario(@PathVariable String id) {
-		logger.info("Delete, id ->" + id);
-		usuarioService.deleteUsuario(Integer.parseInt(id));
+	public ResponseEntity<UsuarioDto> deleteUsuario(@PathVariable int id) {
+		logger.info("Buscando usuario " + id + " en la base de datos...");
+		Optional<Usuario> usuarioOptional = usuarioService.findById(id);
+		if (usuarioOptional.isEmpty()) {
+			throw new UsuarioNotFoundException();
+		} else {
+			logger.info("Eliminando usuario " + id + " de la base de datos...");
+			Usuario usuario = usuarioOptional.get();
+			usuarioService.deleteById(usuario.getId());
+			return new ResponseEntity<UsuarioDto>(usuarioAdapter.usuarioToDto(usuario), HttpStatus.ACCEPTED);
+		}
+
 	}
 
 }

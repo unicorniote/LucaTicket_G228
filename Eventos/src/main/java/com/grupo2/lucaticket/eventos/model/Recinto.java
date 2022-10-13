@@ -29,13 +29,11 @@ import lombok.NoArgsConstructor;
 public class Recinto {
 
 	@Id
-	private String _idRecinto;
+	private String _id;
 
-	@NotNull
 	@NotEmpty
 	private String nombreRecinto;
 
-	@NotNull
 	@NotEmpty
 	private String ciudad;
 

@@ -1,54 +1,48 @@
 package com.grupo2.lucaticket.ventas.controller.error;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.grupo2.lucaticket.ventas.utils.FechaUtils;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * Clase CustomErrorJson , plantilla de errores personalizados de Ventas
+ * Clase CustomErrorJson que sirve como molde para crear nuestras excepciones
+ * personalizadas.
  *
- * @author Grupo 2 - Lamia
- * @version 1.0 : 11/10/2022
+ * @author Álvaro Román
+ * @version 1.0: 11/10/2022
  */
 @Data
+@NoArgsConstructor
+@Slf4j
 public class CustomErrorJson {
-	private String timestamp;
-	private int status;
+
+	private String fecha;
+	private int estado;
 	private String error;
-	private String trace;
-	private List<String> message;
-	private String path;
-	private String jdk;
+	private List<String> mensaje;
 	private String ruta;
-	
-	public CustomErrorJson() {
-		super();
-		this.timestamp = "";
-		this.status = 0;
-		this.error = "";
-		this.trace = "";
-		this.message = new ArrayList<>();
-		this.ruta= "";
-		this.jdk = "ND";
-	}
+	private String custom;
 
-	public CustomErrorJson(int status, String error, String trace, List<String> message, String path,
-			String jdk) {
+	public CustomErrorJson(LocalDateTime fecha, int estado, String error, List<String> mensaje, String ruta) {
+
 		super();
-	
-		this.status = status;
+		log.info("Creando error custom...");
+		this.fecha = FechaUtils.formatearFecha(fecha);
+		this.estado = estado;
 		this.error = error;
-		this.trace = trace;
-		this.message = message;
+		this.mensaje = mensaje;
 		this.ruta = ruta;
-		this.jdk = jdk;
+		this.custom = "Esto es un error personalizado";
+
 	}
 
-	public void setMensaje(List<String> mensajes) {
-		// TODO Auto-generated method stub
-		
+	public void setFecha(LocalDateTime fecha) {
+		this.fecha = FechaUtils.formatearFecha(fecha);
+		log.info("Establaciendo fecha en error custom...");
 	}
-
-	
 }

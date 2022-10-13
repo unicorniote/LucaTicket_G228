@@ -38,13 +38,13 @@ public class Evento {
 	@Id
 	private String _id;
 
-	@NotNull
+	@NotEmpty
+	@Indexed
 	private String nombre;
 
-	@NotNull
+	@NotEmpty
 	private String descripcionCorta;
 
-	@NotNull
 	private String descripcionLarga;
 
 	private String foto;
@@ -59,12 +59,11 @@ public class Evento {
 
 	private String politaAcceso;
 
-	@NotNull
 	@DocumentReference(lazy = true)
 	private Recinto recinto;
 
 	@Indexed
-	@NotNull
+	@NotEmpty
 	private String genero;
 
 }
