@@ -1,6 +1,7 @@
 package com.grupo2.lucaticket.usuario.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

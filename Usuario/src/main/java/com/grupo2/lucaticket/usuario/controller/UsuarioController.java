@@ -83,7 +83,7 @@ public class UsuarioController {
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content) })
 	@PostMapping("/add")
-	public ResponseEntity<?> addUsuario(@Valid @RequestBody Usuario usuario) {
+	public ResponseEntity<?> addUsuario( @RequestBody Usuario usuario) {
 
 		logger.info("añadiendo Usuario");
 		usuario = this.usuarioService.save(usuario);
