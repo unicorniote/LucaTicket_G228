@@ -2,8 +2,8 @@ package com.grupo2.lucaticket.eventos.repository;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.grupo2.lucaticket.eventos.model.Evento;
@@ -27,8 +27,8 @@ public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 
 	List<Evento> findByNombre(String nombre);
 
-	//@Query(" $lookup: { from : 'Eventos', localField: 'ciudadEvento', foreignField: '_id', as: 'sender' }, {$lookup: { from: 'Recintos', localField: 'ciudad: ?0', foreignField: '_id', as: 'receiver' }}")
-	@Query("{ciudadEvento: {'$regex': '?0', '$options':'i'} }")
+	//Lanza una excepcion evento not found
+	@Aggregation("{$match: {ciudad: '?0'}}, {$lookup: {\"from\": \"eventos\", \"localField\": \"_id\", \"foreignField\": \"recinto\", \"as\": \"evento\"}}")
 	List<Evento> findByCiudad(String ciudad);
 
 }
