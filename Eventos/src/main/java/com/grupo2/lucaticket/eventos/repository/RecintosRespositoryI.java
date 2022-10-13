@@ -1,6 +1,9 @@
 package com.grupo2.lucaticket.eventos.repository;
 
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
+
+import com.grupo2.lucaticket.eventos.model.Recinto;
 
 /**
  * @Project LucaTicket
@@ -15,6 +18,8 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface RecintosRespositoryI {
+public interface RecintosRespositoryI extends MongoRepository<Recinto, String>{
 
+
+	
 }

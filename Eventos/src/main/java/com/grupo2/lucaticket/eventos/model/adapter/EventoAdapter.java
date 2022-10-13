@@ -36,7 +36,7 @@ public class EventoAdapter implements EventoAdapterI {
 		// TODO Auto-generated method stub
 		logger.info("Mapeando objeto entidad Evento a DTO de Evento...");
 		EventoDto eventoDto = new EventoDto();
-		eventoDto.setId(evento.get_id());
+		eventoDto.setId(evento.get_id().toString());
 		eventoDto.setNombre(evento.getNombre());
 		eventoDto.setDescripcionEvento(evento.getDescripcionCorta());
 		eventoDto.setFoto(evento.getFoto());
