@@ -31,11 +31,9 @@ public class Recinto {
 	@Id
 	private String _idRecinto;
 
-	@NotNull
 	@NotEmpty
 	private String nombreRecinto;
 
-	@NotNull
 	@NotEmpty
 	private String ciudad;
 

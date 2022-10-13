@@ -1,4 +1,4 @@
-package com.grupo2.lucaticket.eventos.controller.error;
+package com.grupo2.lucaticket.ventas.controller.error;
 
 import javax.validation.ConstraintViolationException;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.grupo2.lucaticket.eventos.utils.ErrorUtils;
+import com.grupo2.lucaticket.ventas.utils.ErrorUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,25 +28,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
-
-	/**
-	 * Método que devuelve una excepción EventoNotFoundException personalizada.
-	 * 
-	 * @param exception
-	 * @param status
-	 * @param request
-	 * @return ResponseEntity
-	 * @author Álvaro Román
-	 * @version 1.0
-	 */
-	@ExceptionHandler(EventoNotFoundException.class)
-	public ResponseEntity<Object> handleCvvNotValidException(EventoNotFoundException exception, HttpStatus status,
-			WebRequest request) {
-		log.info("Lanzando excepción TarjetaNotFoundException...");
-		CustomErrorJson customError = ErrorUtils.customErrorMapper(exception, request);
-		return new ResponseEntity<>(customError, status);
-
-	}
 
 	/**
 	 * Método que devuelve una excepción ConstraintViolationException personalizada.

@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.grupo2.lucaticket.eventos.controller.error.CiudadEventoNotFoundException;
 import com.grupo2.lucaticket.eventos.controller.error.EventoNotFoundException;
+import com.grupo2.lucaticket.eventos.controller.error.EventosEmptyDatabaseException;
+import com.grupo2.lucaticket.eventos.controller.error.GeneroEventoNotFoundException;
 import com.grupo2.lucaticket.eventos.model.Evento;
 import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapterI;
 import com.grupo2.lucaticket.eventos.model.response.EventoDto;
@@ -93,7 +96,7 @@ public class EventosController {
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(evento.get_id())
 				.toUri();
 
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).body(eventoAdapter.eventoToDto(evento));
 	}
 
 	/**
@@ -114,11 +117,11 @@ public class EventosController {
 	@GetMapping("/lista")
 	public List<EventoDto> listaEventos() {
 		logger.info("----------Buscando eventos ");
-		List<Evento> evento = eventosService.findAll();
-		if (evento.isEmpty()) {
-			throw new EventoNotFoundException();
+		List<Evento> eventos = eventosService.findAll();
+		if (eventos.isEmpty()) {
+			throw new EventosEmptyDatabaseException();
 		} else {
-			return eventoAdapter.eventoToDto(evento);
+			return eventoAdapter.eventoToDto(eventos);
 
 		}
 	}
@@ -177,7 +180,7 @@ public class EventosController {
 		logger.info("----------Buscando eventos por genero");
 		List<Evento> evento = eventosService.findAllByGenero(genero);
 		if (evento.isEmpty()) {
-			throw new EventoNotFoundException();
+			throw new GeneroEventoNotFoundException();
 		} else {
 			return eventoAdapter.eventoToDto(evento);
 		}
@@ -237,7 +240,7 @@ public class EventosController {
 			@Parameter(description = "Ciudad del evento a localizar", required = true) @PathVariable String ciudad) {
 		List<Evento> evento = eventosService.findByCiudad(ciudad);
 		if (evento.isEmpty()) {
-			throw new EventoNotFoundException();
+			throw new CiudadEventoNotFoundException();
 		} else {
 			return eventoAdapter.eventoToDto(evento);
 		}
@@ -264,9 +267,17 @@ public class EventosController {
 			@ApiResponse(responseCode = "202", description = "El evento aún no ha sido eliminado", content = @Content) })
 
 	@DeleteMapping("/{id}")
-	public void deleteEvento(@PathVariable String id) {
-		logger.info("Delete, id ->" + id);
-		eventosService.deleteById(id);
+	public ResponseEntity<EventoDto> deleteEvento(@PathVariable String id) {
+		logger.info("Buscando evento " + id + " en la base de datos...");
+		Optional<Evento> eventoOpcional = eventosService.findById(id);
+		if (eventoOpcional.isEmpty()) {
+			throw new EventoNotFoundException();
+		} else {
+			logger.info("Eliminando evento " + id + " de la base de datos...");
+			Evento evento = eventoOpcional.get();
+			eventosService.deleteById(evento.get_id());
+			return new ResponseEntity<EventoDto>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
+		}
 	}
 
 	/**
@@ -290,31 +301,27 @@ public class EventosController {
 	@PutMapping("/editar/{id}")
 	public ResponseEntity<?> update(
 			@Parameter(description = "Párametro Evento que actualiza el evento", required = true) @PathVariable("id") String id,
-			@RequestBody Evento evento) {
+			@Valid @RequestBody Evento eventoActualizar) {
 		logger.info(" ---- updateEvento (PUT)");
-
-		Optional<Evento> eventoActualizado = eventosService.findById(id);
-
-		if (!eventoActualizado.isPresent()) {
+		Optional<Evento> eventoOptcional = eventosService.findById(id);
+		if (!eventoOptcional.isPresent()) {
 			throw new EventoNotFoundException();
+		} else {
+			Evento evento = eventoOptcional.get();
+			evento.set_id(id);
+			evento.setNombre(eventoActualizar.getNombre());
+			evento.setDescripcionCorta(eventoActualizar.getDescripcionCorta());
+			evento.setDescripcionLarga(eventoActualizar.getDescripcionLarga());
+			evento.setFoto(eventoActualizar.getFoto());
+			evento.setFechaEvento(eventoActualizar.getFechaEvento());
+			evento.setPrecio(eventoActualizar.getPrecio());
+			evento.setPolitaAcceso(eventoActualizar.getPolitaAcceso());
+			evento.setRecinto(eventoActualizar.getRecinto());
+			evento.setGenero(eventoActualizar.getGenero());
+			eventosService.save(evento);
+
+			return new ResponseEntity<>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
 		}
-
-		logger.info("------------- evento " + evento.getFechaEvento()); // Fecha se devuelve null
-
-		eventoActualizado.ifPresent(e -> {
-			e.setNombre(evento.getNombre());
-			e.setDescripcionCorta(evento.getDescripcionCorta());
-			e.setDescripcionLarga(evento.getDescripcionLarga());
-			e.setFoto(evento.getFoto());
-			e.setFechaEvento(evento.getFechaEvento());
-			e.setPrecio(evento.getPrecio());
-			e.setPolitaAcceso(evento.getPolitaAcceso());
-			e.setRecinto(evento.getRecinto());
-			e.setGenero(evento.getGenero());
-			eventosService.save(e);
-		});
-
-		return new ResponseEntity<>(eventoAdapter.eventoToDto(eventoActualizado.get()), HttpStatus.OK);
 	}
 
 }

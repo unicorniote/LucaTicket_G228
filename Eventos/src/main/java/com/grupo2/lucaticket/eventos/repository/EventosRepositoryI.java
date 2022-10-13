@@ -21,13 +21,11 @@ import com.grupo2.lucaticket.eventos.model.Evento;
  */
 public interface EventosRepositoryI extends MongoRepository<Evento, String> {
 
-	List<Evento> findAllByGenero(String genero);
+	List<Evento> findAllByGeneroIgnoreCase(String genero);
 
-	List<Evento> findByNombre(String nombre);
+	List<Evento> findByNombreIgnoreCase(String nombre);
 
 	@Query(" $lookup: { from : 'Eventos', localField: 'ciudadEvento', foreignField: '_id', as: 'sender' }, {$lookup: { from: 'Recintos', localField: 'ciudad', foreignField: '_id', as: 'receiver' }}")
-	List<Evento> findByCiudad(String ciudad);
-
-	// Evento save(String id, Evento evento);
+	List<Evento> findByCiudadIgnoreCase(String ciudad);
 
 }
