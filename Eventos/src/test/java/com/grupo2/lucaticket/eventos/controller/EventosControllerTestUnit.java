@@ -138,7 +138,7 @@ public class EventosControllerTestUnit {
 		
 		
 		// EVENTO ACTUALIZADO2
-		eventoActualizado2.set_id("6342ffa7db6b886e7104d2fe");
+		eventoActualizado2.set_id("6342ffa7db6");
 		eventoActualizado2.setNombre(NOMBRE_EVENTO_ACTUALIZADO);
 		eventoActualizado2.setDescripcionCorta(DESCRIPCION_CORTA);
 		eventoActualizado2.setDescripcionLarga(DESCRIPCION_LARGA);
@@ -402,33 +402,6 @@ public class EventosControllerTestUnit {
 
 	}
 	
-	/**
-	 * Descripción del método: Test que da NotFound cuando actualiza evento que no existe
-	 *
-	 * @author Grupo 2 - Carlos Jesus
-	 *
-	 * @version 1.0
-	 */
-	
-	@Test
-	public void actualizarEvento_DevuelveNotFound() throws Exception {
-		
-		when(eventosService.findById(eventoActualizado2.get_id())).thenReturn(null);
-		
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/eventos/add")
-	            .contentType(MediaType.APPLICATION_JSON)
-	            .accept(MediaType.APPLICATION_JSON)
-	            .content(objectMapper.writeValueAsString(eventoActualizado2));
-
-		mockMvc.perform(mockRequest)
-        .andExpect(status().isNotFound())
-        .andExpect(result ->  
-        assertTrue(result.getResolvedException() instanceof NotFoundException))
-        .andExpect(result->
-        assertEquals("Evento con ese id no existe", result.getResolvedException().getMessage()));
-		
-		
-	}
 	
 	
 }
