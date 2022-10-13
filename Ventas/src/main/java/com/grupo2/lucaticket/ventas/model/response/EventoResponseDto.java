@@ -16,7 +16,7 @@ import java.util.Map;
  */
 @Data
 @Schema(name = "Evento DTO", description = "Objeto de tipo DTO de un Evento")
-public class EventoDto implements Serializable {
+public class EventoResponseDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,6 +27,8 @@ public class EventoDto implements Serializable {
     @Schema(name = "Descripción", description = "Descripción del evento")
     private String descripcionEvento;
     @Schema(name = "Foto", description = "Foto del evento")
+    private String foto;
+    @Schema(name = "Fecha", description = "Fecha del evento")
     private LocalDate fechaEvento;
     @Schema(name = "Hora", description = "Hora del evento")
     private LocalTime horaEvento;
@@ -36,4 +38,13 @@ public class EventoDto implements Serializable {
     private String politcaAcceso;
     @Schema(name = "Recinto", description = "Nombre del recinto del evento")
     private String recintoEvento;
+    @Schema(name = "Ciudad", description = "Ciudad del recinto del evento")
+    private String ciudadEvento;
+    @Schema(name = "Dirección", description = "Dirección del recinto del evento")
+    private String direccionEvento;
+    @Schema(name = "Aforo", description = "Límite de aforo del recinto del evento")
+    private Integer aforoEvento;
+    @Schema(name = "Género", description = "Género del evento")
+    private String genero;
+
 }

@@ -3,8 +3,9 @@ package com.grupo2.lucaticket.ventas.service;
 import com.grupo2.lucaticket.ventas.controller.VentasController;
 import com.grupo2.lucaticket.ventas.feignclients.EventoFeignClient;
 import com.grupo2.lucaticket.ventas.feignclients.UsuarioFeignClients;
-import com.grupo2.lucaticket.ventas.model.response.EventoDto;
+import com.grupo2.lucaticket.ventas.model.response.EventoResponseDto;
 import com.grupo2.lucaticket.ventas.model.response.UsuarioDto;
+import com.grupo2.lucaticket.ventas.model.response.VentasDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,23 +34,10 @@ public class VentasService implements VentasServiceI{
 	@Autowired
 	private VentasRepositoryI repo;
 
-	@Autowired
-	private UsuarioFeignClients usuarioFeignClients;
-
-	@Autowired
-	private EventoFeignClient eventoFeignClient;
 
 	@Override
 	public Venta addVenta(Venta venta) {
-		logger.info("Comprobando usuario " + venta.getUsuario());
-		final UsuarioDto usuarioDto = usuarioFeignClients.getUsuario(venta.getUsuario());
-		logger.info("usuario encontrado ->: " + usuarioDto);
-		final EventoDto eventoDto = eventoFeignClient.getEvento(venta.getEvento());
-		logger.info("evento encontrado ->: " + eventoDto);
-		if (usuarioDto != null && eventoDto != null) {
-			venta = repo.save(venta);
-		}
-		return venta;
+		return repo.save(venta);
 	}
 
 	
