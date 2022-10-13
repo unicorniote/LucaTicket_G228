@@ -20,7 +20,6 @@ public class VentasAdapter implements VentasAdapterI{
     @Override
     public VentasDto of(Venta venta, UsuarioDto usuario, EventoDto evento) {
         VentasDto ventasDto = new VentasDto();
-        ventasDto.setId(venta.getId());
         ventasDto.setUsuario(usuario);
         ventasDto.setEvento(evento);
         return ventasDto;

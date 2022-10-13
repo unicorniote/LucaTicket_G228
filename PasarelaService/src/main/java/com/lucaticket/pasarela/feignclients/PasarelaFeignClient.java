@@ -1,7 +1,7 @@
-package com.grupo2.lucaticket.ventas.feignclients;
+package com.lucaticket.pasarela.feignclients;
 
-import com.grupo2.lucaticket.ventas.model.response.PagoCompletado;
-import com.grupo2.lucaticket.ventas.model.response.VentasDto;
+import com.lucaticket.pasarela.model.Tarjeta;
+import com.lucaticket.pasarela.model.response.VentasDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "pasarela", url = "http://localhost:10000")
 public interface PasarelaFeignClient {
 
-    @PostMapping("/pasarela/info")
-    public PagoCompletado checkCompra(@RequestBody VentasDto ventasDto);
+    @PostMapping("/pasarela/pagar")
+    public ResponseEntity<?> checkCompra(@RequestBody Tarjeta tarjeta);
 }

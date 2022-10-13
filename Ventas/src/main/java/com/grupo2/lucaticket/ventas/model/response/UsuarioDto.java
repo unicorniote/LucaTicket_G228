@@ -16,9 +16,6 @@ import java.io.Serializable;
 @Schema(name = "UsuarioDto", description = "DTO de Usuario")
 public class UsuarioDto implements Serializable {
 
-    @Schema(name = "id", description = "Identificador numerico del usuario")
-    private int id;
-
     @Schema(name = "nombre", description = "Nombre del usuario")
     private String nombre;
 

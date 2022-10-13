@@ -1,5 +1,6 @@
 package com.lucaticket.pasarela.model.response;
 
+import com.lucaticket.pasarela.model.Tarjeta;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -22,13 +23,12 @@ import java.io.Serializable;
 @Schema(name = "VentasDto", description = "DTO de Ventas")
 public class VentasDto implements Serializable {
 
-    @Schema(name = "id", description = "Identificador de la compra")
-    private int id;
-
     @Schema(name = "usuario", description = "Identificador del usuario")
     private UsuarioDto usuario;
 
-    @Size(max = 30)
     @Schema(name = "evento", description = "Identificador del evento")
     private EventoDto evento;
+
+    @Schema(name = "tarjeta", description = "Datos financieros para hacer el pago")
+    private Tarjeta tarjeta;
 }
