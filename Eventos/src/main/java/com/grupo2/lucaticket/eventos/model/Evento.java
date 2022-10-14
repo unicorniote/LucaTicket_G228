@@ -7,7 +7,6 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -36,7 +35,7 @@ import lombok.NoArgsConstructor;
 public class Evento {
 
 	@Id
-	private ObjectId _id;
+	private String _id;
 
 	@NotEmpty
 	@Indexed
@@ -58,7 +57,6 @@ public class Evento {
 	private Map<String, Double> precio;
 
 	private String politaAcceso;
-
 
 	@DocumentReference
 	private Recinto recinto;

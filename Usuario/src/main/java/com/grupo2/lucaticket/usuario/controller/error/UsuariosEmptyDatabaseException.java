@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * @Project LucaTicket
  * @Classname UsuariosEmptyDatabaseException
- * @author Álvaro Román
+ * @author Alvaro
  * @date 13/10/2022
  * @since 1.0
  *

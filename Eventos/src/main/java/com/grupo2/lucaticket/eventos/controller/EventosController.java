@@ -66,7 +66,7 @@ public class EventosController {
 
 	@Autowired
 	private RecintosServiceI recintosService;
-	
+
 	@Autowired
 	private EventoAdapterI eventoAdapter;
 
@@ -93,14 +93,14 @@ public class EventosController {
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content) })
 	@PostMapping("/add")
 	public ResponseEntity<?> addEvento(@Valid @RequestBody Evento evento) {
-		
+
 		logger.info("Intentado añadir evento: " + evento);
-		
+
 		Optional<Recinto> recintoOptional;
 
 		try {
 			logger.info("Comprobando si el recinto es nulo...");
-			recintoOptional = recintosService.findById(evento.getRecinto().get_id().toString());
+			recintoOptional = recintosService.findById(evento.getRecinto().get_id());
 		} catch (NullPointerException npe) {
 			// TODO: handle exception
 			logger.info("Lanzando que el recinto es nulo...");
@@ -116,10 +116,9 @@ public class EventosController {
 			evento.setRecinto(recinto);
 			eventosService.save(evento);
 			return new ResponseEntity<>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
-			
-		}		
 
-		
+		}
+
 	}
 
 	/**
@@ -334,8 +333,8 @@ public class EventosController {
 		} else {
 			logger.info("El evento existe en la base de datos...");
 			Evento evento = eventoOptcional.get();
-			
-			Optional<Recinto> recintoOptional = recintosService.findById(eventoActualizar.getRecinto().get_id().toString());
+
+			Optional<Recinto> recintoOptional = recintosService.findById(eventoActualizar.getRecinto().get_id());
 			logger.info("Comprobando que el recinto está en la base de datos...");
 			if (recintoOptional.isEmpty()) {
 				logger.info("El recinto no existe en la base de datos...");
@@ -355,7 +354,7 @@ public class EventosController {
 				eventosService.save(evento);
 
 				return new ResponseEntity<>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
-				
+
 			}
 
 		}

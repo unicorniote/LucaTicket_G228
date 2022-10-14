@@ -8,6 +8,7 @@ import com.grupo2.lucaticket.eventos.controller.error.EventoNotFoundException;
 import com.grupo2.lucaticket.eventos.controller.error.EventosEmptyDatabaseException;
 import com.grupo2.lucaticket.eventos.controller.error.GeneroEventoNotFoundException;
 import com.grupo2.lucaticket.eventos.controller.error.NombreEventoNotFoundException;
+import com.grupo2.lucaticket.eventos.controller.error.RecintoNotFoundException;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Controlador con los endpoints que lanzan las excepciones personalizadas.
  *
- * @author Álvaro Román
+ * @author Alvaro
  * @version 13/10/2022
  */
 @RestController
@@ -30,7 +31,7 @@ public class ForceErrorController {
 	 * Método que devuelve la excepción personalizada EventoNotFoundException
 	 * 
 	 * @throws EventoNotFoundException
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@Operation(summary = "Lanza una excepción EventoNotFoundException", description = "Permite lanzar una excepción de EventoNotFoundException", tags = {
@@ -47,7 +48,7 @@ public class ForceErrorController {
 	 * Método que devuelve la excepción personalizada GeneroEventoNotFoundException
 	 * 
 	 * @throws GeneroEventoNotFoundException
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@Operation(summary = "Lanza una excepción GeneroEventoNotFoundException", description = "Permite lanzar una excepción de GeneroEventoNotFoundException", tags = {
@@ -63,7 +64,7 @@ public class ForceErrorController {
 	 * Método que devuelve la excepción personalizada NombreEventoNotFoundException
 	 * 
 	 * @throws NombreEventoNotFoundException
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@Operation(summary = "Lanza una excepción NombreEventoNotFoundException", description = "Permite lanzar una excepción de NombreEventoNotFoundException", tags = {
@@ -79,7 +80,7 @@ public class ForceErrorController {
 	 * Método que devuelve la excepción personalizada CiudadEventoNotFoundException
 	 * 
 	 * @throws CiudadEventoNotFoundException
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@Operation(summary = "Lanza una excepción CiudadEventoNotFoundException", description = "Permite lanzar una excepción de CiudadEventoNotFoundException", tags = {
@@ -95,16 +96,32 @@ public class ForceErrorController {
 	 * Método que devuelve la excepción personalizada EventosEmptyDatabaseException
 	 * 
 	 * @throws EventosEmptyDatabaseException
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@Operation(summary = "Lanza una excepción EventosEmptyDatabaseException", description = "Permite lanzar una excepción de EventosEmptyDatabaseException", tags = {
-			"CiudadEventoNotFoundException" })
+			"EventosEmptyDatabaseException" })
 	@ApiResponse(responseCode = "404", description = "No hay eventos en esa ciudad", content = { @Content() })
 	@GetMapping(value = "/eventos/eventosEmptyDatabaseException")
-	public void throweventosEmptyDatabaseException() {
+	public void throwEventosEmptyDatabaseException() {
 		log.info("Lanzando exception EventosEmptyDatabaseException...");
 		throw new EventosEmptyDatabaseException();
+	}
+
+	/**
+	 * Método que devuelve la excepción personalizada RecintoNotFoundException
+	 * 
+	 * @throws RecintoNotFoundException
+	 * @author Alvaro
+	 * @version 1.0
+	 */
+	@Operation(summary = "Lanza una excepción RecintoNotFoundException", description = "Permite lanzar una excepción de RecintoNotFoundException", tags = {
+			"RecintoNotFoundException" })
+	@ApiResponse(responseCode = "404", description = "No hay eventos en esa ciudad", content = { @Content() })
+	@GetMapping(value = "/eventos/recintoNotFoundException")
+	public void throwRecintoNotFoundException() {
+		log.info("Lanzando exception RecintoNotFoundException...");
+		throw new RecintoNotFoundException();
 	}
 
 }

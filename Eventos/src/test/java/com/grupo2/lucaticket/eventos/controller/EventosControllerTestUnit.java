@@ -4,7 +4,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -54,13 +52,12 @@ public class EventosControllerTestUnit {
 
 	@MockBean
 	private EventosRepositoryI eventosRepository;
-	
+
 	@MockBean
 	private RecintosServiceI recintosService;
 
 	@MockBean
 	private RecintosRespositoryI recintosrepository;
-	
 
 	Evento evento;
 	Evento eventoNull;
@@ -70,8 +67,8 @@ public class EventosControllerTestUnit {
 	List<Evento> eventos;
 	List<Evento> eventosVacio;
 
-	private final ObjectId ID = new ObjectId();
-	private final ObjectId ID_NULL = new ObjectId();
+	private final String ID = "ID";
+	private final String ID_NULL = "ID";
 	private final String NOMBRE_EVENTO = "Evento de prueba";
 	private final String NOMBRE_EVENTO_NULL = null;
 	private final String DESCRIPCION_CORTA = "Descripción corta del evento";
@@ -206,7 +203,7 @@ public class EventosControllerTestUnit {
 	/**
 	 * Descripción del método: Test que da ok cuando se listan los eventos.
 	 *
-	 * @author Grupo 2- Tamara Álvarez
+	 * @author Grupo 2- Tamara
 	 *
 	 * @version 1.0
 	 */
@@ -226,7 +223,7 @@ public class EventosControllerTestUnit {
 	/**
 	 * Descripción del método: Test que da ok cuando se busca evento por nombre.
 	 *
-	 * @author Grupo 2 - Tamara Álvarez
+	 * @author Grupo 2 - Tamara
 	 *
 	 * @version 1.0
 	 */
@@ -248,7 +245,7 @@ public class EventosControllerTestUnit {
 	 * Descripción del método: Test que da NotFound cuando se busca evento por
 	 * nombre null.
 	 *
-	 * @author Grupo 2 - Tamara Álvarez
+	 * @author Grupo 2 - Tamara
 	 *
 	 * @version 1.0
 	 */
@@ -288,7 +285,7 @@ public class EventosControllerTestUnit {
 	 * Descripción del método: Test que da error cuando se busca evento por género
 	 * null.
 	 *
-	 * @author Carlos Jesús
+	 * @author Carlos
 	 *
 	 * @version 1.0
 	 */
@@ -307,7 +304,7 @@ public class EventosControllerTestUnit {
 	/**
 	 * Descripción del método: Test que da Ok cuando se elimina un evento.
 	 *
-	 * @author Grupo 2 - Tamara Álvarez
+	 * @author Grupo 2 - Tamara
 	 *
 	 * @version 1.0
 	 */
@@ -323,7 +320,7 @@ public class EventosControllerTestUnit {
 	 * Descripción del método: Test que da NotFound cuando se elimina un evento con
 	 * id null.
 	 *
-	 * @author Grupo 2 - Tamara Álvarez
+	 * @author Grupo 2 - Tamara
 	 *
 	 * @version 1.0
 	 */

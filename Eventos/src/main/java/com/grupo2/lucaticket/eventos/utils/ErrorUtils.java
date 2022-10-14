@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Clase ErrorUtils que contiene métodos para el tratamiento de errores.
  *
- * @author Álvaro Román Gómez
+ * @author Alvaro
  * @version 1.0: 11/10/2022
  */
 
@@ -33,7 +33,7 @@ public class ErrorUtils {
 	 * @param HttpStatus status
 	 * @param WebRequest request
 	 * @return CustomErrorJson
-	 * @author Álvaro Román Gómez
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 
@@ -83,7 +83,7 @@ public class ErrorUtils {
 	 * @param HttpStatus                      status
 	 * @param WebRequest                      request
 	 * @return CustomErrorJson
-	 * @author Álvaro Román Gómez
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	public static CustomErrorJson customErrorMapper(MethodArgumentNotValidException exception, HttpHeaders headers,
@@ -117,7 +117,7 @@ public class ErrorUtils {
 	 * @param HttpStatus                      status
 	 * @param WebRequest                      request
 	 * @return CustomErrorJson
-	 * @author Álvaro Román Gómez
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	public static CustomErrorJson customErrorMapper(HttpRequestMethodNotSupportedException exception,
