@@ -49,12 +49,23 @@ public class EventoAdapter implements EventoAdapterI {
 		}
 		eventoDto.setRangoPreciosEvento(evento.getPrecio());
 		eventoDto.setPolitcaAcceso(evento.getPolitaAcceso());
-		eventoDto.setRecintoEvento(evento.getRecinto().getNombreRecinto());
-		eventoDto.setCiudadEvento(evento.getRecinto().getCiudad());
-		eventoDto.setDireccionEvento(evento.getRecinto().getDireccion());
-		eventoDto.setAforoEvento(evento.getRecinto().getAforo());
+		try {
+			eventoDto.setRecintoEvento(evento.getRecinto().getNombreRecinto());
+			eventoDto.setCiudadEvento(evento.getRecinto().getCiudad());
+			eventoDto.setDireccionEvento(evento.getRecinto().getDireccion());
+			eventoDto.setAforoEvento(evento.getRecinto().getAforo());
+		} catch (NullPointerException npe) {
+			// TODO Auto-generated catch block
+			eventoDto.setRecintoEvento(null);
+			eventoDto.setCiudadEvento(null);
+			eventoDto.setDireccionEvento(null);
+			eventoDto.setAforoEvento(null);
+		}
+
 		eventoDto.setGenero(evento.getGenero());
 
+		System.out.println("=========EVENTO DTO:"+eventoDto);
+		
 		return eventoDto;
 	}
 

@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 public class Recinto {
 
 	@Id
-	private String _id;
+	private ObjectId _id;
 
 	@NotEmpty
 	private String nombreRecinto;
