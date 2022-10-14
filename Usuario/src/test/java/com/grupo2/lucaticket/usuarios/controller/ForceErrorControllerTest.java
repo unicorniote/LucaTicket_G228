@@ -34,7 +34,7 @@ public class ForceErrorControllerTest {
 	private String puerto = "http://localhost:8080";
 
 	@Test
-	public void debeDevolverEventoNotFoundException() throws Exception {
+	public void debeDevolverUsuarioNotFoundException() throws Exception {
 
 		mvc.perform(get(puerto + "/usuario/usuarioNotFoundException").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound())
