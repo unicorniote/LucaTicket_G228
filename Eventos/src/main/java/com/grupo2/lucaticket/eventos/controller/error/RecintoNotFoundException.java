@@ -16,6 +16,12 @@ public class RecintoNotFoundException extends RuntimeException {
 
 	public RecintoNotFoundException() {
 
-		super("Este recinto no existe");
+		super("Ese recinto no existe");
+	}
+	
+	public RecintoNotFoundException(String mensaje) {
+
+		super(mensaje);
 	}
 }
+
