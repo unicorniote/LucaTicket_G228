@@ -36,7 +36,7 @@ import lombok.NoArgsConstructor;
 public class Evento {
 
 	@Id
-	private String _id;
+	private ObjectId _id;
 
 	@NotEmpty
 	@Indexed
