@@ -100,7 +100,7 @@ public class EventosController {
 
 		try {
 			logger.info("Comprobando si el recinto es nulo...");
-			recintoOptional = recintosService.findById(evento.getRecinto().get_id());
+			recintoOptional = recintosService.findById(evento.getRecinto().get_id().toString());
 		} catch (NullPointerException npe) {
 			// TODO: handle exception
 			logger.info("Lanzando que el recinto es nulo...");
@@ -335,12 +335,13 @@ public class EventosController {
 			logger.info("El evento existe en la base de datos...");
 			Evento evento = eventoOptcional.get();
 			
-			Optional<Recinto> recintoOptional = recintosService.findById(id);
-			
+			Optional<Recinto> recintoOptional = recintosService.findById(eventoActualizar.getRecinto().get_id().toString());
+			logger.info("Comprobando que el recinto está en la base de datos...");
 			if (recintoOptional.isEmpty()) {
+				logger.info("El recinto no existe en la base de datos...");
 				throw new RecintoNotFoundException();
 			} else {
-				
+				logger.info("El recinto existe en la base de datos...");
 				evento.set_id(eventoActualizar.get_id());
 				evento.setNombre(eventoActualizar.getNombre());
 				evento.setDescripcionCorta(eventoActualizar.getDescripcionCorta());
@@ -349,7 +350,7 @@ public class EventosController {
 				evento.setFechaEvento(eventoActualizar.getFechaEvento());
 				evento.setPrecio(eventoActualizar.getPrecio());
 				evento.setPolitaAcceso(eventoActualizar.getPolitaAcceso());
-				evento.setRecinto(eventoActualizar.getRecinto());
+				evento.setRecinto(recintoOptional.get());
 				evento.setGenero(eventoActualizar.getGenero());
 				eventosService.save(evento);
 
