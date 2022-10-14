@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Controlador con los endpoints que lanzan las excepciones personalizadas.
  *
- * @author Álvaro Román
+ * @author Alvaron
  * @version 13/10/2022
  */
 @RestController
@@ -27,7 +27,7 @@ public class ForceErrorController {
 	 * Método que devuelve la excepción personalizada EventoNotFoundException
 	 * 
 	 * @throws EventoNotFoundException
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@Operation(summary = "Lanza una excepción UsuarioNotFoundException", description = "Permite lanzar una excepción de UsuarioNotFoundException", tags = {
@@ -44,7 +44,7 @@ public class ForceErrorController {
 	 * Método que devuelve la excepción personalizada EventoNotFoundException
 	 * 
 	 * @throws EventoNotFoundException
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@Operation(summary = "Lanza una excepción UsuariosEmptyDatabaseException", description = "Permite lanzar una excepción de UsuariosEmptyDatabaseException", tags = {

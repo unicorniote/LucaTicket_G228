@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Clase CustomGlobalExceptionHandler que intercepta errores
  *
- * @author Álvaro Román
+ * @author Alvaro
  * @version 13/10/2022
  */
 @Slf4j
@@ -34,7 +34,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	 * @param status
 	 * @param request
 	 * @return ResponseEntity
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@ExceptionHandler(UsuarioNotFoundException.class)
@@ -53,7 +53,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	 * @param status
 	 * @param request
 	 * @return ResponseEntity
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@ExceptionHandler(ConstraintViolationException.class)

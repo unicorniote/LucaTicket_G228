@@ -10,7 +10,7 @@ import com.grupo2.lucaticket.eventos.model.Recinto;
  *
  * @Classname RecintosRespository
  *
- * @author Grupo 2 - Álvaro Román
+ * @author Grupo 2 - Alvaro
  *
  * @date 13/10/2022
  *
@@ -18,8 +18,6 @@ import com.grupo2.lucaticket.eventos.model.Recinto;
  *
  */
 @Repository
-public interface RecintosRespositoryI extends MongoRepository<Recinto, String>{
+public interface RecintosRespositoryI extends MongoRepository<Recinto, String> {
 
-
-	
 }

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.grupo2.lucaticket.eventos.model.Evento;
 import com.grupo2.lucaticket.eventos.model.Recinto;
+import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 
 @ExtendWith(MockitoExtension.class)
 public class EventoAdapterTestUnit {
@@ -53,7 +53,7 @@ public class EventoAdapterTestUnit {
 		eventoDtoCompleto = new EventoDto();
 
 		// RECINTO
-
+		recinto.set_id("ID");
 		recinto.setNombreRecinto(NOMBRE_RECINTO);
 		recinto.setCiudad(CIUDAD);
 		recinto.setDireccion(DIRECCION);
@@ -61,6 +61,7 @@ public class EventoAdapterTestUnit {
 		recinto.setAforo(AFORO);
 
 		// EVENTO
+		evento.set_id("ID");
 		evento.setNombre(NOMBRE_EVENTO);
 		evento.setDescripcionCorta(DESCRIPCION_CORTA);
 		evento.setDescripcionLarga(DESCRIPCION_LARGA);
@@ -75,6 +76,7 @@ public class EventoAdapterTestUnit {
 		eventos.add(evento);
 
 		// EventoDTO
+		eventoDtoCompleto.setId(evento.get_id().toString());
 		eventoDtoCompleto.setNombre(NOMBRE_EVENTO);
 		eventoDtoCompleto.setDescripcionEvento(DESCRIPCION_CORTA);
 		eventoDtoCompleto.setFoto(FOTO);

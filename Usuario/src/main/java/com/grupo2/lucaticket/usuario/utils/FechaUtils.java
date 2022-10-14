@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Clase FechaUtils que contiene métodos para trabajar con fechas.
  *
- * @author Álvaro Román Gómez
+ * @author Alvaro
  * @version 1.0: 11/10/2022
  */
 @Slf4j
@@ -27,7 +27,7 @@ public class FechaUtils {
 	 * 
 	 * @param LocalDateTime fehca
 	 * @return String
-	 * @author Álvaro Román Gómez
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	public static String formatearFecha(LocalDateTime fecha) {
@@ -45,7 +45,7 @@ public class FechaUtils {
 	 * 
 	 * @param LocalDateTime fehca
 	 * @return String
-	 * @author Álvaro Román Gómez
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	public static String formatearFecha(LocalDate fecha) {
@@ -63,7 +63,7 @@ public class FechaUtils {
 	 * 
 	 * @param LocalDateTime fehca
 	 * @return String
-	 * @author Álvaro Román Gómez
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	public static String formatearFecha(Date fecha) {

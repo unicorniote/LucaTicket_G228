@@ -36,7 +36,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	 * @param status
 	 * @param request
 	 * @return ResponseEntity
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@ExceptionHandler(EventoNotFoundException.class)
@@ -55,7 +55,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	 * @param status
 	 * @param request
 	 * @return ResponseEntity
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@ExceptionHandler(ConstraintViolationException.class)

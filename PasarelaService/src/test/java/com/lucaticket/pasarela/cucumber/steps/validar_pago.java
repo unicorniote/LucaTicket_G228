@@ -14,7 +14,9 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lucaticket.pasarela.controller.ValidarPagosController;
+import com.lucaticket.pasarela.feignclients.PasarelaFeignClient;
 import com.lucaticket.pasarela.model.Tarjeta;
+import com.lucaticket.pasarela.model.response.adapter.InfoAdapterI;
 import com.lucaticket.pasarela.service.ValidarPagosService;
 import com.lucaticket.pasarela.utils.ValidationUtils;
 
@@ -41,6 +43,14 @@ public class validar_pago {
 	@Autowired
 	@MockBean
 	private ValidarPagosService validarService;
+
+	@Autowired
+	@MockBean
+	private InfoAdapterI infoAdapter;
+
+	@Autowired
+	@MockBean
+	private PasarelaFeignClient pasarelaFeignClient;
 
 	private MvcResult respuesta;
 
