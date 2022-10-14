@@ -7,6 +7,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -58,7 +59,8 @@ public class Evento {
 
 	private String politaAcceso;
 
-	@DocumentReference(lazy = true)
+
+	@DocumentReference
 	private Recinto recinto;
 
 	@Indexed

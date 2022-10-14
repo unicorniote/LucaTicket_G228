@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.grupo2.lucaticket.eventos.model.Evento;
 import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @Project LucaTicket
  * 
@@ -23,6 +25,7 @@ import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
  */
 
 @Service
+@Slf4j
 public class EventosService implements EventosServiceI {
 
 	@Autowired
@@ -42,7 +45,12 @@ public class EventosService implements EventosServiceI {
 
 	@Override
 	public Evento save(Evento evento) {
-		return repo.save(evento);
+		System.out.println("ANTES\n");
+		log.info("====Evento servicio: "+evento);
+		Evento eventoG = repo.save(evento);
+		System.out.println("DESPUES\n");
+		log.info("====Evento servicio: "+eventoG);
+		return eventoG;
 
 	}
 
