@@ -335,22 +335,24 @@ public class EventosController {
 			logger.info("El evento existe en la base de datos...");
 			Evento evento = eventoOptcional.get();
 			
-			Optional<Recinto> recintoOptional = recintosService.findById(id);
-			
+			Optional<Recinto> recintoOptional = recintosService.findById(eventoActualizar.getRecinto().get_id());
+			logger.info("Comprobando que el recinto está en la base de datos...");
 			if (recintoOptional.isEmpty()) {
+				logger.info("El recinto no existe en la base de datos...");
 				throw new RecintoNotFoundException();
 			} else {
-				
-				evento.set_id(eventoActualizar.get_id());
-				evento.setNombre(eventoActualizar.getNombre());
-				evento.setDescripcionCorta(eventoActualizar.getDescripcionCorta());
-				evento.setDescripcionLarga(eventoActualizar.getDescripcionLarga());
-				evento.setFoto(eventoActualizar.getFoto());
-				evento.setFechaEvento(eventoActualizar.getFechaEvento());
-				evento.setPrecio(eventoActualizar.getPrecio());
-				evento.setPolitaAcceso(eventoActualizar.getPolitaAcceso());
-				evento.setRecinto(eventoActualizar.getRecinto());
-				evento.setGenero(eventoActualizar.getGenero());
+				logger.info("El recinto existe en la base de datos...");
+//				evento.set_id(eventoActualizar.get_id());
+//				evento.setNombre(eventoActualizar.getNombre());
+//				evento.setDescripcionCorta(eventoActualizar.getDescripcionCorta());
+//				evento.setDescripcionLarga(eventoActualizar.getDescripcionLarga());
+//				evento.setFoto(eventoActualizar.getFoto());
+//				evento.setFechaEvento(eventoActualizar.getFechaEvento());
+//				evento.setPrecio(eventoActualizar.getPrecio());
+//				evento.setPolitaAcceso(eventoActualizar.getPolitaAcceso());
+//				evento.setRecinto(recintoOptional.get());
+//				evento.setGenero(eventoActualizar.getGenero());
+				evento = eventoActualizar;
 				eventosService.save(evento);
 
 				return new ResponseEntity<>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
