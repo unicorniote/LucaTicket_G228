@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  * Clase que se encarga de interceptar los atributos del error producido y
  * pasarlos al formato deseado.
  * 
- * @author Álvaro Román
+ * @author Alvaro
  * @version 13/10/2022
  */
 @Slf4j
@@ -30,7 +30,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 	 * @param WebRequest            webRequest
 	 * @param ErrorAttributeOptions options
 	 * @return Map<String, Object>
-	 * @author Álvaro Román
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	public Map<String, Object> getErrorAttributes(WebRequest webRequest, ErrorAttributeOptions options) {

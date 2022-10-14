@@ -14,7 +14,7 @@ import com.grupo2.lucaticket.eventos.model.response.EventoDto;
  * Clase EventoAdapter que contiene los métodos para pasar de entidad Evento a
  * objeto DTO.
  *
- * @author Álvaro Román
+ * @author Alvaro
  * @version 1.0: 06/10/2022
  */
 @Component
@@ -28,7 +28,7 @@ public class EventoAdapter implements EventoAdapterI {
 	 * 
 	 * @param evento - Objeto de tipo entidad Evento
 	 * @return EventoDto
-	 * @author Álvaro Román Gómez
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@Override
@@ -64,8 +64,8 @@ public class EventoAdapter implements EventoAdapterI {
 
 		eventoDto.setGenero(evento.getGenero());
 
-		System.out.println("=========EVENTO DTO:"+eventoDto);
-		
+		System.out.println("=========EVENTO DTO:" + eventoDto);
+
 		return eventoDto;
 	}
 
@@ -75,7 +75,7 @@ public class EventoAdapter implements EventoAdapterI {
 	 * 
 	 * @param eventos - Lista de objetos de entidades Evento
 	 * @return List<EventoDto>
-	 * @author Álvaro Román Gómez
+	 * @author Alvaro
 	 * @version 1.0
 	 */
 	@Override
