@@ -1,6 +1,5 @@
 package com.grupo2.lucaticket.eventos.controller;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,17 +19,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.grupo2.lucaticket.eventos.controller.error.CiudadEventoNotFoundException;
 import com.grupo2.lucaticket.eventos.controller.error.EventoNotFoundException;
 import com.grupo2.lucaticket.eventos.controller.error.EventosEmptyDatabaseException;
 import com.grupo2.lucaticket.eventos.controller.error.GeneroEventoNotFoundException;
-import com.grupo2.lucaticket.eventos.controller.error.NombreEventoNotFoundException;
+import com.grupo2.lucaticket.eventos.controller.error.RecintoNotFoundException;
 import com.grupo2.lucaticket.eventos.model.Evento;
+import com.grupo2.lucaticket.eventos.model.Recinto;
 import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapterI;
 import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 import com.grupo2.lucaticket.eventos.service.EventosServiceI;
+import com.grupo2.lucaticket.eventos.service.RecintosServiceI;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -65,6 +65,9 @@ public class EventosController {
 	private EventosServiceI eventosService;
 
 	@Autowired
+	private RecintosServiceI recintosService;
+	
+	@Autowired
 	private EventoAdapterI eventoAdapter;
 
 	/**
@@ -89,15 +92,34 @@ public class EventosController {
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content) })
 	@PostMapping("/add")
-	public ResponseEntity<?> addEvento(@RequestBody Evento evento) {
+	public ResponseEntity<?> addEvento(@Valid @RequestBody Evento evento) {
+		
+		logger.info("Intentado añadir evento: " + evento);
+		
+		Optional<Recinto> recintoOptional;
 
-		logger.info("añadiendo Evento: " + evento);
-		evento = this.eventosService.save(evento);
-		logger.info("El evento se ha añadido correctamente");
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(evento.get_id())
-				.toUri();
+		try {
+			logger.info("Comprobando si el recinto es nulo...");
+			recintoOptional = recintosService.findById(evento.getRecinto().get_id().toString());
+		} catch (NullPointerException npe) {
+			// TODO: handle exception
+			logger.info("Lanzando que el recinto es nulo...");
+			throw new RecintoNotFoundException("El recinto es nulo!");
+		}
+		logger.info("Comproabando que el recinto existe en la base de datos...");
+		if (recintoOptional.isEmpty()) {
+			logger.info("El recinto no existe en la base de datos!");
+			throw new RecintoNotFoundException();
+		} else {
+			logger.info("Guardando evento en la base de datos...");
+			Recinto recinto = recintoOptional.get();
+			evento.setRecinto(recinto);
+			eventosService.save(evento);
+			return new ResponseEntity<>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
+			
+		}		
 
-		return ResponseEntity.created(location).body(eventoAdapter.eventoToDto(evento));
+		
 	}
 
 	/**
@@ -150,7 +172,7 @@ public class EventosController {
 		logger.info("----------Buscando eventos por nombre");
 		List<Evento> evento = eventosService.findByNombre(nombre);
 		if (evento.isEmpty()) {
-			throw new NombreEventoNotFoundException();
+			throw new EventoNotFoundException();
 		} else {
 			return eventoAdapter.eventoToDto(evento);
 		}
@@ -276,7 +298,7 @@ public class EventosController {
 		} else {
 			logger.info("Eliminando evento " + id + " de la base de datos...");
 			Evento evento = eventoOpcional.get();
-			eventosService.deleteById(evento.get_id());
+			eventosService.deleteById(evento.get_id().toString());
 			return new ResponseEntity<EventoDto>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
 		}
 	}
@@ -304,24 +326,38 @@ public class EventosController {
 			@Parameter(description = "Párametro Evento que actualiza el evento", required = true) @PathVariable("id") String id,
 			@Valid @RequestBody Evento eventoActualizar) {
 		logger.info(" ---- updateEvento (PUT)");
+		logger.info("Comrpobando que el evento está en la base de datos...");
 		Optional<Evento> eventoOptcional = eventosService.findById(id);
 		if (!eventoOptcional.isPresent()) {
+			logger.info("El evento no existe en la base de datos...");
 			throw new EventoNotFoundException();
 		} else {
+			logger.info("El evento existe en la base de datos...");
 			Evento evento = eventoOptcional.get();
-			evento.set_id(id);
-			evento.setNombre(eventoActualizar.getNombre());
-			evento.setDescripcionCorta(eventoActualizar.getDescripcionCorta());
-			evento.setDescripcionLarga(eventoActualizar.getDescripcionLarga());
-			evento.setFoto(eventoActualizar.getFoto());
-			evento.setFechaEvento(eventoActualizar.getFechaEvento());
-			evento.setPrecio(eventoActualizar.getPrecio());
-			evento.setPolitaAcceso(eventoActualizar.getPolitaAcceso());
-			evento.setRecinto(eventoActualizar.getRecinto());
-			evento.setGenero(eventoActualizar.getGenero());
-			eventosService.save(evento);
+			
+			Optional<Recinto> recintoOptional = recintosService.findById(eventoActualizar.getRecinto().get_id().toString());
+			logger.info("Comprobando que el recinto está en la base de datos...");
+			if (recintoOptional.isEmpty()) {
+				logger.info("El recinto no existe en la base de datos...");
+				throw new RecintoNotFoundException();
+			} else {
+				logger.info("El recinto existe en la base de datos...");
+				evento.set_id(eventoActualizar.get_id());
+				evento.setNombre(eventoActualizar.getNombre());
+				evento.setDescripcionCorta(eventoActualizar.getDescripcionCorta());
+				evento.setDescripcionLarga(eventoActualizar.getDescripcionLarga());
+				evento.setFoto(eventoActualizar.getFoto());
+				evento.setFechaEvento(eventoActualizar.getFechaEvento());
+				evento.setPrecio(eventoActualizar.getPrecio());
+				evento.setPolitaAcceso(eventoActualizar.getPolitaAcceso());
+				evento.setRecinto(recintoOptional.get());
+				evento.setGenero(eventoActualizar.getGenero());
+				eventosService.save(evento);
 
-			return new ResponseEntity<>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
+				return new ResponseEntity<>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
+				
+			}
+
 		}
 	}
 

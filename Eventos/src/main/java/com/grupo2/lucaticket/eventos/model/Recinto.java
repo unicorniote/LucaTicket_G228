@@ -4,6 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -29,7 +30,7 @@ import lombok.NoArgsConstructor;
 public class Recinto {
 
 	@Id
-	private String _id;
+	private ObjectId _id;
 
 	@NotEmpty
 	private String nombreRecinto;
