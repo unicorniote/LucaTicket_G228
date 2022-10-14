@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -27,7 +28,9 @@ import com.grupo2.lucaticket.eventos.model.Recinto;
 import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapter;
 import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
+import com.grupo2.lucaticket.eventos.repository.RecintosRespositoryI;
 import com.grupo2.lucaticket.eventos.service.EventosServiceI;
+import com.grupo2.lucaticket.eventos.service.RecintosServiceI;
 
 @WebMvcTest(EventosController.class)
 public class EventosControllerTestUnit {
@@ -50,6 +53,13 @@ public class EventosControllerTestUnit {
 
 	@MockBean
 	private EventosRepositoryI eventosRepository;
+	
+	@MockBean
+	private RecintosServiceI recintosService;
+
+	@MockBean
+	private RecintosRespositoryI recintosrepository;
+	
 
 	Evento evento;
 	Evento eventoNull;
@@ -59,8 +69,8 @@ public class EventosControllerTestUnit {
 	List<Evento> eventos;
 	List<Evento> eventosVacio;
 
-	private final String ID = "1";
-	private final String ID_NULL = "";
+	private final ObjectId ID = new ObjectId();
+	private final ObjectId ID_NULL = new ObjectId();
 	private final String NOMBRE_EVENTO = "Evento de prueba";
 	private final String NOMBRE_EVENTO_NULL = null;
 	private final String DESCRIPCION_CORTA = "Descripción corta del evento";

@@ -1,8 +1,9 @@
 package com.grupo2.lucaticket.eventos.controller;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +19,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.grupo2.lucaticket.eventos.controller.error.CiudadEventoNotFoundException;
 import com.grupo2.lucaticket.eventos.controller.error.EventoNotFoundException;
+import com.grupo2.lucaticket.eventos.controller.error.EventosEmptyDatabaseException;
+import com.grupo2.lucaticket.eventos.controller.error.GeneroEventoNotFoundException;
+import com.grupo2.lucaticket.eventos.controller.error.RecintoNotFoundException;
 import com.grupo2.lucaticket.eventos.model.Evento;
+import com.grupo2.lucaticket.eventos.model.Recinto;
 import com.grupo2.lucaticket.eventos.model.adapter.EventoAdapterI;
 import com.grupo2.lucaticket.eventos.model.response.EventoDto;
 import com.grupo2.lucaticket.eventos.service.EventosServiceI;
+import com.grupo2.lucaticket.eventos.service.RecintosServiceI;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -59,6 +65,9 @@ public class EventosController {
 	private EventosServiceI eventosService;
 
 	@Autowired
+	private RecintosServiceI recintosService;
+	
+	@Autowired
 	private EventoAdapterI eventoAdapter;
 
 	/**
@@ -83,15 +92,34 @@ public class EventosController {
 
 			@ApiResponse(responseCode = "400", description = "El evento no se ha añadido", content = @Content) })
 	@PostMapping("/add")
-	public ResponseEntity<?> addEvento(@RequestBody Evento evento) {
+	public ResponseEntity<?> addEvento(@Valid @RequestBody Evento evento) {
+		
+		logger.info("Intentado añadir evento: " + evento);
+		
+		Optional<Recinto> recintoOptional;
 
-		logger.info("añadiendo Evento: " + evento);
-		evento = this.eventosService.save(evento);
-		logger.info("El evento se ha añadido correctamente");
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(evento.get_id())
-				.toUri();
+		try {
+			logger.info("Comprobando si el recinto es nulo...");
+			recintoOptional = recintosService.findById(evento.getRecinto().get_id().toString());
+		} catch (NullPointerException npe) {
+			// TODO: handle exception
+			logger.info("Lanzando que el recinto es nulo...");
+			throw new RecintoNotFoundException("El recinto es nulo!");
+		}
+		logger.info("Comproabando que el recinto existe en la base de datos...");
+		if (recintoOptional.isEmpty()) {
+			logger.info("El recinto no existe en la base de datos!");
+			throw new RecintoNotFoundException();
+		} else {
+			logger.info("Guardando evento en la base de datos...");
+			Recinto recinto = recintoOptional.get();
+			evento.setRecinto(recinto);
+			eventosService.save(evento);
+			return new ResponseEntity<>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
+			
+		}		
 
-		return ResponseEntity.created(location).build();
+		
 	}
 
 	/**
@@ -112,11 +140,11 @@ public class EventosController {
 	@GetMapping("/lista")
 	public List<EventoDto> listaEventos() {
 		logger.info("----------Buscando eventos ");
-		List<Evento> evento = eventosService.findAll();
-		if (evento.isEmpty()) {
-			throw new EventoNotFoundException();
+		List<Evento> eventos = eventosService.findAll();
+		if (eventos.isEmpty()) {
+			throw new EventosEmptyDatabaseException();
 		} else {
-			return eventoAdapter.eventoToDto(evento);
+			return eventoAdapter.eventoToDto(eventos);
 
 		}
 	}
@@ -175,7 +203,7 @@ public class EventosController {
 		logger.info("----------Buscando eventos por genero");
 		List<Evento> evento = eventosService.findAllByGenero(genero);
 		if (evento.isEmpty()) {
-			throw new EventoNotFoundException();
+			throw new GeneroEventoNotFoundException();
 		} else {
 			return eventoAdapter.eventoToDto(evento);
 		}
@@ -233,9 +261,9 @@ public class EventosController {
 	@GetMapping("/ciudad/{ciudad}")
 	public List<EventoDto> listaEventosCiudad(
 			@Parameter(description = "Ciudad del evento a localizar", required = true) @PathVariable String ciudad) {
-		List<Evento> evento = eventosService.findAllByCiudad(ciudad);
+		List<Evento> evento = eventosService.findByCiudad(ciudad);
 		if (evento.isEmpty()) {
-			throw new EventoNotFoundException();
+			throw new CiudadEventoNotFoundException();
 		} else {
 			return eventoAdapter.eventoToDto(evento);
 		}
@@ -262,9 +290,17 @@ public class EventosController {
 			@ApiResponse(responseCode = "202", description = "El evento aún no ha sido eliminado", content = @Content) })
 
 	@DeleteMapping("/{id}")
-	public void deleteEvento(@PathVariable String id) {
-		logger.info("Delete, id ->" + id);
-		eventosService.deleteById(id);
+	public ResponseEntity<EventoDto> deleteEvento(@PathVariable String id) {
+		logger.info("Buscando evento " + id + " en la base de datos...");
+		Optional<Evento> eventoOpcional = eventosService.findById(id);
+		if (eventoOpcional.isEmpty()) {
+			throw new EventoNotFoundException();
+		} else {
+			logger.info("Eliminando evento " + id + " de la base de datos...");
+			Evento evento = eventoOpcional.get();
+			eventosService.deleteById(evento.get_id().toString());
+			return new ResponseEntity<EventoDto>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
+		}
 	}
 
 	/**
@@ -288,31 +324,41 @@ public class EventosController {
 	@PutMapping("/editar/{id}")
 	public ResponseEntity<?> update(
 			@Parameter(description = "Párametro Evento que actualiza el evento", required = true) @PathVariable("id") String id,
-			@RequestBody Evento evento) {
+			@Valid @RequestBody Evento eventoActualizar) {
 		logger.info(" ---- updateEvento (PUT)");
-
-		Optional<Evento> eventoActualizado = eventosService.findById(id);
-
-		if (!eventoActualizado.isPresent()) {
+		logger.info("Comrpobando que el evento está en la base de datos...");
+		Optional<Evento> eventoOptcional = eventosService.findById(id);
+		if (!eventoOptcional.isPresent()) {
+			logger.info("El evento no existe en la base de datos...");
 			throw new EventoNotFoundException();
+		} else {
+			logger.info("El evento existe en la base de datos...");
+			Evento evento = eventoOptcional.get();
+			
+			Optional<Recinto> recintoOptional = recintosService.findById(eventoActualizar.getRecinto().get_id().toString());
+			logger.info("Comprobando que el recinto está en la base de datos...");
+			if (recintoOptional.isEmpty()) {
+				logger.info("El recinto no existe en la base de datos...");
+				throw new RecintoNotFoundException();
+			} else {
+				logger.info("El recinto existe en la base de datos...");
+				evento.set_id(eventoActualizar.get_id());
+				evento.setNombre(eventoActualizar.getNombre());
+				evento.setDescripcionCorta(eventoActualizar.getDescripcionCorta());
+				evento.setDescripcionLarga(eventoActualizar.getDescripcionLarga());
+				evento.setFoto(eventoActualizar.getFoto());
+				evento.setFechaEvento(eventoActualizar.getFechaEvento());
+				evento.setPrecio(eventoActualizar.getPrecio());
+				evento.setPolitaAcceso(eventoActualizar.getPolitaAcceso());
+				evento.setRecinto(recintoOptional.get());
+				evento.setGenero(eventoActualizar.getGenero());
+				eventosService.save(evento);
+
+				return new ResponseEntity<>(eventoAdapter.eventoToDto(evento), HttpStatus.ACCEPTED);
+				
+			}
+
 		}
-
-		logger.info("------------- evento " + evento.getFechaEvento()); // Fecha se devuelve null
-
-		eventoActualizado.ifPresent(e -> {
-			e.setNombre(evento.getNombre());
-			e.setDescripcionCorta(evento.getDescripcionCorta());
-			e.setDescripcionLarga(evento.getDescripcionLarga());
-			e.setFoto(evento.getFoto());
-			e.setFechaEvento(evento.getFechaEvento());
-			e.setPrecio(evento.getPrecio());
-			e.setPolitaAcceso(evento.getPolitaAcceso());
-			e.setRecinto(evento.getRecinto());
-			e.setGenero(evento.getGenero());
-			eventosService.save(e);
-		});
-
-		return new ResponseEntity<>(eventoAdapter.eventoToDto(eventoActualizado.get()), HttpStatus.OK);
 	}
 
 }

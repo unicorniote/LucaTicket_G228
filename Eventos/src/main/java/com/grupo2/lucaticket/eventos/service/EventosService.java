@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.grupo2.lucaticket.eventos.model.Evento;
 import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @Project LucaTicket
  * 
@@ -23,6 +25,7 @@ import com.grupo2.lucaticket.eventos.repository.EventosRepositoryI;
  */
 
 @Service
+@Slf4j
 public class EventosService implements EventosServiceI {
 
 	@Autowired
@@ -42,7 +45,12 @@ public class EventosService implements EventosServiceI {
 
 	@Override
 	public Evento save(Evento evento) {
-		return repo.save(evento);
+		System.out.println("ANTES\n");
+		log.info("====Evento servicio: "+evento);
+		Evento eventoG = repo.save(evento);
+		System.out.println("DESPUES\n");
+		log.info("====Evento servicio: "+eventoG);
+		return eventoG;
 
 	}
 
@@ -88,7 +96,7 @@ public class EventosService implements EventosServiceI {
 
 	public List<Evento> findAllByGenero(String genero) {
 
-		return repo.findAllByGenero(genero);
+		return repo.findAllByGeneroIgnoreCase(genero);
 	}
 
 	/**
@@ -101,7 +109,7 @@ public class EventosService implements EventosServiceI {
 	 * @version 1.0
 	 */
 	public List<Evento> findByNombre(String nombre) {
-		return repo.findByNombre(nombre);
+		return repo.findByNombreIgnoreCase(nombre);
 	}
 
 	/**
@@ -128,8 +136,8 @@ public class EventosService implements EventosServiceI {
 	 * @version 1.0
 	 */
 	@Override
-	public List<Evento> findAllByCiudad(String ciudad) {
-		return repo.findAllByCiudad(ciudad);
+	public List<Evento> findByCiudad(String ciudad) {
+		return repo.findByCiudadIgnoreCase(ciudad);
 	}
 
 	/**

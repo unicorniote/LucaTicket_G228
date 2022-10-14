@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.grupo2.lucaticket.eventos.model.response.EventoDto;
+
+import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,7 +55,7 @@ public class EventoAdapterTestUnit {
 		eventoDtoCompleto = new EventoDto();
 
 		// RECINTO
-
+		recinto.set_id(new ObjectId());
 		recinto.setNombreRecinto(NOMBRE_RECINTO);
 		recinto.setCiudad(CIUDAD);
 		recinto.setDireccion(DIRECCION);
@@ -61,6 +63,7 @@ public class EventoAdapterTestUnit {
 		recinto.setAforo(AFORO);
 
 		// EVENTO
+		evento.set_id(new ObjectId());
 		evento.setNombre(NOMBRE_EVENTO);
 		evento.setDescripcionCorta(DESCRIPCION_CORTA);
 		evento.setDescripcionLarga(DESCRIPCION_LARGA);
@@ -75,6 +78,7 @@ public class EventoAdapterTestUnit {
 		eventos.add(evento);
 
 		// EventoDTO
+		eventoDtoCompleto.setId(evento.get_id().toString());
 		eventoDtoCompleto.setNombre(NOMBRE_EVENTO);
 		eventoDtoCompleto.setDescripcionEvento(DESCRIPCION_CORTA);
 		eventoDtoCompleto.setFoto(FOTO);
